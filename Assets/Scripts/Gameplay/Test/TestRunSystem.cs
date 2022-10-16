@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace Gameplay.Test
 {
-    public class TestRunSystem : IEcsRunSystem
+    public sealed class TestRunSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
