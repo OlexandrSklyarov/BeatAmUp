@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.leopotam.ecslite": {
+      "version": "https://github.com/Leopotam/ecslite.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "42741da4c087b44afefd269ebb566b3e8fae8464"
+    },
     "com.unity.burst": {
       "version": "1.6.5",
       "depth": 1,
