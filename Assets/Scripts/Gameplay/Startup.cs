@@ -53,6 +53,9 @@ namespace Gameplay
 
             _updateSystems?.Destroy();
             _updateSystems = null;
+
+            _world?.Destroy();
+            _world = null;
         }
     }
 }
