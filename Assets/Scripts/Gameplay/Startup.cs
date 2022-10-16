@@ -11,6 +11,7 @@ namespace Gameplay
         private EcsWorld _world;
         private IEcsSystems _initSystems;
         private IEcsSystems _updateSystems;
+        private IEcsSystems _fixedUpdateSystems;
 
 
         private void Start()
@@ -21,9 +22,10 @@ namespace Gameplay
             
             _initSystems = new EcsSystems(_world, data);
             _updateSystems = new EcsSystems(_world, data);
+            _fixedUpdateSystems = new EcsSystems(_world, data);
 
             AddInitSystems();
-            AddSystems();
+            AddSystems();       
         }
 
 
@@ -40,10 +42,17 @@ namespace Gameplay
             _updateSystems
                 .Add(new TestRunSystem())
                 .Init();
+            
+            _fixedUpdateSystems
+                .Add(new TestFixedUpdateSystem())
+                .Init();
         }
 
 
         private void Update() => _updateSystems?.Run();
+
+
+        private void FixedUpdate() => _fixedUpdateSystems?.Run();
 
 
         private void OnDestroy()
@@ -53,6 +62,9 @@ namespace Gameplay
 
             _updateSystems?.Destroy();
             _updateSystems = null;
+
+            _fixedUpdateSystems?.Destroy();
+            _fixedUpdateSystems = null;
 
             _world?.Destroy();
             _world = null;
