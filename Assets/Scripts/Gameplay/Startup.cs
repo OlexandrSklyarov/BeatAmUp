@@ -1,6 +1,8 @@
+using Gameplay.Character.Hero;
 using Gameplay.Environment;
 using Gameplay.Test;
 using Leopotam.EcsLite;
+using Leopotam.EcsLite.Di;
 using Services.Data;
 using UnityEngine;
 
@@ -8,6 +10,9 @@ namespace Gameplay
 {
     public sealed class Startup : MonoBehaviour
     {        
+        [SerializeField] private WorldData _worldData;
+        [Space(10f), SerializeField] private GameConfig _gameConfig;
+
         private EcsWorld _world;
         private IEcsSystems _initSystems;
         private IEcsSystems _updateSystems;
@@ -33,6 +38,9 @@ namespace Gameplay
         {
             _initSystems
                 .Add(new InitWorldSystem())
+                .Add(new InitPlayerSystem())
+                .Inject(_gameConfig)
+                .Inject(_worldData)
                 .Init();
         }
 
