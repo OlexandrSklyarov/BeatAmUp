@@ -23,7 +23,10 @@ namespace Gameplay
         {
             _world = new EcsWorld();
 
-            var data = new SharedData();
+            var data = new SharedData()
+            {
+                InputServices = new InputServices()
+            };
             
             _initSystems = new EcsSystems(_world, data);
             _updateSystems = new EcsSystems(_world, data);
@@ -36,9 +39,9 @@ namespace Gameplay
 
         private void AddInitSystems()
         {
-            _initSystems
+            _initSystems                
                 .Add(new InitWorldSystem())
-                .Add(new InitPlayerSystem())
+                .Add(new InitHeroSystem())
                 .Inject(_gameConfig)
                 .Inject(_worldData)
                 .Init();
@@ -48,7 +51,7 @@ namespace Gameplay
         private void AddSystems()
         {
             _updateSystems
-                .Add(new TestRunSystem())
+                .Add(new PlayerInputSystem())
                 .Init();
             
             _fixedUpdateSystems

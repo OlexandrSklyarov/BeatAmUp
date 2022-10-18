@@ -1,10 +1,10 @@
-
-using System.Numerics;
+using UnityEngine;
 
 namespace Gameplay.Character.Hero
 {
-    public struct HeroInputData
+    public struct PlayerInputData
     {
         public Vector3 Direction;
+        public bool Jump;
     }
 }
