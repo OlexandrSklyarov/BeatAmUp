@@ -7,18 +7,15 @@ namespace Gameplay.Character.Hero
 {
     public sealed class InitHeroSystem : IEcsInitSystem
     {
-        private readonly EcsCustomInject<WorldData>  _worldData = default;
-        private readonly EcsCustomInject<GameConfig> _gameConfig = default;        
-
-
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var data = systems.GetShared<SharedData>();
 
             var heroGO = Object.Instantiate
             (
-                _gameConfig.Value.PlayerData.Prefab, 
-                _worldData.Value.HeroSpawnPoint.position, 
+                data.Config.PlayerData.Prefab, 
+                data.WorldData.HeroSpawnPoint.position, 
                 Quaternion.identity
             );
 
@@ -30,15 +27,15 @@ namespace Gameplay.Character.Hero
             var inputDataPool =  world.GetPool<PlayerInputData>();
             inputDataPool.Add(heroEntity);
 
-            var movementPool =  world.GetPool<Movement>();
-            ref var movement = ref movementPool.Add(heroEntity);
-            movement.Body = heroGO.GetComponent<Rigidbody>();
-            movement.Transform = heroGO.transform;
-            movement.Speed = _gameConfig.Value.PlayerData.Speed;
-
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(heroEntity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
+
+            var movementPool =  world.GetPool<Movement>();
+            ref var movement = ref movementPool.Add(heroEntity);
+            movement.Body = heroGO.GetComponent<Rigidbody>();
+            movement.Transform = heroGO.transform;            
+            movement.ViewTransform = heroGO.transform.GetChild(0).transform;   
             
             Util.Debug.Print($"hero init...");
         }

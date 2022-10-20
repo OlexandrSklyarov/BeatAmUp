@@ -1,4 +1,5 @@
 using System;
+using Cinemachine;
 using UnityEngine;
 
 namespace Services.Data
@@ -7,5 +8,7 @@ namespace Services.Data
     public class WorldData
     {
         public Transform HeroSpawnPoint;
+        public CinemachineVirtualCamera GameVC;
+
     }
 }

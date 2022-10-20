@@ -1,8 +1,9 @@
+using Gameplay.Character;
 using Gameplay.Character.Hero;
 using Gameplay.Environment;
+using Gameplay.GameCamera;
 using Gameplay.Test;
 using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
 using Services.Data;
 using UnityEngine;
 
@@ -25,7 +26,9 @@ namespace Gameplay
 
             var data = new SharedData()
             {
-                InputServices = new InputServices()
+                InputServices = new InputServices(),
+                Config = _gameConfig,
+                WorldData = _worldData
             };
             
             _initSystems = new EcsSystems(_world, data);
@@ -42,8 +45,7 @@ namespace Gameplay
             _initSystems                
                 .Add(new InitWorldSystem())
                 .Add(new InitHeroSystem())
-                .Inject(_gameConfig)
-                .Inject(_worldData)
+                .Add(new InitCameraSystem())
                 .Init();
         }
 
@@ -52,10 +54,13 @@ namespace Gameplay
         {
             _updateSystems
                 .Add(new PlayerInputSystem())
+                .Add(new CheckGroundSystem())
+                .Add(new JumpSystem())
                 .Init();
             
             _fixedUpdateSystems
                 .Add(new TestFixedUpdateSystem())
+                .Add(new MovementSystem())
                 .Init();
         }
 

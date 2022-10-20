@@ -7,6 +7,7 @@ namespace Services.Data
     public class GameConfig : ScriptableObject
     {
         [field: SerializeField] public PlayerConfig PlayerData { get; private set; }
+        [field: Space(10f), SerializeField] public CameraConfig CameraConfig { get; private set; }        
     }
 
 
@@ -15,5 +16,14 @@ namespace Services.Data
     {
         [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 2f;
+        [field: SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 360f;
+        [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 5f;
+    }
+
+
+    [Serializable]
+    public sealed class CameraConfig
+    {
+        [field: SerializeField] public Vector3 Offset { get; private set; }
     }
 }

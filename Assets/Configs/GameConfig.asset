@@ -15,3 +15,8 @@ MonoBehaviour:
   <PlayerData>k__BackingField:
     <Prefab>k__BackingField: {fileID: 8385687399334179205, guid: 6dc06b531568228b4b0caf423f1b5029,
       type: 3}
+    <Speed>k__BackingField: 20
+    <RotateSpeed>k__BackingField: 360
+    <JumpForce>k__BackingField: 5
+  <CameraConfig>k__BackingField:
+    <Offset>k__BackingField: {x: 0, y: 15, z: -15}
