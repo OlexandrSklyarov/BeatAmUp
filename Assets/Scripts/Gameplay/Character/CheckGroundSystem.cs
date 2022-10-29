@@ -22,7 +22,7 @@ namespace Gameplay.Character
                 ref var movement = ref movementPool.Get(e); 
 
                 var ray = new Ray(movement.Transform.position, Vector3.down);
-                movement.IsGround = Physics.RaycastNonAlloc(ray, _hits, MAX_DIST) > 0;             
+                movement.IsGround = Physics.RaycastNonAlloc(ray, _hits, MAX_DIST) > 0; 
             }
         }
     }

@@ -2,7 +2,6 @@ using Gameplay.Character;
 using Gameplay.Character.Hero;
 using Gameplay.Environment;
 using Gameplay.GameCamera;
-using Gameplay.Test;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
@@ -56,10 +55,11 @@ namespace Gameplay
                 .Add(new PlayerInputSystem())
                 .Add(new CheckGroundSystem())
                 .Add(new JumpSystem())
+                .Add(new RotationSystem())
                 .Init();
             
             _fixedUpdateSystems
-                .Add(new TestFixedUpdateSystem())
+                //.Add(new Gameplay.Test.TestFixedUpdateSystem())
                 .Add(new MovementSystem())
                 .Init();
         }
