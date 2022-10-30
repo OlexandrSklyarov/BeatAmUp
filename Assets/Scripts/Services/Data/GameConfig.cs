@@ -20,6 +20,7 @@ namespace Services.Data
         [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 5f;
         [field: SerializeField, Min(1f)] public float MaxDrag { get; private set; } = 2f;
         [field: SerializeField, Min(0.01f)] public float MinDrag { get; private set; } = 0.25f;
+        [field: SerializeField, Min(0.01f)] public float Acceleration { get; private set; } = 8f;
     }
 
 

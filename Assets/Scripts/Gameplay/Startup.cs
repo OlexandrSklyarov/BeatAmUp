@@ -56,6 +56,7 @@ namespace Gameplay
                 .Add(new CheckGroundSystem())
                 .Add(new JumpSystem())
                 .Add(new RotationSystem())
+                .Add(new HeroAnimationSystem())
                 .Init();
             
             _fixedUpdateSystems

@@ -23,13 +23,23 @@ namespace Gameplay.Character
 
                 if (movement.IsGround)
                 {
-                    var speed = config.PlayerData.Speed;
-                    movement.Body.AddForce(input.Direction * speed);
+                    movement.Acceleration = Mathf.Lerp
+                    (
+                        movement.Acceleration, 
+                        (input.IsRunning) ? 1f : 0.5f, 
+                        Time.deltaTime * config.PlayerData.Acceleration
+                    );
+
+                    movement.CurrentSpeed = config.PlayerData.Speed * movement.Acceleration;
+
+                    movement.Body.AddForce(input.Direction * movement.CurrentSpeed);
                     movement.Body.drag = (input.IsMoved) ? config.PlayerData.MaxDrag : config.PlayerData.MinDrag;
                 }
                 else
                 {
                     movement.Body.drag = config.PlayerData.MinDrag;
+                    movement.CurrentSpeed = 0f;
+                    movement.Acceleration = 0f;
                 }              
             }
         }

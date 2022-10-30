@@ -6,6 +6,7 @@ namespace Gameplay.Character.Hero
     {
         public Vector3 Direction;
         public bool IsJump;
+        public bool IsRunning;
         public bool IsMoved;        
     }
 }

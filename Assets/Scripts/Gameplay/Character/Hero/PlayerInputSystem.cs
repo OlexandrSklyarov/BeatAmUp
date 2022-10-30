@@ -1,3 +1,4 @@
+using System;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace Gameplay.Character.Hero
         private Vector2 _direction;
         private bool _isJump;
         private bool _isMoved;
-
+        private bool _isRunning;
 
         public void Init(IEcsSystems systems) 
         {
@@ -20,8 +21,9 @@ namespace Gameplay.Character.Hero
 
             control.Player.Movement.performed += SetDirection;
             control.Player.Movement.canceled += ReleaseDirection;
-
             control.Player.Jump.started += ActiveJump;
+            control.Player.Running.started += ActiveRunning;
+            control.Player.Running.canceled += ActiveRunning;
         }
 
 
@@ -31,12 +33,13 @@ namespace Gameplay.Character.Hero
 
             control.Player.Movement.performed -= SetDirection;
             control.Player.Movement.canceled -= ReleaseDirection;
-
             control.Player.Jump.started -= ActiveJump;
+            control.Player.Running.started -= ActiveRunning;
+            control.Player.Running.canceled -= ActiveRunning;
 
             control.Disable();
         }
-
+        
 
         public void Run(IEcsSystems systems)
         {
@@ -56,9 +59,10 @@ namespace Gameplay.Character.Hero
                 var relativeDirection = movement.Transform
                     .TransformDirection(new Vector3(_direction.x, 0f, _direction.y));
 
+                input.Direction = relativeDirection;
                 input.IsMoved =_isMoved;
                 input.IsJump = _isJump;
-                input.Direction = relativeDirection;
+                input.IsRunning = _isRunning;
 
                 _isJump = false;
             }
@@ -67,6 +71,9 @@ namespace Gameplay.Character.Hero
 
         private void ActiveJump(InputAction.CallbackContext ctx) => _isJump = ctx.ReadValue<float>() > 0f;
 
+
+        private void ActiveRunning(InputAction.CallbackContext ctx) => _isRunning = ctx.ReadValue<float>() > 0f;
+        
 
         private void SetDirection(InputAction.CallbackContext ctx) 
         {

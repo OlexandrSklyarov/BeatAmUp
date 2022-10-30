@@ -1,3 +1,4 @@
+using Cinemachine;
 using Gameplay.Character;
 using Gameplay.Character.Hero;
 using Leopotam.EcsLite;
@@ -10,7 +11,7 @@ namespace Gameplay.GameCamera
         public void Init(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>().WorldData;
+            var data = systems.GetShared<SharedData>();
 
             var entities = world.Filter<HeroTag>().End();
             var movementPool = world.GetPool<Movement>();
@@ -19,8 +20,11 @@ namespace Gameplay.GameCamera
             {
                 var target = movementPool.Get(e).Transform;
 
-                data.GameVC.Follow = target;
-                data.GameVC.LookAt = target;
+                data.WorldData.GameVC.Follow = target;
+                data.WorldData.GameVC.LookAt = target;
+
+                var t = data.WorldData.GameVC.GetCinemachineComponent<CinemachineTransposer>();
+                t.m_FollowOffset = data.Config.CameraConfig.Offset;
             }
         }
     }
