@@ -12,7 +12,9 @@ public static class ConstPrm
         public const string RUN_SPEED_MULTIPLIER_PRM = "RUN_SPEED_MULTIPLIER";
         public const string FORWARD_PRM = "FORWARD";
         public const string SIDE_PRM = "SIDE";
-
+        public const string GROUND = "GROUND";
+        public const string JUMP = "JUMP";
+        public const string FALLING = "FALLING";  
     }
 
 

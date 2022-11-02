@@ -45,6 +45,7 @@ namespace Gameplay.Character.Hero
         {
             var entities = systems.GetWorld()
                 .Filter<PlayerInputData>()
+                .Inc<Movement>()
                 .Inc<HeroTag>()
                 .End();
 

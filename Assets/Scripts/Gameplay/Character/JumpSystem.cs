@@ -25,7 +25,6 @@ namespace Gameplay.Character
                 {
                     var jumpForce = data.Config.PlayerData.JumpForce;
                     movement.Body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
-                    input.IsJump = false;
                 }
             }
         }
