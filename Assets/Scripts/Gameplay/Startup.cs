@@ -54,15 +54,15 @@ namespace Gameplay
             _updateSystems
                 .Add(new PlayerInputSystem())
                 .Add(new CheckGroundSystem())
-                .Add(new JumpSystem())
-                .Add(new RotationSystem())
+                .Add(new HeroJumpSystem())
+                .Add(new CharacterRotateViewSystem())
                 .Add(new HeroAnimationSystem())
                 .Add(new PlayerResetInputSystem())
                 .Init();
             
             _fixedUpdateSystems
                 //.Add(new Gameplay.Test.TestFixedUpdateSystem())
-                .Add(new MovementSystem())
+                .Add(new HeroMovementSystem())
                 .Init();
         }
 

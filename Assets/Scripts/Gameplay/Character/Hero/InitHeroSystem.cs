@@ -1,5 +1,4 @@
 using Leopotam.EcsLite;
-using Leopotam.EcsLite.Di;
 using Services.Data;
 using UnityEngine;
 
@@ -30,12 +29,12 @@ namespace Gameplay.Character.Hero
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(heroEntity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
+            view.ViewTransform = heroGO.transform.GetChild(0).transform;   
 
             var movementPool =  world.GetPool<Movement>();
             ref var movement = ref movementPool.Add(heroEntity);
             movement.Body = heroGO.GetComponent<Rigidbody>();
             movement.Transform = heroGO.transform;            
-            movement.ViewTransform = heroGO.transform.GetChild(0).transform;   
             
             Util.Debug.Print($"hero init...");
         }

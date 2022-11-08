@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
@@ -43,14 +42,16 @@ namespace Gameplay.Character.Hero
 
         public void Run(IEcsSystems systems)
         {
-            var entities = systems.GetWorld()
+            var world = systems.GetWorld();
+
+            var entities = world
                 .Filter<PlayerInputData>()
                 .Inc<Movement>()
                 .Inc<HeroTag>()
                 .End();
 
-            var inputDataPool = systems.GetWorld().GetPool<PlayerInputData>();
-            var movementPool = systems.GetWorld().GetPool<Movement>();
+            var inputDataPool = world.GetPool<PlayerInputData>();
+            var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)
             {
@@ -61,7 +62,7 @@ namespace Gameplay.Character.Hero
                     .TransformDirection(new Vector3(_direction.x, 0f, _direction.y));
 
                 input.Direction = relativeDirection;
-                input.IsMoved =_isMoved;
+                input.IsMoved = _isMoved;
                 input.IsJump = _isJump;
                 input.IsRunning = _isRunning;
 

@@ -3,7 +3,7 @@ using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
 
-namespace Gameplay.Character
+namespace Gameplay.Character.Hero
 {
     public class HeroAnimationSystem : IEcsRunSystem
     {
@@ -11,16 +11,18 @@ namespace Gameplay.Character
         {
             var config = systems.GetShared<SharedData>().Config;
 
-            var entities = systems.GetWorld()
+            var world = systems.GetWorld();
+
+            var entities = world
                 .Filter<CharacterView>()
                 .Inc<PlayerInputData>()
                 .Inc<Movement>()
                 .Inc<HeroTag>()
                 .End();
 
-            var viewPool = systems.GetWorld().GetPool<CharacterView>();
-            var inputPool = systems.GetWorld().GetPool<PlayerInputData>();
-            var movementPool = systems.GetWorld().GetPool<Movement>();
+            var viewPool = world.GetPool<CharacterView>();
+            var inputPool = world.GetPool<PlayerInputData>();
+            var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)
             {
@@ -43,8 +45,7 @@ namespace Gameplay.Character
 
                 if (isJumping) 
                 {
-                    view.Animator.SetTrigger(ConstPrm.Animation.JUMP); 
-                    Util.Debug.Print($"isJumping {isJumping}");      
+                    view.Animator.SetTrigger(ConstPrm.Animation.JUMP);      
                 }        
             }
         }

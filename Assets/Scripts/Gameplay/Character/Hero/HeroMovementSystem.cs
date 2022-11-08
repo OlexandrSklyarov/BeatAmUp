@@ -3,9 +3,9 @@ using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
 
-namespace Gameplay.Character
+namespace Gameplay.Character.Hero
 {
-    public class MovementSystem : IEcsRunSystem
+    public class HeroMovementSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
