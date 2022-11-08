@@ -38,8 +38,6 @@ namespace Gameplay.Character
                 else
                 {
                     movement.Body.drag = config.PlayerData.MinDrag;
-                    movement.CurrentSpeed = 0f;
-                    movement.Acceleration = 0f;
                 }              
             }
         }
