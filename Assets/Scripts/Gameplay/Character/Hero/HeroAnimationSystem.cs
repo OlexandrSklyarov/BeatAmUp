@@ -1,11 +1,10 @@
-using Gameplay.Character.Hero;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
 
 namespace Gameplay.Character.Hero
 {
-    public class HeroAnimationSystem : IEcsRunSystem
+    public sealed class HeroAnimationSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -23,12 +22,14 @@ namespace Gameplay.Character.Hero
             var viewPool = world.GetPool<CharacterView>();
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
+            var heroAttackPool = world.GetPool<HeroHandleAttack>();
 
             foreach(var e in entities)
             {
                 ref var view = ref viewPool.Get(e);
                 ref var input = ref inputPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
+                ref var attack = ref heroAttackPool.Get(e);
 
                 var sqVelocity = movement.Body.velocity.sqrMagnitude;
                 var isWalk = movement.IsGround && sqVelocity > 0f;
@@ -46,8 +47,29 @@ namespace Gameplay.Character.Hero
                 if (isJumping) 
                 {
                     view.Animator.SetTrigger(ConstPrm.Animation.JUMP);      
-                }        
+                }   
+
+                if (movement.IsGround && input.IsKick || input.IsPunch) 
+                {
+                    var attackTrigger = GetAttackTrigger(attack.CurrentComboState);                    
+                    if (!string.IsNullOrEmpty(attackTrigger)) view.Animator.SetTrigger(attackTrigger);  
+                }    
             }
+        }
+
+
+        private string GetAttackTrigger(ComboState state)
+        {        
+            return state switch
+            {
+                ComboState.KICK_1 => ConstPrm.Animation.KICK_1,
+                ComboState.KICK_2 => ConstPrm.Animation.KICK_2,
+                ComboState.PUNCH_1 => ConstPrm.Animation.PUNCH_1,
+                ComboState.PUNCH_2 => ConstPrm.Animation.PUNCH_2,
+                ComboState.PUNCH_3 => ConstPrm.Animation.PUNCH_3,
+                ComboState.PUNCH_4 => ConstPrm.Animation.PUNCH_4,
+                _=> null
+            };
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gameplay.Character.Hero
 {
-    public class HeroMovementSystem : IEcsRunSystem
+    public sealed class HeroMovementSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -22,7 +22,7 @@ namespace Gameplay.Character.Hero
                 ref var movement = ref movementPool.Get(e);
 
                 if (movement.IsGround)
-                {
+                {                    
                     movement.Acceleration = Mathf.Lerp
                     (
                         movement.Acceleration, 

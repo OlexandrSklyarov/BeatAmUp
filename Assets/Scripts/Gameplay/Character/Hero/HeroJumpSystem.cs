@@ -1,11 +1,10 @@
-using Gameplay.Character.Hero;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
 
 namespace Gameplay.Character.Hero
 {
-    public class HeroJumpSystem : IEcsRunSystem
+    public sealed class HeroJumpSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

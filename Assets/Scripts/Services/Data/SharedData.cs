@@ -1,9 +1,10 @@
+using Gameplay.Input;
 
 namespace Services.Data
 {
     public class SharedData
     {
-        public InputServices InputServices;
+        public InputHandleProvider InputProvider;
         public GameConfig Config;
         public WorldData WorldData;
     }

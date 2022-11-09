@@ -1,47 +1,29 @@
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Gameplay.Character.Hero
 {
     public sealed class PlayerInputSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
-    {
-        private Vector2 _direction;
-        private bool _isJump;
-        private bool _isMoved;
-        private bool _isRunning;
-
+    {        
         public void Init(IEcsSystems systems) 
         {
-            var control = systems.GetShared<SharedData>().InputServices;
-
+            var control = systems.GetShared<SharedData>().InputProvider;
             control.Enable();
-
-            control.Player.Movement.performed += SetDirection;
-            control.Player.Movement.canceled += ReleaseDirection;
-            control.Player.Jump.started += ActiveJump;
-            control.Player.Running.started += ActiveRunning;
-            control.Player.Running.canceled += ActiveRunning;
         }
 
 
         public void Destroy(IEcsSystems systems)
         {
-            var control = systems.GetShared<SharedData>().InputServices;
-
-            control.Player.Movement.performed -= SetDirection;
-            control.Player.Movement.canceled -= ReleaseDirection;
-            control.Player.Jump.started -= ActiveJump;
-            control.Player.Running.started -= ActiveRunning;
-            control.Player.Running.canceled -= ActiveRunning;
-
-            control.Disable();
+            var control = systems.GetShared<SharedData>().InputProvider;
+            control.Disable();            
         }
         
 
         public void Run(IEcsSystems systems)
         {
+            var control = systems.GetShared<SharedData>().InputProvider;
+
             var world = systems.GetWorld();
 
             var entities = world
@@ -59,35 +41,20 @@ namespace Gameplay.Character.Hero
                 ref var movement = ref movementPool.Get(e);       
 
                 var relativeDirection = movement.Transform
-                    .TransformDirection(new Vector3(_direction.x, 0f, _direction.y));
+                    .TransformDirection(new Vector3(control.Direction.x, 0f, control.Direction.y));
 
-                input.Direction = relativeDirection;
-                input.IsMoved = _isMoved;
-                input.IsJump = _isJump;
-                input.IsRunning = _isRunning;
+                input.IsKick = control.IsKick;
+                input.IsPunch = control.IsPunch;
 
-                _isJump = false;
+                var isAttack = (input.IsKick || input.IsPunch);
+
+                input.Direction = (!isAttack) ? relativeDirection : Vector3.zero;
+                input.IsMoved = !isAttack && control.IsMoved;
+                input.IsJump = control.IsJump;
+                input.IsRunning = control.IsRunning;
+
+                control.ResetInput();                
             }
-        }
-
-
-        private void ActiveJump(InputAction.CallbackContext ctx) => _isJump = ctx.ReadValue<float>() > 0f;
-
-
-        private void ActiveRunning(InputAction.CallbackContext ctx) => _isRunning = ctx.ReadValue<float>() > 0f;
-        
-
-        private void SetDirection(InputAction.CallbackContext ctx) 
-        {
-            _direction = ctx.ReadValue<Vector2>();
-            _isMoved = true;
-        }
-
-
-        private void ReleaseDirection(InputAction.CallbackContext ctx)
-        {
-            _direction = ctx.ReadValue<Vector2>();
-            _isMoved = false;
-        }
+        }        
     }
 }

@@ -2,6 +2,7 @@ using Gameplay.Character;
 using Gameplay.Character.Hero;
 using Gameplay.Environment;
 using Gameplay.GameCamera;
+using Gameplay.Input;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;
@@ -25,7 +26,7 @@ namespace Gameplay
 
             var data = new SharedData()
             {
-                InputServices = new InputServices(),
+                InputProvider = new InputHandleProvider(new InputServices()),
                 Config = _gameConfig,
                 WorldData = _worldData
             };
@@ -53,6 +54,7 @@ namespace Gameplay
         {
             _updateSystems
                 .Add(new PlayerInputSystem())
+                .Add(new HeroAttackSystem())
                 .Add(new CheckGroundSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())

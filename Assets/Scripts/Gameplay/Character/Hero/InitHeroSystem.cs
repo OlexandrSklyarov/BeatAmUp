@@ -34,7 +34,12 @@ namespace Gameplay.Character.Hero
             var movementPool =  world.GetPool<Movement>();
             ref var movement = ref movementPool.Add(heroEntity);
             movement.Body = heroGO.GetComponent<Rigidbody>();
-            movement.Transform = heroGO.transform;            
+            movement.Transform = heroGO.transform;  
+
+            var heroHandleAttackPool = world.GetPool<HeroHandleAttack>();
+            ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);
+            heroAttack.ComboTimer = ConstPrm.Hero.DEFAULT_COMBO_TIMER;    
+            heroAttack.CurrentComboState = ComboState.NONE; 
             
             Util.Debug.Print($"hero init...");
         }

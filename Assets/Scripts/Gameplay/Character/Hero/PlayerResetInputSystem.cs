@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace Gameplay.Character.Hero
 {
-    public class PlayerResetInputSystem : IEcsRunSystem
+    public sealed class PlayerResetInputSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -18,6 +18,8 @@ namespace Gameplay.Character.Hero
             {
                 ref var input = ref inputDataPool.Get(e); 
                 input.IsJump = false;
+                input.IsKick = false;
+                input.IsPunch = false;
             }
         }
     }
