@@ -24,33 +24,32 @@ namespace Gameplay.Character.Hero
 
                 SetComboAttack(ref input, ref attack);
                 ResetComboState(ref attack);
+                CompletedAttackTime(ref attack);            
             }
         }
 
 
         private void SetComboAttack(ref PlayerInputData input, ref HeroHandleAttack attack)
         {
+            if (attack.IsAttackProcess) return;
+
             if (input.IsPunch)
             {
-                //if (IsLastAttack(ref attack)) return;
-
                 attack.CurrentComboState++;
                 attack.IsActiveCombo = true;
+                attack.IsAttackProcess = true;
+                attack.Duration = ConstPrm.Hero.ATTACK_TIMER;
                 attack.ComboTimer = ConstPrm.Hero.DEFAULT_COMBO_TIMER;
             }            
             else if (input.IsKick)
             {
                 attack.CurrentComboState = ComboState.KICK_1;
+                attack.IsActiveCombo = true;
+                attack.IsAttackProcess = true;
+                attack.Duration = ConstPrm.Hero.ATTACK_TIMER;
             }
         }
-
-
-        private bool IsLastAttack(ref HeroHandleAttack attack)
-        {
-            return attack.CurrentComboState == ComboState.PUNCH_4 ||
-                attack.CurrentComboState == ComboState.KICK_1 || 
-                attack.CurrentComboState == ComboState.KICK_2;
-        }
+        
 
 
         private void ResetComboState(ref HeroHandleAttack attack)
@@ -66,6 +65,20 @@ namespace Gameplay.Character.Hero
             attack.CurrentComboState = ComboState.NONE;
             attack.IsActiveCombo = false;
             attack.ComboTimer = ConstPrm.Hero.DEFAULT_COMBO_TIMER;
+        }
+
+
+        private void CompletedAttackTime(ref HeroHandleAttack attack)
+        {
+            if (!attack.IsAttackProcess) return;
+
+            if (attack.Duration > 0f)
+            {
+                attack.Duration -= Time.deltaTime;
+                return;
+            }
+
+            attack.IsAttackProcess = false;
         }
     }
 }

@@ -33,6 +33,7 @@ public static class ConstPrm
 
     public static class Hero
     {      
-        public const float DEFAULT_COMBO_TIMER = 0.4f;       
+        public const float DEFAULT_COMBO_TIMER = 0.4f; 
+        public const float ATTACK_TIMER = 0.25f;               
     }
 }

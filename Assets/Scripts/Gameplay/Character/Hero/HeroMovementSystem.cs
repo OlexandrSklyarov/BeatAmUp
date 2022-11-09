@@ -15,13 +15,15 @@ namespace Gameplay.Character.Hero
             var entities = world.Filter<PlayerInputData>().End();
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
+            var attackPool = world.GetPool<HeroHandleAttack>();
            
             foreach(var e in entities)
             {
                 ref var input = ref inputPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
+                ref var attack = ref attackPool.Get(e);
 
-                if (movement.IsGround)
+                if (movement.IsGround && attack.CurrentComboState == ComboState.NONE)
                 {                    
                     movement.Acceleration = Mathf.Lerp
                     (
