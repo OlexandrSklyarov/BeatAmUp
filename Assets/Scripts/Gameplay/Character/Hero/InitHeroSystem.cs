@@ -36,10 +36,11 @@ namespace Gameplay.Character.Hero
             movement.Body = heroGO.GetComponent<Rigidbody>();
             movement.Transform = heroGO.transform;  
 
-            var heroHandleAttackPool = world.GetPool<HeroHandleAttack>();
-            ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);
+            var heroHandleAttackPool = world.GetPool<HeroAttack>();
+            ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
             heroAttack.ComboTimer = ConstPrm.Hero.DEFAULT_COMBO_TIMER;    
-            heroAttack.CurrentComboState = ComboState.NONE; 
+            heroAttack.CurrentPunchState = PunchState.NONE; 
+            heroAttack.CurrentKickState = KickState.NONE; 
             
             Util.Debug.Print($"hero init...");
         }

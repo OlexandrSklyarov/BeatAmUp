@@ -21,6 +21,7 @@ MonoBehaviour:
     <MaxDrag>k__BackingField: 1.5
     <MinDrag>k__BackingField: 0.1
     <Acceleration>k__BackingField: 3
-    <CheckGroundDistance>k__BackingField: 0.2
+  <CharacterData>k__BackingField:
+    <CheckGroundDistance>k__BackingField: 0.25
   <CameraConfig>k__BackingField:
     <Offset>k__BackingField: {x: 0, y: 7, z: -11}

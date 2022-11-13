@@ -59,7 +59,7 @@ namespace Gameplay
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())
                 .Add(new HeroAnimationSystem())
-                .Add(new PlayerResetInputSystem())
+                .Add(new ResetPlayerInputDataSystem())
                 .Init();
             
             _fixedUpdateSystems

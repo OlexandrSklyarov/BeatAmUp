@@ -15,7 +15,7 @@ namespace Gameplay.Character.Hero
             var entities = world.Filter<PlayerInputData>().End();
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
-            var attackPool = world.GetPool<HeroHandleAttack>();
+            var attackPool = world.GetPool<HeroAttack>();
            
             foreach(var e in entities)
             {
@@ -23,7 +23,7 @@ namespace Gameplay.Character.Hero
                 ref var movement = ref movementPool.Get(e);
                 ref var attack = ref attackPool.Get(e);
 
-                if (movement.IsGround && attack.CurrentComboState == ComboState.NONE)
+                if (movement.IsGround && attack.CurrentPunchState == PunchState.NONE)
                 {                    
                     movement.Acceleration = Mathf.Lerp
                     (

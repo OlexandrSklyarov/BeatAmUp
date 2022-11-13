@@ -22,7 +22,7 @@ namespace Gameplay.Character.Hero
             var viewPool = world.GetPool<CharacterView>();
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
-            var heroAttackPool = world.GetPool<HeroHandleAttack>();
+            var heroAttackPool = world.GetPool<HeroAttack>();
 
             foreach(var e in entities)
             {
@@ -51,23 +51,31 @@ namespace Gameplay.Character.Hero
 
                 if (movement.IsGround && input.IsKick || input.IsPunch) 
                 {
-                    var attackTrigger = GetAttackTrigger(attack.CurrentComboState);                    
+                    var attackTrigger = GetAttackTrigger(ref attack);                    
                     if (!string.IsNullOrEmpty(attackTrigger)) view.Animator.SetTrigger(attackTrigger);  
                 }    
             }
         }
 
 
-        private string GetAttackTrigger(ComboState state)
+        private string GetAttackTrigger(ref HeroAttack attack)
         {        
-            return state switch
+            if (attack.CurrentPunchState != PunchState.NONE)
             {
-                ComboState.KICK_1 => ConstPrm.Animation.KICK_1,
-                ComboState.KICK_2 => ConstPrm.Animation.KICK_2,
-                ComboState.PUNCH_1 => ConstPrm.Animation.PUNCH_1,
-                ComboState.PUNCH_2 => ConstPrm.Animation.PUNCH_2,
-                ComboState.PUNCH_3 => ConstPrm.Animation.PUNCH_3,
-                ComboState.PUNCH_4 => ConstPrm.Animation.PUNCH_4,
+                return attack.CurrentPunchState switch
+                {
+                    PunchState.PUNCH_1 => ConstPrm.Animation.PUNCH_1,
+                    PunchState.PUNCH_2 => ConstPrm.Animation.PUNCH_2,
+                    PunchState.PUNCH_3 => ConstPrm.Animation.PUNCH_3,
+                    PunchState.PUNCH_4 => ConstPrm.Animation.PUNCH_4,
+                    _=> null
+                };
+            }
+
+            return attack.CurrentKickState switch
+            {
+                KickState.KICK_1 => ConstPrm.Animation.KICK_1,
+                KickState.KICK_2 => ConstPrm.Animation.KICK_2,                
                 _=> null
             };
         }
