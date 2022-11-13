@@ -6,7 +6,7 @@ namespace Gameplay.Character
 {
     public class CheckGroundSystem : IEcsRunSystem
     {
-        private RaycastHit[] _hits = new RaycastHit[1];
+        private readonly RaycastHit[] _hits = new RaycastHit[1];
         
 
         public void Run(IEcsSystems systems)
