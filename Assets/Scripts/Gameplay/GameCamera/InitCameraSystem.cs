@@ -1,3 +1,4 @@
+using Assets.Scripts.Gameplay.Mono.Hero;
 using Cinemachine;
 using Gameplay.Character;
 using Gameplay.Character.Hero;
@@ -13,15 +14,19 @@ namespace Gameplay.GameCamera
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var entities = world.Filter<HeroTag>().End();
+            var entities = world.
+                Filter<HeroTag>()
+                .Inc<Movement>()
+                .End();
+
             var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)
             {
-                var target = movementPool.Get(e).Transform;
+                var provider = movementPool.Get(e).Transform.GetComponent<HeroViewProvider>();
 
-                data.WorldData.GameVC.Follow = target;
-                data.WorldData.GameVC.LookAt = target;
+                data.WorldData.GameVC.LookAt = provider.CameraLookPoint;
+                data.WorldData.GameVC.Follow = provider.CameraFollowPoint;
 
                 var t = data.WorldData.GameVC.GetCinemachineComponent<CinemachineTransposer>();
                 t.m_FollowOffset = data.Config.CameraConfig.Offset;
