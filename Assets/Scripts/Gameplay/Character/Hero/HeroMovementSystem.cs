@@ -16,33 +16,43 @@ namespace Gameplay.Character.Hero
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
             var attackPool = world.GetPool<HeroAttack>();
-           
-            foreach(var e in entities)
+
+            foreach (var e in entities)
             {
                 ref var input = ref inputPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
                 ref var attack = ref attackPool.Get(e);
 
                 if (movement.IsGround)
-                {                    
+                {
                     movement.Acceleration = Mathf.Lerp
                     (
-                        movement.Acceleration, 
-                        (input.IsRunning) ? 1f : 0.5f, 
+                        movement.Acceleration,
+                        (input.IsRunning) ? 1f : 0.5f,
                         Time.deltaTime * ((input.IsRunning) ? config.PlayerData.RunAcceleration : config.PlayerData.Acceleration)
                     );
 
                     if (!input.IsMoved) movement.Acceleration = 0f;
 
                     movement.CurrentSpeed = config.PlayerData.Speed * movement.Acceleration;
-                    movement.Body.AddForce(input.Direction * movement.CurrentSpeed);
-                    movement.Body.drag = (input.IsMoved) ? config.PlayerData.MaxDrag : config.PlayerData.MinDrag;                    
+
+                    var velocity = GetHorizontalMovementVelocity(
+                            movement.Body.velocity, input.Direction, movement.CurrentSpeed);
+
+                    movement.Body.AddForce(velocity);
                 }
-                else
-                {
-                    movement.Body.drag = config.PlayerData.MinDrag;
-                }              
             }
+        }
+
+
+        private Vector3 GetHorizontalMovementVelocity(Vector3 curVelocity, Vector3 inputDir, float speed)
+        {
+            var targetVelocity = inputDir * speed;
+            targetVelocity.y = 0f;
+
+            curVelocity.y = 0f;
+
+            return Vector3.ClampMagnitude(targetVelocity - curVelocity, speed);
         }
     }
 }
