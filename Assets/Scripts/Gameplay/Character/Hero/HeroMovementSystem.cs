@@ -11,7 +11,10 @@ namespace Gameplay.Character.Hero
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var entities = world.Filter<PlayerInputData>().End();
+            var entities = world
+                .Filter<PlayerInputData>()
+                .Inc<CharacterGrounded>()
+                .End();
 
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
@@ -23,24 +26,21 @@ namespace Gameplay.Character.Hero
                 ref var movement = ref movementPool.Get(e);
                 ref var attack = ref attackPool.Get(e);
 
-                if (movement.IsGround)
-                {
-                    movement.Acceleration = Mathf.Lerp
-                    (
-                        movement.Acceleration,
-                        (input.IsRunning) ? 1f : 0.5f,
-                        Time.deltaTime * ((input.IsRunning) ? config.PlayerData.RunAcceleration : config.PlayerData.Acceleration)
-                    );
+                movement.Acceleration = Mathf.Lerp
+                (
+                    movement.Acceleration,
+                    (input.IsRunning) ? 1f : 0.5f,
+                    Time.deltaTime * ((input.IsRunning) ? config.PlayerData.RunAcceleration : config.PlayerData.Acceleration)
+                );
 
-                    if (!input.IsMoved) movement.Acceleration = 0f;
+                if (!input.IsMoved) movement.Acceleration = 0f;
 
-                    movement.CurrentSpeed = config.PlayerData.Speed * movement.Acceleration;
+                movement.CurrentSpeed = config.PlayerData.Speed * movement.Acceleration;
 
-                    var velocity = GetHorizontalMovementVelocity(
-                            movement.Body.velocity, input.Direction, movement.CurrentSpeed);
+                var velocity = GetHorizontalMovementVelocity(
+                        movement.Body.velocity, input.Direction, movement.CurrentSpeed);
 
-                    movement.Body.AddForce(velocity);
-                }
+                movement.Body.AddForce(velocity);
             }
         }
 

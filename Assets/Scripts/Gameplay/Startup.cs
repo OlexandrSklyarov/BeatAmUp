@@ -55,7 +55,6 @@ namespace Gameplay
             _updateSystems
                 .Add(new PlayerInputSystem())
                 .Add(new HeroAttackSystem())
-                .Add(new CheckGroundSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())
                 .Add(new HeroAnimationSystem())

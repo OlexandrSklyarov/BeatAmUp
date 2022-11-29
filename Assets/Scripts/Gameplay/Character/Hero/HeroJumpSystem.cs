@@ -14,6 +14,7 @@ namespace Gameplay.Character.Hero
             var entities = world.Filter<HeroTag>()
                 .Inc<PlayerInputData>()
                 .Inc<Movement>()
+                .Inc<CharacterGrounded>()
                 .End();
                 
             var inputPool = world.GetPool<PlayerInputData>();
@@ -24,7 +25,7 @@ namespace Gameplay.Character.Hero
                 ref var input = ref inputPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
 
-                if (movement.IsGround && input.IsJump)
+                if (input.IsJump)
                 {
                     var jumpForce = data.Config.PlayerData.JumpForce;
                     movement.Body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);

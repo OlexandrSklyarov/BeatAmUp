@@ -29,7 +29,7 @@ namespace Services.Data
     [Serializable]
     public sealed class CharacterConfig
     {
-        [field: SerializeField, Min(0.01f)] public float CheckGroundDistance { get; private set; } = 0.2f;
+        [field: SerializeField, Min(0.01f)] public LayerMask GroundLayer { get; private set; }
     }
 
 

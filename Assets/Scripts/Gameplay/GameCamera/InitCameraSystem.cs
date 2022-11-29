@@ -1,4 +1,4 @@
-using Assets.Scripts.Gameplay.Mono.Hero;
+using Gameplay.Mono.Hero;
 using Cinemachine;
 using Gameplay.Character;
 using Gameplay.Character.Hero;

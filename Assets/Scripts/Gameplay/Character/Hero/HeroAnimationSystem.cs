@@ -23,6 +23,7 @@ namespace Gameplay.Character.Hero
             var inputPool = world.GetPool<PlayerInputData>();
             var movementPool = world.GetPool<Movement>();
             var heroAttackPool = world.GetPool<HeroAttack>();
+            var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)
             {
@@ -31,17 +32,19 @@ namespace Gameplay.Character.Hero
                 ref var movement = ref movementPool.Get(e);
                 ref var attack = ref heroAttackPool.Get(e);
 
+                var isGrounded = groundedPool.Has(e);
+
                 var sqVelocity = movement.Body.velocity.sqrMagnitude;
-                var isWalk = movement.IsGround && sqVelocity > 0f;
-                var isFalling = !movement.IsGround && movement.Body.velocity.y < 0f;
-                var isJumping = movement.IsGround && input.IsJump;
+                var isWalk = isGrounded && sqVelocity > 0f;
+                var isFalling = !isGrounded && movement.Body.velocity.y < 0f;
+                var isJumping = isGrounded && input.IsJump;
 
                 var speedProgress = movement.CurrentSpeed / config.PlayerData.Speed;
                 speedProgress = Mathf.Min(speedProgress, sqVelocity);
 
                 view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
-                view.Animator.SetBool(ConstPrm.Animation.GROUND, movement.IsGround);
+                view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);
                 view.Animator.SetBool(ConstPrm.Animation.FALLING, isFalling);
 
                 if (isJumping) 
@@ -49,7 +52,7 @@ namespace Gameplay.Character.Hero
                     view.Animator.SetTrigger(ConstPrm.Animation.JUMP);      
                 }   
 
-                if (movement.IsGround && input.IsKick || input.IsPunch) 
+                if (isGrounded && input.IsKick || input.IsPunch) 
                 {
                     var attackTrigger = GetAttackTrigger(ref attack);                    
                     if (!string.IsNullOrEmpty(attackTrigger)) view.Animator.SetTrigger(attackTrigger);  
