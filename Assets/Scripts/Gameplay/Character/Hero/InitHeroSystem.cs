@@ -1,3 +1,4 @@
+using Gameplay.Mono.Character;
 using Gameplay.Mono.Hero;
 using Leopotam.EcsLite;
 using Services.Data;
@@ -37,10 +38,8 @@ namespace Gameplay.Character.Hero
             movement.Body = heroGO.GetComponent<Rigidbody>();
             movement.Transform = heroGO.transform; 
 
-            world.GetPool<CharacterGrounded>().Add(heroEntity);
-            var colView = movement.Transform.GetComponent<HeroViewProvider>().CollisionView; 
+            var colView = movement.Transform.GetComponent<CharacterCollisionView>(); 
             colView.Init(world, heroEntity, data.Config.CharacterData.GroundLayer);
-
 
             var heroHandleAttackPool = world.GetPool<HeroAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
