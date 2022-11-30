@@ -11,10 +11,10 @@ namespace Gameplay.Character.Hero
 
             var entities = world.Filter<HeroTag>()
                 .Inc<HeroAttack>()
-                .Inc<PlayerInputData>()
+                .Inc<CharacterCommand>()
                 .End();
 
-            var inputPool = world.GetPool<PlayerInputData>();
+            var inputPool = world.GetPool<CharacterCommand>();
             var heroAttackPool = world.GetPool<HeroAttack>();
 
             foreach (var e in entities)
@@ -28,7 +28,7 @@ namespace Gameplay.Character.Hero
         }
 
 
-        private void SetComboAttack(ref PlayerInputData input, ref HeroAttack attack)
+        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack)
         {
             if (attack.IsActiveCombo) return;
 

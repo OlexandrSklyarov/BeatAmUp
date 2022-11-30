@@ -12,11 +12,11 @@ namespace Gameplay.Character
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var entities = world.Filter<PlayerInputData>()
+            var entities = world.Filter<CharacterCommand>()
                 .Inc<CharacterView>()
                 .End();
                 
-            var inputPool = world.GetPool<PlayerInputData>();
+            var inputPool = world.GetPool<CharacterCommand>();
             var viewPool = world.GetPool<CharacterView>();
 
             foreach (var e in entities)

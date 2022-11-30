@@ -12,22 +12,21 @@ namespace Gameplay.Character.Hero
             var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
-                .Filter<PlayerInputData>()
+                .Filter<CharacterCommand>()
+                .Inc<Movement>()
                 .Inc<CharacterGrounded>()
                 .End();
 
-            var inputPool = world.GetPool<PlayerInputData>();
+            var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
-            var attackPool = world.GetPool<HeroAttack>();
 
             foreach (var e in entities)
             {
-                ref var input = ref inputPool.Get(e);
+                ref var com = ref commandPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
-                ref var attack = ref attackPool.Get(e);
                 
-                if ((input.IsMoved))
-                    ChangeAcceleration(ref movement, (input.IsRunning) ? 1f : 0.6f, config.PlayerData.AccelerationTime);
+                if ((com.IsMoved))
+                    ChangeAcceleration(ref movement, (com.IsRunning) ? 1f : 0.6f, config.PlayerData.AccelerationTime);
                 else
                     ChangeAcceleration(ref movement, 0f, config.PlayerData.AccelerationReleaseTime);
                            
@@ -36,7 +35,7 @@ namespace Gameplay.Character.Hero
                 var velocity = GetHorizontalMovementVelocity
                 (
                     movement.Body.velocity, 
-                    input.Direction, 
+                    com.Direction, 
                     movement.CurrentSpeed
                 );
 
@@ -47,7 +46,7 @@ namespace Gameplay.Character.Hero
 
         private void ChangeAcceleration(ref Movement movement, float targetAcceleration, float time)
         {
-            movement.Acceleration = Mathf.Lerp
+            movement.Acceleration = Mathf.MoveTowards
             (
                 movement.Acceleration,
                 targetAcceleration,

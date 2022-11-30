@@ -14,13 +14,13 @@ namespace Gameplay.Character.Hero
 
             var entities = world
                 .Filter<CharacterView>()
-                .Inc<PlayerInputData>()
+                .Inc<CharacterCommand>()
                 .Inc<Movement>()
                 .Inc<HeroTag>()
                 .End();
 
             var viewPool = world.GetPool<CharacterView>();
-            var inputPool = world.GetPool<PlayerInputData>();
+            var inputPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
             var heroAttackPool = world.GetPool<HeroAttack>();
             var groundedPool = world.GetPool<CharacterGrounded>();
@@ -40,8 +40,7 @@ namespace Gameplay.Character.Hero
                 var isJumping = isGrounded && input.IsJump;
 
                 var speedProgress = movement.CurrentSpeed / config.PlayerData.Speed;
-                speedProgress = Mathf.Min(speedProgress, sqVelocity);
-
+                
                 view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
                 view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);

@@ -27,12 +27,12 @@ namespace Gameplay.Character.Hero
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<PlayerInputData>()
+                .Filter<CharacterCommand>()
                 .Inc<Movement>()
                 .Inc<HeroTag>()
                 .End();
 
-            var inputDataPool = world.GetPool<PlayerInputData>();
+            var inputDataPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)

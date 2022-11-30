@@ -12,12 +12,12 @@ namespace Gameplay.Character.Hero
             var data = systems.GetShared<SharedData>();
 
             var entities = world.Filter<HeroTag>()
-                .Inc<PlayerInputData>()
+                .Inc<CharacterCommand>()
                 .Inc<Movement>()
                 .Inc<CharacterGrounded>()
                 .End();
                 
-            var inputPool = world.GetPool<PlayerInputData>();
+            var inputPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
 
             foreach (var e in entities)

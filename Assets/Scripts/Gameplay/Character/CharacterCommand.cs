@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Gameplay.Character.Hero
+namespace Gameplay.Character
 {
-    public struct PlayerInputData
+    public struct CharacterCommand
     {
         public Vector3 Direction;
         public bool IsJump;

@@ -25,7 +25,7 @@ namespace Gameplay.Character.Hero
             var heroTagPool =  world.GetPool<HeroTag>();
             heroTagPool.Add(heroEntity);
 
-            var inputDataPool =  world.GetPool<PlayerInputData>();
+            var inputDataPool =  world.GetPool<CharacterCommand>();
             inputDataPool.Add(heroEntity);
 
             var viewPool = world.GetPool<CharacterView>();

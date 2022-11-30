@@ -7,12 +7,12 @@ namespace Gameplay.Character.Hero
         public void Run(IEcsSystems systems)
         {
             var entities = systems.GetWorld()
-                .Filter<PlayerInputData>()
+                .Filter<CharacterCommand>()
                 .Inc<HeroAttack>()
                 .Inc<HeroTag>()
                 .End();
 
-            var inputDataPool = systems.GetWorld().GetPool<PlayerInputData>();
+            var inputDataPool = systems.GetWorld().GetPool<CharacterCommand>();
             var attackPool = systems.GetWorld().GetPool<HeroAttack>();
 
             foreach(var e in entities)
