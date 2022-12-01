@@ -33,6 +33,10 @@ public static class ConstPrm
 
     public static class Hero
     {      
-        public const float DEFAULT_COMBO_TIMER = 0.4f;               
+        public const float PUNCH_COMBO_TIME = 0.4f; 
+        public const float KICK_COMBO_TIME = 0.5f; 
+        public const float ACTION_TIME_MULTIPLIER = 1.5f; 
+        public const int MAX_KICK_ACTIONS = 3;           
+        public const int MAX_PUNCH_ACTIONS = 5;
     }
 }

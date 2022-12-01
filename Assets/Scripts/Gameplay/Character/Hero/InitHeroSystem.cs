@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Gameplay.Mono.Character;
 using Gameplay.Mono.Hero;
 using Leopotam.EcsLite;
@@ -43,9 +44,11 @@ namespace Gameplay.Character.Hero
 
             var heroHandleAttackPool = world.GetPool<HeroAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
-            heroAttack.ComboTimer = ConstPrm.Hero.DEFAULT_COMBO_TIMER;    
+            heroAttack.IsActiveAttack = false;    
             heroAttack.CurrentPunchState = PunchState.NONE; 
             heroAttack.CurrentKickState = KickState.NONE; 
+            heroAttack.KickQueue = new Queue<KickState>();
+            heroAttack.PunchQueue = new Queue<PunchState>();
             
             Util.Debug.Print($"hero init...");
         }
