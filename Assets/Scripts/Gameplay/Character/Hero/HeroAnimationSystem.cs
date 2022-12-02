@@ -78,6 +78,7 @@ namespace Gameplay.Character.Hero
             {
                 KickState.KICK_1 => ConstPrm.Animation.KICK_1,
                 KickState.KICK_2 => ConstPrm.Animation.KICK_2,                
+                KickState.KICK_3 => ConstPrm.Animation.KICK_3,                
                 _=> null
             };
         }

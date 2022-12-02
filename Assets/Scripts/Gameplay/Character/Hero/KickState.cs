@@ -4,6 +4,7 @@ namespace Gameplay.Character.Hero
     {
         NONE,
         KICK_1,
-        KICK_2
+        KICK_2,
+        KICK_3
     }
 }

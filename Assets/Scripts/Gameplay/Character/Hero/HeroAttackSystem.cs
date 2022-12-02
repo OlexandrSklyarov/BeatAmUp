@@ -12,6 +12,7 @@ namespace Gameplay.Character.Hero
             var entities = world.Filter<HeroTag>()
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
+                .Inc<CharacterGrounded>()
                 .End();
 
             var inputPool = world.GetPool<CharacterCommand>();
