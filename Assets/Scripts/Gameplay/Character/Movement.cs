@@ -8,5 +8,6 @@ namespace Gameplay.Character
         public Rigidbody Body;
         public float CurrentSpeed;
         public float Acceleration;
+        public float MaxVelocity;
     }
 }

@@ -39,7 +39,9 @@ namespace Gameplay.Character.Hero
                 var isFalling = !isGrounded && movement.Body.velocity.y < 0f;
                 var isJumping = isGrounded && input.IsJump;
 
-                var speedProgress = movement.CurrentSpeed / config.PlayerData.Speed;
+                var vel = movement.Body.velocity;
+                vel.y = 0f;
+                var speedProgress = vel.magnitude / movement.MaxVelocity;
                 
                 view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
