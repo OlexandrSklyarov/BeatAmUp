@@ -15,14 +15,16 @@ MonoBehaviour:
   <PlayerData>k__BackingField:
     <Prefab>k__BackingField: {fileID: 8385687399334179205, guid: 6dc06b531568228b4b0caf423f1b5029,
       type: 3}
-    <Speed>k__BackingField: 15
-    <RotateSpeed>k__BackingField: 800
-    <JumpForce>k__BackingField: 7
+    <Speed>k__BackingField: 4
+    <MaxVelocity>k__BackingField: 4
+    <RotateSpeed>k__BackingField: 400
+    <JumpForce>k__BackingField: 2
     <AccelerationTime>k__BackingField: 10
     <AccelerationReleaseTime>k__BackingField: 1.5
   <CharacterData>k__BackingField:
     <GroundLayer>k__BackingField:
       serializedVersion: 2
-      m_Bits: 0
+      m_Bits: 64
+    <CheckGroundRadius>k__BackingField: 0.2
   <CameraConfig>k__BackingField:
     <Offset>k__BackingField: {x: 0, y: 7, z: -11}

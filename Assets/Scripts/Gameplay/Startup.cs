@@ -1,3 +1,4 @@
+using BeatAmUp.Assets.Scripts.Gameplay.Character;
 using Gameplay.Character;
 using Gameplay.Character.Hero;
 using Gameplay.Environment;
@@ -62,8 +63,10 @@ namespace Gameplay
                 .Init();
             
             _fixedUpdateSystems
-                //.Add(new Gameplay.Test.TestFixedUpdateSystem())
-                .Add(new HeroMovementSystem())
+                .Add(new CheckGroundSystem())
+                .Add(new ApplyGravitySystem())
+                .Add(new HeroChangeHorizontalVelocitySystem())
+                .Add(new ApplyHorizontalVelocitySystem())
                 .Init();
         }
 

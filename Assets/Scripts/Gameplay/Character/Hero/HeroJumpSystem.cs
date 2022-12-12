@@ -28,7 +28,7 @@ namespace Gameplay.Character.Hero
                 if (input.IsJump)
                 {
                     var jumpForce = data.Config.PlayerData.JumpForce;
-                    movement.Body.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+                    movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
                 }
             }
         }

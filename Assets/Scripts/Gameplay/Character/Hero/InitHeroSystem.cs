@@ -36,12 +36,10 @@ namespace Gameplay.Character.Hero
 
             var movementPool =  world.GetPool<Movement>();
             ref var movement = ref movementPool.Add(heroEntity);
-            movement.Body = heroGO.GetComponent<Rigidbody>();
+            movement.characterController = heroGO.GetComponent<CharacterController>();
             movement.Transform = heroGO.transform; 
-
-            var dynamicFriction = heroGO.GetComponent<CapsuleCollider>().material.dynamicFriction;
-            var maxSpeed = data.Config.PlayerData.Speed;
-            movement.MaxVelocity = (1 - dynamicFriction) * maxSpeed;
+            
+            movement.MaxVelocity = data.Config.PlayerData.MaxVelocity;
 
             var colView = movement.Transform.GetComponent<CharacterCollisionView>(); 
             colView.Init(world, heroEntity, data.Config.CharacterData.GroundLayer);

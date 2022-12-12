@@ -1,4 +1,3 @@
-using Gameplay.Character.Hero;
 using Leopotam.EcsLite;
 using Services.Data;
 using UnityEngine;

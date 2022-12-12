@@ -8,7 +8,7 @@ namespace Services.Data
     {
         [field: SerializeField] public PlayerConfig PlayerData { get; private set; }
         [field: SerializeField] public CharacterConfig CharacterData { get; private set; }
-        [field: Space(10f), SerializeField] public CameraConfig CameraConfig { get; private set; }
+        [field: Space(10f), SerializeField] public CameraConfig CameraConfig { get; private set; }        
     }
 
 
@@ -16,9 +16,10 @@ namespace Services.Data
     public sealed class PlayerConfig
     {
         [field: SerializeField] public GameObject Prefab { get; private set; }
-        [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 2f;
-        [field: SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 360f;
-        [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 5f;
+        [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 15f;
+        [field: SerializeField, Min(1f)] public float MaxVelocity { get; private set; } = 15f;
+        [field: SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 400f;
+        [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 2f;
         [field: SerializeField, Min(0.01f)] public float AccelerationTime { get; private set; } = 50f;
         [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;
     }
@@ -27,7 +28,9 @@ namespace Services.Data
     [Serializable]
     public sealed class CharacterConfig
     {
-        [field: SerializeField, Min(0.01f)] public LayerMask GroundLayer { get; private set; }
+        [field: SerializeField] public LayerMask GroundLayer { get; private set; }
+        [field: SerializeField, Min(0.01f)] public float CheckGroundRadius { get; private set; } = 0.4f;
+
     }
 
 
