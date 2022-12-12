@@ -17,7 +17,7 @@ namespace Services.Data
     {
         [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 15f;
-        [field: SerializeField, Min(1f)] public float MaxVelocity { get; private set; } = 15f;
+        [field: SerializeField, Min(1f)] public float ChangeVelocityTime { get; private set; } = 15f;
         [field: SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 400f;
         [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 2f;
         [field: SerializeField, Min(0.01f)] public float AccelerationTime { get; private set; } = 50f;
@@ -30,7 +30,7 @@ namespace Services.Data
     {
         [field: SerializeField] public LayerMask GroundLayer { get; private set; }
         [field: SerializeField, Min(0.01f)] public float CheckGroundRadius { get; private set; } = 0.4f;
-
+        [field: SerializeField, Min(0.01f)] public float MinVerticalVelocity { get; private set; } = 2f;
     }
 
 

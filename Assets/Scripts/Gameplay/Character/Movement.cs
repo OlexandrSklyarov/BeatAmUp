@@ -6,11 +6,10 @@ namespace Gameplay.Character
     {
         public Transform Transform;
         public CharacterController characterController;
-        public Vector3 CurrentHorizontalVelocity;
+        public Vector3 HorizontalVelocity;
         public float VerticalVelocity;
         public float CurrentSpeed;
         public float Acceleration;
-        public float MaxVelocity;
 
     }
 }

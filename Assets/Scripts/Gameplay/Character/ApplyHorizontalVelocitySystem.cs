@@ -19,7 +19,7 @@ namespace BeatAmUp.Assets.Scripts.Gameplay.Character
             foreach (var e in entities)
             {
                 ref var movement = ref movementPool.Get(e);                
-                movement.characterController.Move(movement.CurrentHorizontalVelocity * Time.fixedDeltaTime);            
+                movement.characterController.Move(movement.HorizontalVelocity * Time.fixedDeltaTime);            
             }
         }
     }

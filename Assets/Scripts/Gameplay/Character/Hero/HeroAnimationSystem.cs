@@ -1,5 +1,6 @@
 using Leopotam.EcsLite;
 using Services.Data;
+using UnityEditor.VersionControl;
 
 namespace Gameplay.Character.Hero
 {
@@ -7,6 +8,8 @@ namespace Gameplay.Character.Hero
     {
         public void Run(IEcsSystems systems)
         {
+            var config = systems.GetShared<SharedData>().Config;
+
             var world = systems.GetWorld();
 
             var entities = world
@@ -31,14 +34,14 @@ namespace Gameplay.Character.Hero
 
                 var isGrounded = groundedPool.Has(e);
 
-                var sqVelocity = movement.CurrentHorizontalVelocity.sqrMagnitude;
+                var sqVelocity = movement.HorizontalVelocity.sqrMagnitude;
                 var isWalk = isGrounded && sqVelocity > 0f;
-                var isFalling = !isGrounded && movement.VerticalVelocity < 0f;
+                var isFalling = !isGrounded && movement.VerticalVelocity < config.CharacterData.MinVerticalVelocity;
                 var isJumping = isGrounded && input.IsJump;
 
-                var vel = movement.CurrentHorizontalVelocity;
+                var vel = movement.HorizontalVelocity;
                 vel.y = 0f;
-                var speedProgress = vel.magnitude / movement.MaxVelocity;
+                var speedProgress = vel.magnitude / config.PlayerData.Speed;
                 
                 view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);

@@ -72,7 +72,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8385687399334179204}
   - component: {fileID: 5184697731714896426}
-  - component: {fileID: 5995229194650263388}
   - component: {fileID: 3158387078282724943}
   m_Layer: 0
   m_Name: Character
@@ -113,18 +112,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <CameraLookPoint>k__BackingField: {fileID: 5171688011829451504}
   <CameraFollowPoint>k__BackingField: {fileID: 1145220035066498536}
---- !u!114 &5995229194650263388
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8385687399334179205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0adfdb6afc021517a8f819f58e0f37c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!143 &3158387078282724943
 CharacterController:
   m_ObjectHideFlags: 0

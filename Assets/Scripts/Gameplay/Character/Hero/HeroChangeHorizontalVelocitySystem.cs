@@ -33,12 +33,19 @@ namespace Gameplay.Character.Hero
                            
                 movement.CurrentSpeed = config.PlayerData.Speed * movement.Acceleration;
                 
-                movement.CurrentHorizontalVelocity = GetMovementVelocity
+                var newVelocity = GetMovementVelocity
                 ( 
                     movement.characterController.velocity,
                     command.Direction, 
                     movement.CurrentSpeed
                 );                
+
+                movement.HorizontalVelocity = Vector3.Lerp
+                (
+                    movement.HorizontalVelocity,
+                    newVelocity,
+                    Time.fixedDeltaTime * config.PlayerData.ChangeVelocityTime
+                );
             }
         }
        

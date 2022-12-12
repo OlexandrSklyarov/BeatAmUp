@@ -37,13 +37,8 @@ namespace Gameplay.Character.Hero
             var movementPool =  world.GetPool<Movement>();
             ref var movement = ref movementPool.Add(heroEntity);
             movement.characterController = heroGO.GetComponent<CharacterController>();
-            movement.Transform = heroGO.transform; 
-            
-            movement.MaxVelocity = data.Config.PlayerData.MaxVelocity;
-
-            var colView = movement.Transform.GetComponent<CharacterCollisionView>(); 
-            colView.Init(world, heroEntity, data.Config.CharacterData.GroundLayer);
-
+            movement.Transform = heroGO.transform;             
+           
             var heroHandleAttackPool = world.GetPool<HeroAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
             heroAttack.IsActiveAttack = false;    

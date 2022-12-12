@@ -1,4 +1,5 @@
 using Leopotam.EcsLite;
+using Services.Data;
 using UnityEngine;
 
 namespace Gameplay.Character
@@ -7,6 +8,7 @@ namespace Gameplay.Character
     {
         public void Run(IEcsSystems systems)
         {
+            var config = systems.GetShared<SharedData>().Config;
             var world = systems.GetWorld();
 
             var entities = world
@@ -24,13 +26,11 @@ namespace Gameplay.Character
 
                 if (isHasGrounded  && movement.VerticalVelocity < 0f)
                 {
-                    movement.VerticalVelocity = -2f;
+                    movement.VerticalVelocity = -config.CharacterData.MinVerticalVelocity;
                 }
                 
-                movement.VerticalVelocity += Physics.gravity.y * Time.fixedDeltaTime;                
-                
+                movement.VerticalVelocity += Physics.gravity.y * Time.fixedDeltaTime; 
                 movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.fixedDeltaTime);
-                Util.Debug.Print($"movement.VerticalVelocity {movement.VerticalVelocity}");
             }
         }
     }
