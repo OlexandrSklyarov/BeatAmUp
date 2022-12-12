@@ -17,7 +17,7 @@ MonoBehaviour:
       type: 3}
     <Speed>k__BackingField: 4
     <MaxVelocity>k__BackingField: 4
-    <RotateSpeed>k__BackingField: 400
+    <RotateSpeed>k__BackingField: 800
     <JumpForce>k__BackingField: 2
     <AccelerationTime>k__BackingField: 10
     <AccelerationReleaseTime>k__BackingField: 1.5
