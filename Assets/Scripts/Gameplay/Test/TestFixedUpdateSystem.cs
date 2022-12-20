@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using Leopotam.EcsLite;
 
-namespace Gameplay.Test
+namespace BT
 {
     public sealed class TestFixedUpdateSystem : IEcsRunSystem
     {

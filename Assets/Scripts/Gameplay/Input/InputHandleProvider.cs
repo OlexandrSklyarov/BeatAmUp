@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Gameplay.Input
+namespace BT
 {
     public class InputHandleProvider
     {

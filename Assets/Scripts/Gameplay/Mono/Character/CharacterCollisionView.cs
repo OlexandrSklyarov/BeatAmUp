@@ -1,8 +1,7 @@
 using UnityEngine;
 using Leopotam.EcsLite;
-using Gameplay.Character;
 
-namespace Gameplay.Mono.Character
+namespace BT
 {
     public class CharacterCollisionView : MonoBehaviour
     {

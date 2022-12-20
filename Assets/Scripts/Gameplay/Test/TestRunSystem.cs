@@ -1,6 +1,6 @@
 using Leopotam.EcsLite;
 
-namespace Gameplay.Test
+namespace BT
 {
     public sealed class TestRunSystem : IEcsRunSystem
     {

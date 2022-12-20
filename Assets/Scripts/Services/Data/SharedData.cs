@@ -1,6 +1,5 @@
-using Gameplay.Input;
 
-namespace Services.Data
+namespace BT
 {
     public class SharedData
     {

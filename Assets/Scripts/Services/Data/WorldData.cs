@@ -2,7 +2,7 @@ using System;
 using Cinemachine;
 using UnityEngine;
 
-namespace Services.Data
+namespace BT
 {
     [Serializable]
     public class WorldData

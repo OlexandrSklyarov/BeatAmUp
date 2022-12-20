@@ -1,6 +1,6 @@
 using Leopotam.EcsLite;
 
-namespace Gameplay.Environment
+namespace BT
 {
     public sealed class InitWorldSystem : IEcsInitSystem
     {

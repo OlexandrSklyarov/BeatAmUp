@@ -1,13 +1,9 @@
-using Gameplay.Mono.Hero;
 using Cinemachine;
-using Gameplay.Character;
-using Gameplay.Character.Hero;
 using Leopotam.EcsLite;
-using Services.Data;
 
-namespace Gameplay.GameCamera
+namespace BT
 {
-    public class InitCameraSystem : IEcsInitSystem
+    public sealed class InitCameraSystem : IEcsInitSystem
     {
         public void Init(IEcsSystems systems)
         {

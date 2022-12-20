@@ -1,14 +1,7 @@
-using BeatAmUp.Assets.Scripts.Gameplay.Character;
-using Gameplay.Character;
-using Gameplay.Character.Hero;
-using Gameplay.Environment;
-using Gameplay.GameCamera;
-using Gameplay.Input;
 using Leopotam.EcsLite;
-using Services.Data;
 using UnityEngine;
 
-namespace Gameplay
+namespace BT
 {
     public sealed class Startup : MonoBehaviour
     {        
@@ -66,6 +59,7 @@ namespace Gameplay
                 .Add(new CheckGroundSystem())
                 .Add(new ApplyGravitySystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
+                .Add(new StopMovementWhenAttackingSystem())
                 .Add(new ApplyHorizontalVelocitySystem())
                 .Init();
         }

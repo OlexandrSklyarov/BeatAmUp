@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Services.Data
+namespace BT
 {
     [CreateAssetMenu(menuName = "SO/GameConfig")]
     public class GameConfig : ScriptableObject

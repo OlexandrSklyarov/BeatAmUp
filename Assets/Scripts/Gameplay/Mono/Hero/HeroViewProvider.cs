@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gameplay.Mono.Hero
+namespace BT
 {
     public class HeroViewProvider : MonoBehaviour
     {
