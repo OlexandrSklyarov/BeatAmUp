@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   <PlayerData>k__BackingField:
-    <Prefab>k__BackingField: {fileID: 8385687399334179205, guid: 6dc06b531568228b4b0caf423f1b5029,
+    <Prefab>k__BackingField: {fileID: 8243997842999161195, guid: 8c9e65a1a4e3009969067d48003c4c92,
       type: 3}
     <Speed>k__BackingField: 7
     <ChangeVelocityTime>k__BackingField: 8
