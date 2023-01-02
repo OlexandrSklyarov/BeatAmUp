@@ -84,7 +84,9 @@ Material:
     m_Ints: []
     m_Floats:
     - _AlphaClip: 0
+    - _AlphaToMask: 0
     - _Blend: 0
+    - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
@@ -93,6 +95,7 @@ Material:
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
@@ -102,17 +105,18 @@ Material:
     - _Parallax: 0.005
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Smoothness: 0.5
+    - _Smoothness: 0.489
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _SrcBlendAlpha: 1
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 0.8962264, g: 0.83281416, b: 0.8719956, a: 1}
-    - _Color: {r: 0.8962264, g: 0.8328142, b: 0.8719956, a: 1}
-    - _EmissionColor: {r: 0.03773582, g: 0.02997232, b: 0.0040939813, a: 1}
+    - _BaseColor: {r: 0.58314675, g: 0.6612216, b: 0.68128246, a: 1}
+    - _Color: {r: 0.5831467, g: 0.6612216, b: 0.6812824, a: 1}
+    - _EmissionColor: {r: 0.060906794, g: 0.11262886, b: 0.1212492, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &4223243771793497661
