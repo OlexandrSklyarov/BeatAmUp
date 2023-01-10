@@ -23,8 +23,8 @@ namespace BT
                 input.IsPunch = false;
 
                 ref var attack = ref attackPool.Get(e);
-                attack.CurrentKickState = KickState.NONE;
-                attack.CurrentPunchState = PunchState.NONE;
+                attack.CurrentKick = null;
+                attack.CurrentPunch = null;
             }
         }
     }

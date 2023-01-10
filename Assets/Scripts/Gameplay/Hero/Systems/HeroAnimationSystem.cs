@@ -63,25 +63,10 @@ namespace BT
 
         private string GetAttackTrigger(ref HeroAttack attack)
         {        
-            if (attack.CurrentPunchState != PunchState.NONE)
-            {
-                return attack.CurrentPunchState switch
-                {
-                    PunchState.PUNCH_1 => ConstPrm.Animation.PUNCH_1,
-                    PunchState.PUNCH_2 => ConstPrm.Animation.PUNCH_2,
-                    PunchState.PUNCH_3 => ConstPrm.Animation.PUNCH_3,
-                    PunchState.PUNCH_4 => ConstPrm.Animation.PUNCH_4,
-                    _=> null
-                };
-            }
-
-            return attack.CurrentKickState switch
-            {
-                KickState.KICK_1 => ConstPrm.Animation.KICK_1,
-                KickState.KICK_2 => ConstPrm.Animation.KICK_2,                
-                KickState.KICK_3 => ConstPrm.Animation.KICK_3,                
-                _=> null
-            };
+            if (attack.CurrentPunch != null) return attack.CurrentPunch.StateName;
+            if (attack.CurrentKick != null)return attack.CurrentKick.StateName;
+            
+            return string.Empty;
         }
     }
 }

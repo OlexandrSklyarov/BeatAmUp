@@ -1,10 +1,9 @@
 namespace BT
 {
-    public enum KickState
+    public enum HeroKickState
     {
         NONE,
         KICK_1,
-        KICK_2,
-        KICK_3
+        KICK_FINISH
     }
 }

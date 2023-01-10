@@ -248,7 +248,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|aperkot 1
+      name: metarig|aperkot
       takeName: metarig|aperkot 1
       internalID: 4424341884642895107
       firstFrame: 0
@@ -480,7 +480,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|punch.2
+      name: metarig|punch_1
       takeName: metarig|punch.2
       internalID: 750389291906243426
       firstFrame: 0
@@ -509,7 +509,7 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: metarig|punch.3
+      name: metarig|punch_2
       takeName: metarig|punch.3
       internalID: -395769941852650699
       firstFrame: 0

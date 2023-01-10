@@ -17,14 +17,7 @@ namespace BT
             public const string GROUND = "GROUND";
             public const string JUMP = "JUMP";
             public const string FALLING = "FALLING";  
-            public const string VERTICAL_VELOCITY = "VERTICAL_VELOCITY";  
-            public const string KICK_1 = "KICK_1";  
-            public const string KICK_2 = "KICK_2";  
-            public const string KICK_3 = "KICK_3";  
-            public const string PUNCH_1 = "PUNCH_1"; 
-            public const string PUNCH_2 = "PUNCH_2"; 
-            public const string PUNCH_3 = "PUNCH_3"; 
-            public const string PUNCH_4 = "PUNCH_4"; 
+            public const string VERTICAL_VELOCITY = "VERTICAL_VELOCITY";              
         }
 
 
@@ -36,12 +29,8 @@ namespace BT
 
 
         public static class Hero
-        {      
-            public const float PUNCH_COMBO_TIME = 0.4f; 
-            public const float KICK_COMBO_TIME = 0.5f; 
-            public const float ACTION_TIME_MULTIPLIER = 1.5f; 
-            public const int MAX_KICK_ACTIONS = 4;           
-            public const int MAX_PUNCH_ACTIONS = 5;
+        {                
+            public const float ACTION_TIME_MULTIPLIER = 2f; 
         }
     }
 }
