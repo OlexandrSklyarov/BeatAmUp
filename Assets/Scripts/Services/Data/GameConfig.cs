@@ -18,8 +18,11 @@ namespace BT
         [field: SerializeField] public GameObject Prefab { get; private set; }
         [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 15f;
         [field: SerializeField, Min(1f)] public float ChangeVelocityTime { get; private set; } = 15f;
+        [field: SerializeField, Range(0.1f, 1f)] public float ChangeVelocityTimeMultiplier { get; private set; } = 0.65f;
         [field: SerializeField, Min(1f)] public float RotateSpeed { get; private set; } = 400f;
         [field: SerializeField, Min(1f)] public float JumpForce { get; private set; } = 2f;
+        [field: SerializeField, Range(0.1f, 1f)] public float AccelerationRun { get; private set; } = 1;
+        [field: SerializeField, Range(0.1f, 1f)] public float AccelerationWalk { get; private set; } = 0.6f;
         [field: SerializeField, Min(0.01f)] public float AccelerationTime { get; private set; } = 50f;
         [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;
         [field: Space(10f), SerializeField] public HeroAttackAnimationData[] PunchAnimationData { get; private set; }
