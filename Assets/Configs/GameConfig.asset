@@ -50,7 +50,7 @@ MonoBehaviour:
     - <StateName>k__BackingField: KICK_1
       _clip: {fileID: -4323760888525717484, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
         type: 3}
-      _animSpeed: 2
+      _animSpeed: 1.5
     <KickAnimationFinishData>k__BackingField:
     - <StateName>k__BackingField: KICK_FINISH
       _clip: {fileID: 7244992392561737592, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
