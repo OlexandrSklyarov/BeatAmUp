@@ -1,10 +1,11 @@
-using UnityEngine;
 using Leopotam.EcsLite;
 
 namespace BT
 {
     public sealed class StopMovementWhenAttackingSystem : IEcsRunSystem
     {
+        private const float MIN_VELOCITY_MULTIPLIER = 0.01f;
+
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
@@ -22,8 +23,12 @@ namespace BT
             {
                 ref var attack = ref attackPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
-
-                if (attack.IsActiveAttack) movement.HorizontalVelocity = Vector3.zero;
+                
+                if (attack.IsActiveAttack) 
+                {                    
+                    movement.HorizontalVelocity.x *= MIN_VELOCITY_MULTIPLIER;
+                    movement.HorizontalVelocity.z *= MIN_VELOCITY_MULTIPLIER;
+                }
             }
         }
     }

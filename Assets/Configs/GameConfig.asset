@@ -17,8 +17,11 @@ MonoBehaviour:
       type: 3}
     <Speed>k__BackingField: 7
     <ChangeVelocityTime>k__BackingField: 8
+    <ChangeVelocityTimeMultiplier>k__BackingField: 0.65
     <RotateSpeed>k__BackingField: 700
     <JumpForce>k__BackingField: 2
+    <AccelerationRun>k__BackingField: 1
+    <AccelerationWalk>k__BackingField: 0.6
     <AccelerationTime>k__BackingField: 10
     <AccelerationReleaseTime>k__BackingField: 1.5
     <PunchAnimationData>k__BackingField:
@@ -58,6 +61,6 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 64
     <CheckGroundRadius>k__BackingField: 0.35
-    <MinVerticalVelocity>k__BackingField: 2
+    <MinVerticalVelocity>k__BackingField: 3
   <CameraConfig>k__BackingField:
     <Offset>k__BackingField: {x: 0, y: 7, z: -11}
