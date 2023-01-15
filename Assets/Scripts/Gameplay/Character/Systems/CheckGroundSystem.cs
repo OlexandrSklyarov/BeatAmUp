@@ -21,7 +21,7 @@ namespace BT
             {
                 ref var movement = ref movementPool.Get(e);
 
-                var isGround = Physics.CheckSphere
+                var isGroundCollision = Physics.CheckSphere
                 (
                     movement.Transform.position + Vector3.up * config.CharacterData.CheckGroundRadius * 0.5f,
                     config.CharacterData.CheckGroundRadius,
@@ -30,12 +30,13 @@ namespace BT
 
                 var isHasGrounded = groundedPool.Has(e);
 
-                if (isGround)
+                if (isGroundCollision)
                 {
                     if (!isHasGrounded) 
                     {
                         Util.Debug.Print("Add ground");
                         groundedPool.Add(e);
+                        movement.IsJumpProcess = false;
                     }
                 }   
                 else

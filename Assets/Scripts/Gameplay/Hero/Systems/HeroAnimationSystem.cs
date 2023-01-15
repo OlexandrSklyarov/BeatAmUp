@@ -34,7 +34,7 @@ namespace BT
 
                 var sqVelocity = movement.HorizontalVelocity.sqrMagnitude;
                 var isWalk = isGrounded && sqVelocity > 0f;
-                var isFalling = !isGrounded && movement.VerticalVelocity < config.CharacterData.MinVerticalVelocity;                
+                var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
                 var isJumping = isGrounded && input.IsJump;
 
                 var vel = movement.HorizontalVelocity;

@@ -11,6 +11,6 @@ namespace BT
         public float CurrentSpeed;
         public float PreviousSpeed;
         public float Acceleration;
-
+        public bool IsJumpProcess;
     }
 }

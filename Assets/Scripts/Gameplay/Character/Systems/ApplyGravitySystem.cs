@@ -12,15 +12,17 @@ namespace BT
 
             var entities = world
                 .Filter<Movement>()
+                .Inc<CharacterCommand>()
                 .End();
 
             var movementPool = world.GetPool<Movement>();
+            var commandPool = world.GetPool<CharacterCommand>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)
             {
                 ref var movement = ref movementPool.Get(e);
-
+                ref var command = ref commandPool.Get(e);
                 var isHasGrounded = groundedPool.Has(e);
 
                 if (isHasGrounded  && movement.VerticalVelocity < 0f)
@@ -28,7 +30,10 @@ namespace BT
                     movement.VerticalVelocity = -config.CharacterData.MinVerticalVelocity;
                 }
                 
-                movement.VerticalVelocity += Physics.gravity.y * Time.fixedDeltaTime; 
+                var gravityMultiplier = (!isHasGrounded && movement.IsJumpProcess && !command.IsJump) ? 
+                    config.CharacterData.FallGravityMultiplier : 1f;
+
+                movement.VerticalVelocity += Physics.gravity.y * gravityMultiplier * Time.fixedDeltaTime; 
                 movement.VerticalVelocity = Mathf.Max(Physics.gravity.y, movement.VerticalVelocity);
                 
                 movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.fixedDeltaTime);

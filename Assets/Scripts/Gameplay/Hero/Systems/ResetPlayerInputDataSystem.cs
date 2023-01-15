@@ -6,21 +6,18 @@ namespace BT
     {
         public void Run(IEcsSystems systems)
         {
+            var control = systems.GetShared<SharedData>().InputProvider;
+
             var entities = systems.GetWorld()
-                .Filter<CharacterCommand>()
-                .Inc<HeroAttack>()
+                .Filter<HeroAttack>()
                 .Inc<HeroTag>()
                 .End();
 
-            var inputDataPool = systems.GetWorld().GetPool<CharacterCommand>();
             var attackPool = systems.GetWorld().GetPool<HeroAttack>();
 
             foreach(var e in entities)
             {
-                ref var input = ref inputDataPool.Get(e); 
-                input.IsJump = false;
-                input.IsKick = false;
-                input.IsPunch = false;
+                control.ResetInput();
 
                 ref var attack = ref attackPool.Get(e);
                 attack.CurrentKick = null;

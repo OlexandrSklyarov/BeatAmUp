@@ -28,6 +28,7 @@ namespace BT
                 {
                     var jumpForce = data.Config.PlayerData.JumpForce;
                     movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
+                    movement.IsJumpProcess = true;
                 }
             }
         }

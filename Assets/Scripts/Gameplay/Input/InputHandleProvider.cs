@@ -23,7 +23,7 @@ namespace BT
 
         public void ResetInput()
         {
-            IsJump = IsKick = IsPunch = false;            
+            IsKick = IsPunch = false;            
         }
 
 
@@ -34,6 +34,7 @@ namespace BT
             _control.Player.Movement.performed += SetDirection;
             _control.Player.Movement.canceled += ReleaseDirection;
             _control.Player.Jump.started += ActiveJump;
+            _control.Player.Jump.canceled += ActiveJump;
             _control.Player.Running.started += ActiveRunning;
             _control.Player.Running.canceled += ActiveRunning;
             _control.Player.Kick.started += ActiveKick;
@@ -46,6 +47,7 @@ namespace BT
             _control.Player.Movement.performed -= SetDirection;
             _control.Player.Movement.canceled -= ReleaseDirection;
             _control.Player.Jump.started -= ActiveJump;
+            _control.Player.Jump.canceled -= ActiveJump;
             _control.Player.Running.started -= ActiveRunning;
             _control.Player.Running.canceled -= ActiveRunning;
             _control.Player.Kick.started -= ActiveKick;
@@ -55,16 +57,16 @@ namespace BT
         }
 
 
-        private void ActivePunch(InputAction.CallbackContext ctx) => IsPunch = ctx.ReadValue<float>() > 0f;
+        private void ActivePunch(InputAction.CallbackContext ctx) => IsPunch = ctx.ReadValueAsButton();
     
 
-        private void ActiveKick(InputAction.CallbackContext ctx) => IsKick = ctx.ReadValue<float>() > 0f;
+        private void ActiveKick(InputAction.CallbackContext ctx) => IsKick = ctx.ReadValueAsButton();
 
 
-        private void ActiveJump(InputAction.CallbackContext ctx) => IsJump = ctx.ReadValue<float>() > 0f;
+        private void ActiveJump(InputAction.CallbackContext ctx) => IsJump = ctx.ReadValueAsButton();
 
 
-        private void ActiveRunning(InputAction.CallbackContext ctx) => IsRunning = ctx.ReadValue<float>() > 0f;
+        private void ActiveRunning(InputAction.CallbackContext ctx) => IsRunning = ctx.ReadValueAsButton();
         
 
         private void SetDirection(InputAction.CallbackContext ctx) 
