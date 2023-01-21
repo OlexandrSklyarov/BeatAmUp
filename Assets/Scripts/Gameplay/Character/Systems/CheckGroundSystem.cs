@@ -34,16 +34,13 @@ namespace BT
                 {
                     if (!isHasGrounded) 
                     {
-                        Util.Debug.Print("Add ground");
-                        groundedPool.Add(e);
-                        movement.IsJumpProcess = false;
+                        groundedPool.Add(e);                        
                     }
                 }   
                 else
                 {
                     if (isHasGrounded) 
                     {
-                        Util.Debug.Print("Del ground");
                         groundedPool.Del(e);
                     }
                 }  

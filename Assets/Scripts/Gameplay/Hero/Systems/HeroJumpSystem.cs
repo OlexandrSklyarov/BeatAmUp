@@ -16,15 +16,15 @@ namespace BT
                 .Inc<CharacterGrounded>()
                 .End();
                 
-            var inputPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
 
             foreach (var e in entities)
             {
-                ref var input = ref inputPool.Get(e);
+                ref var command = ref commandPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
 
-                if (input.IsJump)
+                if (!movement.IsJumpProcess && command.IsJump)
                 {
                     var jumpForce = data.Config.PlayerData.JumpForce;
                     movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);

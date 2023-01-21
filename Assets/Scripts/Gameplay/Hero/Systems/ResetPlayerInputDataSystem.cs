@@ -1,3 +1,4 @@
+using System.Data;
 using Leopotam.EcsLite;
 
 namespace BT
@@ -6,14 +7,20 @@ namespace BT
     {
         public void Run(IEcsSystems systems)
         {
+            var world  = systems.GetWorld();
             var control = systems.GetShared<SharedData>().InputProvider;
 
-            var entities = systems.GetWorld()
+            var entities = world
                 .Filter<HeroAttack>()
                 .Inc<HeroTag>()
+                .Inc<CharacterCommand>()
+                .Inc<Movement>()
                 .End();
 
-            var attackPool = systems.GetWorld().GetPool<HeroAttack>();
+            var attackPool = world.GetPool<HeroAttack>();
+            var commandPool = world.GetPool<CharacterCommand>();
+            var groundedPool = world.GetPool<CharacterGrounded>();
+            var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)
             {
@@ -22,6 +29,15 @@ namespace BT
                 ref var attack = ref attackPool.Get(e);
                 attack.CurrentKick = null;
                 attack.CurrentPunch = null;
+
+                ref var command = ref commandPool.Get(e);
+                ref var movement = ref movementPool.Get(e);  
+                var isHasGrounded = groundedPool.Has(e);
+
+                if (!command.IsJump && isHasGrounded) 
+                {
+                    movement.IsJumpProcess = false;
+                }
             }
         }
     }
