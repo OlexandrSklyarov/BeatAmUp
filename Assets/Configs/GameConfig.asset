@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   <PlayerData>k__BackingField:
-    <Prefab>k__BackingField: {fileID: 8243997842999161195, guid: 8c9e65a1a4e3009969067d48003c4c92,
+    <Prefab>k__BackingField: {fileID: 1153458557421773201, guid: 8c9e65a1a4e3009969067d48003c4c92,
       type: 3}
-    <Speed>k__BackingField: 7
+    <Speed>k__BackingField: 5.5
     <ChangeVelocityTime>k__BackingField: 8
     <ChangeVelocityTimeMultiplier>k__BackingField: 0.65
     <RotateSpeed>k__BackingField: 700
@@ -26,34 +26,34 @@ MonoBehaviour:
     <AccelerationReleaseTime>k__BackingField: 1.5
     <PunchAnimationData>k__BackingField:
     - <StateName>k__BackingField: PUNCH_1
-      _clip: {fileID: 750389291906243426, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: 5515038584425254757, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
-      _animSpeed: 2
+      _animSpeed: 1
     - <StateName>k__BackingField: PUNCH_2
-      _clip: {fileID: -395769941852650699, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: 7232228851601863464, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
-      _animSpeed: 2
+      _animSpeed: 1
     <PunchAnimationFinishData>k__BackingField:
     - <StateName>k__BackingField: PUNCH_FINISH_1
-      _clip: {fileID: -4891799862808197840, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: 7197861529635569335, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
       _animSpeed: 1
     - <StateName>k__BackingField: PUNCH_FINISH_2
-      _clip: {fileID: -5149128733256851613, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: -744097596311149743, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
       _animSpeed: 1
     - <StateName>k__BackingField: PUNCH_FINISH_3
-      _clip: {fileID: 4424341884642895107, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: -6932546222299759752, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
-      _animSpeed: 2
+      _animSpeed: 1
     <KickAnimationData>k__BackingField:
     - <StateName>k__BackingField: KICK_1
-      _clip: {fileID: -4323760888525717484, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: -7377207814516764978, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
-      _animSpeed: 1.5
+      _animSpeed: 1
     <KickAnimationFinishData>k__BackingField:
     - <StateName>k__BackingField: KICK_FINISH
-      _clip: {fileID: 7244992392561737592, guid: 9ae1ff95f1d17d4379c8efe644a8f17c,
+      _clip: {fileID: 7244992392561737592, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
       _animSpeed: 1
   <CharacterData>k__BackingField:
@@ -62,5 +62,6 @@ MonoBehaviour:
       m_Bits: 64
     <CheckGroundRadius>k__BackingField: 0.35
     <MinVerticalVelocity>k__BackingField: 3
+    <FallGravityMultiplier>k__BackingField: 2
   <CameraConfig>k__BackingField:
     <Offset>k__BackingField: {x: 0, y: 7, z: -11}
