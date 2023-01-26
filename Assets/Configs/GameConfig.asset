@@ -19,7 +19,7 @@ MonoBehaviour:
     <ChangeVelocityTime>k__BackingField: 8
     <ChangeVelocityTimeMultiplier>k__BackingField: 0.65
     <RotateSpeed>k__BackingField: 700
-    <JumpForce>k__BackingField: 2.5
+    <JumpForce>k__BackingField: 3
     <AccelerationRun>k__BackingField: 1
     <AccelerationWalk>k__BackingField: 0.6
     <AccelerationTime>k__BackingField: 10
