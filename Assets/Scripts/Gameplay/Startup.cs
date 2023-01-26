@@ -48,19 +48,19 @@ namespace BT
         private void AddSystems()
         {
             _updateSystems
+                .Add(new CheckGroundSystem())
+                .Add(new ApplyGravitySystem())
                 .Add(new PlayerInputSystem())
                 .Add(new HeroAttackSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())
                 .Add(new HeroAnimationSystem())
-                .Init();
-            
-            _fixedUpdateSystems
-                .Add(new CheckGroundSystem())
-                .Add(new ApplyGravitySystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
                 .Add(new StopMovementWhenAttackingSystem())
                 .Add(new ApplyHorizontalVelocitySystem())
+                .Init();
+            
+            _fixedUpdateSystems
                 .Init();
 
             _lateUpdateSystems
