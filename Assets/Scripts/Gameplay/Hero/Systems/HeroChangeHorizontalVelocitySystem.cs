@@ -51,7 +51,7 @@ namespace BT
             (
                 movement.HorizontalVelocity,
                 newVelocity,
-                Time.fixedDeltaTime * changeTime
+                Time.deltaTime * changeTime
             );
         }
 
@@ -92,7 +92,7 @@ namespace BT
             (
                 movement.Acceleration,
                 targetAcceleration,
-                Time.fixedDeltaTime * time
+                Time.deltaTime * time
             );
         }
 

@@ -33,10 +33,10 @@ namespace BT
                 var gravityMultiplier = (!isHasGrounded && movement.IsJumpProcess && !command.IsJump) ? 
                     config.CharacterData.FallGravityMultiplier : 1f;
 
-                movement.VerticalVelocity += Physics.gravity.y * gravityMultiplier * Time.fixedDeltaTime; 
+                movement.VerticalVelocity += Physics.gravity.y * gravityMultiplier * Time.deltaTime; 
                 movement.VerticalVelocity = Mathf.Max(Physics.gravity.y, movement.VerticalVelocity);
                 
-                movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.fixedDeltaTime);
+                movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
             }
         }
     }

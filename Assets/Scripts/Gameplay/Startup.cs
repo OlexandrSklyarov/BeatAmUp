@@ -54,10 +54,10 @@ namespace BT
                 .Add(new HeroAttackSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())
-                .Add(new HeroAnimationSystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
                 .Add(new StopMovementWhenAttackingSystem())
                 .Add(new ApplyHorizontalVelocitySystem())
+                .Add(new HeroAnimationSystem())
                 .Init();
             
             _fixedUpdateSystems
