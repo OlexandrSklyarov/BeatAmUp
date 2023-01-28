@@ -8,6 +8,7 @@ namespace BT
     {
         [field: SerializeField] public PlayerConfig PlayerData { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
+        [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
         [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }        
     }
 
@@ -24,11 +25,7 @@ namespace BT
         [field: SerializeField, Range(0.1f, 1f)] public float AccelerationRun { get; private set; } = 1;
         [field: SerializeField, Range(0.1f, 1f)] public float AccelerationWalk { get; private set; } = 0.6f;
         [field: SerializeField, Min(0.01f)] public float AccelerationTime { get; private set; } = 50f;
-        [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;
-        [field: Space(10f), SerializeField] public HeroAttackAnimationData[] PunchAnimationData { get; private set; }
-        [field: SerializeField] public HeroAttackAnimationData[] PunchAnimationFinishData { get; private set; }
-        [field: Space(10f), SerializeField] public HeroAttackAnimationData[] KickAnimationData { get; private set; }
-        [field: SerializeField] public HeroAttackAnimationData[] KickAnimationFinishData { get; private set; }
+        [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;        
     }
 
 

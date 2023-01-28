@@ -31,7 +31,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: KICK_FINISH
+    m_ConditionEvent: KICK_FINISH_1
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -8738221751121964040}
@@ -54,7 +54,7 @@ AnimatorState:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: KICK_FINISH
+  m_Name: KICK_FINISH_1
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -467,31 +467,31 @@ AnimatorStateMachine:
     m_Position: {x: 1060, y: 670, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3230176911297127281}
-    m_Position: {x: 1280, y: 120, z: 0}
+    m_Position: {x: 1400, y: 100, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -528297501724898193}
-    m_Position: {x: 1070, y: -60, z: 0}
+    m_Position: {x: 1060, y: -90, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 6284801636907480240}
-    m_Position: {x: -750, y: 280, z: 0}
+    m_Position: {x: -760, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1782016676466563460}
-    m_Position: {x: -750, y: -160, z: 0}
+    m_Position: {x: -760, y: -110, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7374464780079850580}
-    m_Position: {x: -750, y: -60, z: 0}
+    m_Position: {x: -760, y: -10, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -2219660046838960643}
-    m_Position: {x: -750, y: 30, z: 0}
+    m_Position: {x: -760, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -606036592232312786}
-    m_Position: {x: -750, y: 120, z: 0}
+    m_Position: {x: -760, y: 170, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8738221751121964040}
-    m_Position: {x: -750, y: 360, z: 0}
+    m_Position: {x: -760, y: 410, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1824233860081236663}
-    m_Position: {x: -750, y: 210, z: 0}
+    m_Position: {x: -760, y: 260, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7753073643765756348}
     m_Position: {x: -130, y: 760, z: 0}
@@ -500,10 +500,10 @@ AnimatorStateMachine:
     m_Position: {x: -130, y: 880, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5998812389503641029}
-    m_Position: {x: 230, y: 260, z: 0}
+    m_Position: {x: 140, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3331957865846993703}
-    m_Position: {x: 470, y: 250, z: 0}
+    m_Position: {x: 440, y: 350, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 88301749241136181}
     m_Position: {x: -130, y: 930, z: 0}
@@ -744,7 +744,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: KICK_FINISH
+  - m_Name: KICK_FINISH_1
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0

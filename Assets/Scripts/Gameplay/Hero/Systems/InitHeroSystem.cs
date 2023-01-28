@@ -49,10 +49,10 @@ namespace BT
             heroAttack.CurrentKick = null; 
             heroAttack.KickQueue = new Queue<HeroAttackAnimationData>();
             heroAttack.PunchQueue = new Queue<HeroAttackAnimationData>();
-            heroAttack.PunchData = data.Config.PlayerData.PunchAnimationData;
-            heroAttack.KickData = data.Config.PlayerData.KickAnimationData;
-            heroAttack.PunchFinishData = data.Config.PlayerData.PunchAnimationFinishData;
-            heroAttack.KickFinishData = data.Config.PlayerData.KickAnimationFinishData;
+            heroAttack.PunchData = data.Config.HeroAttackData.PunchAnimationData;
+            heroAttack.KickData = data.Config.HeroAttackData.KickAnimationData;
+            heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
+            heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
             
             Util.Debug.Print($"hero init...");
         }

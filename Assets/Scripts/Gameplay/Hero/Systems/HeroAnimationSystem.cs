@@ -68,7 +68,7 @@ namespace BT
         private string GetAttackTrigger(ref HeroAttack attack)
         {        
             if (attack.CurrentPunch != null) return attack.CurrentPunch.StateName;
-            if (attack.CurrentKick != null)return attack.CurrentKick.StateName;
+            if (attack.CurrentKick != null) return attack.CurrentKick.StateName;
             
             return string.Empty;
         }
