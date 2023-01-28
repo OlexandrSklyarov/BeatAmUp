@@ -14,6 +14,7 @@ namespace BT
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterGrounded>()
+                .Exc<CharacterSitDown>()
                 .End();
 
             var inputPool = world.GetPool<CharacterCommand>();

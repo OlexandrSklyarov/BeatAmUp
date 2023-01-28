@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,8 @@ namespace BT
         public bool IsRunning {get; private set;}
         public bool IsKick {get; private set;}
         public bool IsPunch {get; private set;}
-        
+        public bool IsSitting { get; private set; }
+
         private readonly InputServices _control;
 
 
@@ -39,6 +41,8 @@ namespace BT
             _control.Player.Running.canceled += ActiveRunning;
             _control.Player.Kick.started += ActiveKick;
             _control.Player.Punch.started += ActivePunch;
+            _control.Player.Sitting.started += ActiveSitting;
+            _control.Player.Sitting.canceled += ActiveSitting;
         }
 
 
@@ -52,9 +56,14 @@ namespace BT
             _control.Player.Running.canceled -= ActiveRunning;
             _control.Player.Kick.started -= ActiveKick;
             _control.Player.Punch.started -= ActivePunch;
+            _control.Player.Sitting.started -= ActiveSitting;
+            _control.Player.Sitting.canceled -= ActiveSitting;
 
             _control.Disable();
         }
+
+
+        private void ActiveSitting(InputAction.CallbackContext ctx) => IsSitting = ctx.ReadValueAsButton();
 
 
         private void ActivePunch(InputAction.CallbackContext ctx) => IsPunch = ctx.ReadValueAsButton();

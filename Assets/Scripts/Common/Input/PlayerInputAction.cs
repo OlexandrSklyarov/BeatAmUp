@@ -71,6 +71,15 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Sitting"",
+                    ""type"": ""Button"",
+                    ""id"": ""07d56511-6c13-48c4-bab9-ab4d13833d08"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -220,7 +229,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""f6934cbd-50bd-40f3-813e-27b668188fd5"",
-                    ""path"": ""<Keyboard>/ctrl"",
+                    ""path"": ""<Keyboard>/shift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -275,11 +284,33 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""18c23770-17a3-4d57-bde0-1b2da54ef247"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
                     ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Punch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""472749f3-aceb-49c4-9001-492050badba0"",
+                    ""path"": ""<Keyboard>/ctrl"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Sitting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f52c6a1a-071c-4062-aec7-51e2c46f44a3"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": ""Press"",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Sitting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -318,6 +349,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         m_Player_Running = m_Player.FindAction("Running", throwIfNotFound: true);
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
         m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
+        m_Player_Sitting = m_Player.FindAction("Sitting", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -382,6 +414,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Running;
     private readonly InputAction m_Player_Kick;
     private readonly InputAction m_Player_Punch;
+    private readonly InputAction m_Player_Sitting;
     public struct PlayerActions
     {
         private @InputServices m_Wrapper;
@@ -391,6 +424,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         public InputAction @Running => m_Wrapper.m_Player_Running;
         public InputAction @Kick => m_Wrapper.m_Player_Kick;
         public InputAction @Punch => m_Wrapper.m_Player_Punch;
+        public InputAction @Sitting => m_Wrapper.m_Player_Sitting;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -415,6 +449,9 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 @Punch.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
                 @Punch.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
                 @Punch.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPunch;
+                @Sitting.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
+                @Sitting.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
+                @Sitting.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -434,6 +471,9 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 @Punch.started += instance.OnPunch;
                 @Punch.performed += instance.OnPunch;
                 @Punch.canceled += instance.OnPunch;
+                @Sitting.started += instance.OnSitting;
+                @Sitting.performed += instance.OnSitting;
+                @Sitting.canceled += instance.OnSitting;
             }
         }
     }
@@ -463,5 +503,6 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         void OnRunning(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
+        void OnSitting(InputAction.CallbackContext context);
     }
 }

@@ -51,6 +51,7 @@ namespace BT
                 input.IsMoved = !isAttack && control.IsMoved;
                 input.IsJump = control.IsJump;
                 input.IsRunning = control.IsRunning;
+                input.IsSitting = control.IsSitting;
 
                 control.ResetInput();                
             }

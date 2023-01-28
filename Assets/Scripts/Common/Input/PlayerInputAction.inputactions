@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Sitting",
+                    "type": "Button",
+                    "id": "07d56511-6c13-48c4-bab9-ab4d13833d08",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -198,7 +207,7 @@
                 {
                     "name": "",
                     "id": "f6934cbd-50bd-40f3-813e-27b668188fd5",
-                    "path": "<Keyboard>/ctrl",
+                    "path": "<Keyboard>/shift",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard",
@@ -253,11 +262,33 @@
                 {
                     "name": "",
                     "id": "18c23770-17a3-4d57-bde0-1b2da54ef247",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/buttonNorth",
                     "interactions": "Press",
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Punch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "472749f3-aceb-49c4-9001-492050badba0",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Keyboard",
+                    "action": "Sitting",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f52c6a1a-071c-4062-aec7-51e2c46f44a3",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Gamepad",
+                    "action": "Sitting",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

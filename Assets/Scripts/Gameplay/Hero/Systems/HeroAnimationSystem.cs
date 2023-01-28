@@ -22,6 +22,7 @@ namespace BT
             var movementPool = world.GetPool<Movement>();
             var heroAttackPool = world.GetPool<HeroAttack>();
             var groundedPool = world.GetPool<CharacterGrounded>();
+            var sittingPool = world.GetPool<CharacterSitDown>();
 
             foreach(var e in entities)
             {
@@ -31,11 +32,13 @@ namespace BT
                 ref var attack = ref heroAttackPool.Get(e);
 
                 var isGrounded = groundedPool.Has(e);
+                var isSitting = sittingPool.Has(e);
 
                 var sqVelocity = movement.HorizontalVelocity.sqrMagnitude;
                 var isWalk = isGrounded && sqVelocity > 0f;
                 var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
                 var isJumping = isGrounded && movement.VerticalVelocity > 0f;
+           
 
                 var vel = movement.HorizontalVelocity;
                 vel.y = 0f;
@@ -44,6 +47,7 @@ namespace BT
                 view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
                 view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);
+                view.Animator.SetBool(ConstPrm.Animation.SITTING, isSitting);
                 view.Animator.SetBool(ConstPrm.Animation.FALLING, isFalling);
                 view.Animator.SetFloat(ConstPrm.Animation.VERTICAL_VELOCITY, movement.VerticalVelocity);
 

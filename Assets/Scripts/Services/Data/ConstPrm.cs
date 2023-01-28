@@ -15,9 +15,10 @@ namespace BT
             public const string FORWARD_PRM = "FORWARD";
             public const string SIDE_PRM = "SIDE";
             public const string GROUND = "GROUND";
+            public const string SITTING = "SITTING";
             public const string JUMP = "JUMP";
             public const string FALLING = "FALLING";  
-            public const string VERTICAL_VELOCITY = "VERTICAL_VELOCITY";              
+            public const string VERTICAL_VELOCITY = "VERTICAL_VELOCITY";
         }
 
 

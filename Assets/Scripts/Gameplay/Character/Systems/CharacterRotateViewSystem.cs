@@ -12,6 +12,7 @@ namespace BT
 
             var entities = world.Filter<CharacterCommand>()
                 .Inc<CharacterView>()
+                .Exc<CharacterSitDown>()
                 .End();
                 
             var inputPool = world.GetPool<CharacterCommand>();

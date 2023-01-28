@@ -16,7 +16,7 @@ namespace BT
             var movementPool = world.GetPool<Movement>();
 
             foreach (var e in entities)
-            {
+            {    
                 ref var movement = ref movementPool.Get(e);  
                 movement.characterController.Move(movement.HorizontalVelocity * Time.deltaTime);            
             }

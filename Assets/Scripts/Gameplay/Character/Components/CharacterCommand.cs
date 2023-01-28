@@ -10,5 +10,6 @@ namespace BT
         public bool IsMoved;
         public bool IsKick;
         public bool IsPunch;
+        public bool IsSitting;
     }
 }
