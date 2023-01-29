@@ -80,6 +80,24 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ToggleDebugConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""84670a81-28a0-461b-9e9d-6052ef024e9a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""EnterDebugConsole"",
+                    ""type"": ""Button"",
+                    ""id"": ""c22580dc-fff2-4a31-8795-0b4e3ad277e6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -313,6 +331,28 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                     ""action"": ""Sitting"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39e8dc9c-718b-4075-94d6-4fc410724a46"",
+                    ""path"": ""<Keyboard>/backquote"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""ToggleDebugConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b7789728-d54c-4190-a9c2-94ac8836f3e9"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""EnterDebugConsole"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -350,6 +390,8 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
         m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
         m_Player_Sitting = m_Player.FindAction("Sitting", throwIfNotFound: true);
+        m_Player_ToggleDebugConsole = m_Player.FindAction("ToggleDebugConsole", throwIfNotFound: true);
+        m_Player_EnterDebugConsole = m_Player.FindAction("EnterDebugConsole", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -415,6 +457,8 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Kick;
     private readonly InputAction m_Player_Punch;
     private readonly InputAction m_Player_Sitting;
+    private readonly InputAction m_Player_ToggleDebugConsole;
+    private readonly InputAction m_Player_EnterDebugConsole;
     public struct PlayerActions
     {
         private @InputServices m_Wrapper;
@@ -425,6 +469,8 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         public InputAction @Kick => m_Wrapper.m_Player_Kick;
         public InputAction @Punch => m_Wrapper.m_Player_Punch;
         public InputAction @Sitting => m_Wrapper.m_Player_Sitting;
+        public InputAction @ToggleDebugConsole => m_Wrapper.m_Player_ToggleDebugConsole;
+        public InputAction @EnterDebugConsole => m_Wrapper.m_Player_EnterDebugConsole;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -452,6 +498,12 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 @Sitting.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
                 @Sitting.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
                 @Sitting.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnSitting;
+                @ToggleDebugConsole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebugConsole;
+                @ToggleDebugConsole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebugConsole;
+                @ToggleDebugConsole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleDebugConsole;
+                @EnterDebugConsole.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugConsole;
+                @EnterDebugConsole.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugConsole;
+                @EnterDebugConsole.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEnterDebugConsole;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -474,6 +526,12 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 @Sitting.started += instance.OnSitting;
                 @Sitting.performed += instance.OnSitting;
                 @Sitting.canceled += instance.OnSitting;
+                @ToggleDebugConsole.started += instance.OnToggleDebugConsole;
+                @ToggleDebugConsole.performed += instance.OnToggleDebugConsole;
+                @ToggleDebugConsole.canceled += instance.OnToggleDebugConsole;
+                @EnterDebugConsole.started += instance.OnEnterDebugConsole;
+                @EnterDebugConsole.performed += instance.OnEnterDebugConsole;
+                @EnterDebugConsole.canceled += instance.OnEnterDebugConsole;
             }
         }
     }
@@ -504,5 +562,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
         void OnKick(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
         void OnSitting(InputAction.CallbackContext context);
+        void OnToggleDebugConsole(InputAction.CallbackContext context);
+        void OnEnterDebugConsole(InputAction.CallbackContext context);
     }
 }

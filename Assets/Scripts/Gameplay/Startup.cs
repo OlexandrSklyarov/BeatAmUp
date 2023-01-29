@@ -1,5 +1,7 @@
+using System;
 using Leopotam.EcsLite;
 using UnityEngine;
+using Util.Console;
 
 namespace BT
 {
@@ -15,12 +17,14 @@ namespace BT
         private IEcsSystems _lateUpdateSystems;
 
         private void Start()
-        {
+        {   
             _world = new EcsWorld();
+
+            var inputService = new InputServices();
 
             var data = new SharedData()
             {
-                InputProvider = new InputHandleProvider(new InputServices()),
+                InputProvider = new InputHandleProvider(inputService),
                 Config = _gameConfig,
                 WorldData = _worldData
             };
@@ -31,7 +35,18 @@ namespace BT
             _lateUpdateSystems = new EcsSystems(_world, data);
 
             AddInitSystems();
-            AddSystems();       
+            AddSystems();      
+            
+            TryCreateDebugConsole(inputService); 
+        }
+
+
+        private void TryCreateDebugConsole(InputServices inputService)
+        {
+            #if DEVELOPMENT_BUILD || UNITY_EDITOR
+            var console = new GameObject("[DEBUG_CONSOLE]").AddComponent<DebugConsole>();
+            console.Init(inputService);       
+            #endif
         }
 
 
