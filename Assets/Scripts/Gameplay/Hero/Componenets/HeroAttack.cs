@@ -12,6 +12,8 @@ namespace BT
         public HeroAttackAnimationData CurrentKick;
         public Queue<HeroAttackAnimationData> PunchQueue;
         public Queue<HeroAttackAnimationData> KickQueue;
+        public HitBox[] HitBoxes;
+        public IHitReceiver HitOwner;
         public int NextPunchState;
         public int NextKickState;
         public float AttackTimer;

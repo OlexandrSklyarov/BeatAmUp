@@ -1,10 +1,12 @@
+using System;
+using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
 using Util;
 
 namespace BT
 {
-    public sealed class HeroAttackSystem : IEcsRunSystem
+    public sealed class HeroComboAttackSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -25,7 +27,7 @@ namespace BT
                 ref var input = ref inputPool.Get(e);
                 ref var attack = ref heroAttackPool.Get(e);
 
-                SetComboAttack(ref input, ref attack);
+                SetComboAttack(ref input, ref attack, world);
                 AddActionQueue(ref input, ref attack);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
@@ -33,7 +35,7 @@ namespace BT
         }
         
 
-        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack)
+        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  EcsWorld world)
         {
             if (attack.IsActiveAttack) return;
 
@@ -49,6 +51,8 @@ namespace BT
                 attack.CurrentKick = null;
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
+
+                CreateHitEvent(attack.HitBoxes, attack.HitOwner, attack.CurrentPunch, world);
             }            
             else if (input.IsKick)
             {
@@ -60,6 +64,8 @@ namespace BT
                 attack.CurrentPunch = null;
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
+
+                CreateHitEvent(attack.HitBoxes, attack.HitOwner, attack.CurrentKick, world);
             }
         }
 
@@ -83,7 +89,6 @@ namespace BT
             }           
         }
         
-
 
         private void ResetComboState(ref HeroAttack attack)
         {     
@@ -112,6 +117,24 @@ namespace BT
             {
                 attack.ResetNextActionTimer -= Time.deltaTime;
             }
+        }
+
+
+        private void CreateHitEvent(HitBox[] hitBoxes, IHitReceiver responder, HeroAttackAnimationData attackData, EcsWorld world)
+        {
+            var hitBox = hitBoxes.FirstOrDefault(h => h.Type == attackData.HitType);
+
+            if (hitBox == null) return;
+
+            var hitEntity = world.NewEntity();
+            var hitPool = world.GetPool<HitDelayAction>(); 
+            ref var hit = ref hitPool.Add(hitEntity);
+
+            hit.Responder = responder;
+            hit.Collider = hitBox.Collider;
+            hit.Type = hitBox.Type;
+            hit.Damage = 1;
+            hit.Timer = attackData.AttackTime * 0.65f;
         }
     }
 }

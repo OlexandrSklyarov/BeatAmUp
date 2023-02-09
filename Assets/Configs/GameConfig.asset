@@ -31,6 +31,9 @@ MonoBehaviour:
     <CheckGroundRadius>k__BackingField: 0.35
     <MinVerticalVelocity>k__BackingField: 3
     <FallGravityMultiplier>k__BackingField: 2
+    <HitLayerMask>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 128
   <HeroAttackData>k__BackingField: {fileID: 11400000, guid: 51785c64be06d7ac7b2b10f52de49737,
     type: 2}
   <CameraConfig>k__BackingField:

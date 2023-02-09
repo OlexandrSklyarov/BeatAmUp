@@ -1,4 +1,3 @@
-using System.Data;
 using Leopotam.EcsLite;
 
 namespace BT

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var heroGO = Object.Instantiate
+            var heroGO = UnityEngine.Object.Instantiate
             (
                 data.Config.PlayerData.Prefab, 
                 data.WorldData.HeroSpawnPoint.position, 
@@ -54,6 +55,12 @@ namespace BT
             heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
             heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
             
+            var hitBoxes = heroGO.GetComponentsInChildren<HitBox>();
+            Array.ForEach(hitBoxes, h => h.Init());
+            heroAttack.HitBoxes = hitBoxes;
+
+            heroAttack.HitOwner = heroGO.GetComponent<IHitReceiver>();
+
             Util.Debug.Print($"hero init...");
         }
     }
