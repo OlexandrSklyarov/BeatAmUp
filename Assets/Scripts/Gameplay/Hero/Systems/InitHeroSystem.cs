@@ -21,27 +21,28 @@ namespace BT
 
             var heroEntity = world.NewEntity();
 
-            
+            //hero
             var heroTagPool =  world.GetPool<HeroTag>();
             heroTagPool.Add(heroEntity);
 
-
+            //input
             var inputDataPool =  world.GetPool<CharacterCommand>();
             inputDataPool.Add(heroEntity);
 
-
+            //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(heroEntity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
-            view.ViewTransform = heroGO.transform.GetChild(0).transform;  
+            view.ViewTransform = heroGO.transform.GetChild(0).transform; 
+            view.HitView = heroGO.GetComponent<IHitReceiver>();
 
-
+            //movement
             var movementPool =  world.GetPool<Movement>();
             ref var movement = ref movementPool.Add(heroEntity);
             movement.characterController = heroGO.GetComponent<CharacterController>();
             movement.Transform = heroGO.transform;   
 
-           
+           //attack
             var heroHandleAttackPool = world.GetPool<HeroAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
             heroAttack.IsActiveAttack = false;    
@@ -54,12 +55,17 @@ namespace BT
             heroAttack.KickData = data.Config.HeroAttackData.KickAnimationData;
             heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
             heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
+            heroAttack.LastTargetHP = 100;
             
             var hitBoxes = heroGO.GetComponentsInChildren<HitBox>();
             Array.ForEach(hitBoxes, h => h.Init());
             heroAttack.HitBoxes = hitBoxes;
 
-            heroAttack.HitOwner = heroGO.GetComponent<IHitReceiver>();
+            //HP
+            var healthPool = world.GetPool<Health>();
+            ref var heroHealth = ref healthPool.Add(heroEntity); 
+            heroHealth.HP = data.Config.PlayerData.StartHP;
+            heroHealth.MaxHP = data.Config.PlayerData.StartHP;            
 
             Util.Debug.Print($"hero init...");
         }

@@ -16,18 +16,21 @@ namespace BT
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterGrounded>()
+                .Inc<CharacterView>()
                 .Exc<CharacterSitDown>()
                 .End();
 
             var inputPool = world.GetPool<CharacterCommand>();
             var heroAttackPool = world.GetPool<HeroAttack>();
+            var viewPool = world.GetPool<CharacterView>();
 
             foreach (var e in entities)
             {
                 ref var input = ref inputPool.Get(e);
                 ref var attack = ref heroAttackPool.Get(e);
+                ref var view = ref viewPool.Get(e);
 
-                SetComboAttack(ref input, ref attack, world);
+                SetComboAttack(ref input, ref attack, ref view, world);
                 AddActionQueue(ref input, ref attack);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
@@ -35,9 +38,17 @@ namespace BT
         }
         
 
-        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  EcsWorld world)
+        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  ref CharacterView view, EcsWorld world)
         {
             if (attack.IsActiveAttack) return;
+
+            attack.CurrentDamage = 10;
+            
+            if(attack.LastTargetHP < 20)
+            {
+                attack.IsNeedFinishAttack = true;
+                attack.CurrentDamage = 20;
+            }
 
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;   
 
@@ -52,7 +63,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(attack.HitBoxes, attack.HitOwner, attack.CurrentPunch, world);
+                CreateHitEvent(attack.HitBoxes, view.HitView, attack.CurrentPunch, world, attack.CurrentDamage);
             }            
             else if (input.IsKick)
             {
@@ -65,8 +76,10 @@ namespace BT
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(attack.HitBoxes, attack.HitOwner, attack.CurrentKick, world);
+                CreateHitEvent(attack.HitBoxes, view.HitView, attack.CurrentKick, world, attack.CurrentDamage);
             }
+
+            attack.LastTargetHP = 100;
         }
 
 
@@ -97,6 +110,7 @@ namespace BT
                 attack.CurrentKick = null;
                 attack.CurrentPunch = null;
                 attack.IsActiveAttack = false;
+                attack.IsNeedFinishAttack = false;
                 attack.AttackTimer = 0f;                
             }
             else
@@ -120,7 +134,7 @@ namespace BT
         }
 
 
-        private void CreateHitEvent(HitBox[] hitBoxes, IHitReceiver responder, HeroAttackAnimationData attackData, EcsWorld world)
+        private void CreateHitEvent(HitBox[] hitBoxes, IHitReceiver responder, HeroAttackAnimationData attackData, EcsWorld world, int damage)
         {
             var hitBox = hitBoxes.FirstOrDefault(h => h.Type == attackData.HitType);
 
@@ -133,7 +147,7 @@ namespace BT
             hit.Responder = responder;
             hit.Collider = hitBox.Collider;
             hit.Type = hitBox.Type;
-            hit.Damage = 1;
+            hit.Damage = damage;
             hit.Timer = attackData.AttackTime * 0.65f;
         }
     }

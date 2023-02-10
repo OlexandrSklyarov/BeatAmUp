@@ -56,6 +56,7 @@ namespace BT
                 .Add(new InitWorldSystem())
                 .Add(new InitHeroSystem())
                 .Add(new InitCameraSystem())
+                .Add(new InitTestPunchBoxSystem())
                 .Init();
         }
 
@@ -75,6 +76,7 @@ namespace BT
                 .Add(new HeroChangeHorizontalVelocitySystem())
                 .Add(new StopMovementWhenAttackingSystem())
                 .Add(new ApplyHorizontalVelocitySystem())
+                .Add(new TakeDamageSystem())
                 .Add(new HeroAnimationSystem())
                 .Init();
             

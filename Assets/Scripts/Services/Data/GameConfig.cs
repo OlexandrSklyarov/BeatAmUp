@@ -25,7 +25,8 @@ namespace BT
         [field: SerializeField, Range(0.1f, 1f)] public float AccelerationRun { get; private set; } = 1;
         [field: SerializeField, Range(0.1f, 1f)] public float AccelerationWalk { get; private set; } = 0.6f;
         [field: SerializeField, Min(0.01f)] public float AccelerationTime { get; private set; } = 50f;
-        [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;        
+        [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 5f;
+        [field: Space(10f), SerializeField] public int StartHP { get; private set; } = 100;
     }
 
 

@@ -13,12 +13,13 @@ namespace BT
         public Queue<HeroAttackAnimationData> PunchQueue;
         public Queue<HeroAttackAnimationData> KickQueue;
         public HitBox[] HitBoxes;
-        public IHitReceiver HitOwner;
         public int NextPunchState;
         public int NextKickState;
         public float AttackTimer;
         public float ResetNextActionTimer;
         public bool IsActiveAttack;
         public bool IsNeedFinishAttack;
+        public int LastTargetHP;
+        public int CurrentDamage;
     }
 }
