@@ -63,8 +63,7 @@ namespace BT
 
         private void AddSystems()
         {
-            _updateSystems                
-                //Hero
+            _updateSystems  
                 .Add(new CheckGroundSystem())
                 .Add(new ApplyGravitySystem())
                 .Add(new PlayerInputSystem())
