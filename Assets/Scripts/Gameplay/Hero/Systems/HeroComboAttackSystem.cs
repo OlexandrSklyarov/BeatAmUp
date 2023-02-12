@@ -89,6 +89,8 @@ namespace BT
 
             if (input.IsPunch && attack.PunchQueue.Count < attack.PunchData.Length - 1)
             {
+                attack.NextKickState = 0;
+
                 attack.NextPunchState++;
                 attack.NextPunchState %= attack.PunchData.Length;
                 attack.PunchQueue.Enqueue(attack.PunchData[attack.NextPunchState]);
@@ -96,6 +98,8 @@ namespace BT
 
             if (input.IsKick && attack.KickQueue.Count < attack.KickData.Length - 1)
             {
+                attack.NextPunchState = 0;
+                
                 attack.NextKickState++;
                 attack.NextKickState %= attack.KickData.Length;
                 attack.KickQueue.Enqueue(attack.KickData[attack.NextKickState]);
