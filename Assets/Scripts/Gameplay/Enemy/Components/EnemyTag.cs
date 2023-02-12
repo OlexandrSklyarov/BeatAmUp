@@ -1,7 +1,7 @@
 
 namespace BT
 {
-    public interface IHitReceiver
+    public struct EnemyTag
     {        
     }
 }

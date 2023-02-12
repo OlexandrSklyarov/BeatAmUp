@@ -55,7 +55,7 @@ namespace BT
             var responder = hitAction.Responder;
 
             var hpPool = world.GetPool<Health>();
-            var viewPool = world.GetPool<CharacterView>();
+            var hitInteractionPool = world.GetPool<HitInteraction>();
             var attackPool = world.GetPool<HeroAttack>();
 
             if (c.TryGetComponent(out IHitReceiver receiver) && receiver != responder)
@@ -63,19 +63,19 @@ namespace BT
                 foreach (var e in hpViewFilter)
                 {
                     ref var hpComp = ref hpPool.Get(e);
-                    ref var viewComp = ref viewPool.Get(e);
+                    ref var hitIntComp = ref hitInteractionPool.Get(e);
 
-                    if (viewComp.HitView == receiver)
+                    if (hitIntComp.HitView == receiver)
                     {
                         CreateTakeDamageEvent(world, e, ref hitAction);                        
 
                         foreach (var e2 in hpViewFilter)
                         {
-                            ref var viewComp2 = ref viewPool.Get(e2);
+                            ref var hitIntComp2 = ref hitInteractionPool.Get(e2);
 
-                            if (viewComp.HitView == viewComp2.HitView) continue;
+                            if (hitIntComp.HitView == hitIntComp2.HitView) continue;
 
-                            if (viewComp2.HitView == responder)
+                            if (hitIntComp2.HitView == responder)
                             {                                
                                 if (attackPool.Has(e2))
                                 {

@@ -34,7 +34,13 @@ namespace BT
             ref var view = ref viewPool.Add(heroEntity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
             view.ViewTransform = heroGO.transform.GetChild(0).transform; 
-            view.HitView = heroGO.GetComponent<IHitReceiver>();
+          
+            //hit interaction
+            var hitPool = world.GetPool<HitInteraction>();
+            ref var hit = ref hitPool.Add(heroEntity);
+            hit.HitView = heroGO.GetComponent<IHitReceiver>();
+            hit.HitBoxes = heroGO.GetComponentsInChildren<HitBox>();
+            Array.ForEach(hit.HitBoxes, h => h.Init());
 
             //movement
             var movementPool =  world.GetPool<Movement>();
@@ -55,11 +61,7 @@ namespace BT
             heroAttack.KickData = data.Config.HeroAttackData.KickAnimationData;
             heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
             heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
-            heroAttack.LastTargetHP = 100;
-            
-            var hitBoxes = heroGO.GetComponentsInChildren<HitBox>();
-            Array.ForEach(hitBoxes, h => h.Init());
-            heroAttack.HitBoxes = hitBoxes;
+            heroAttack.LastTargetHP = 100;  
 
             //HP
             var healthPool = world.GetPool<Health>();

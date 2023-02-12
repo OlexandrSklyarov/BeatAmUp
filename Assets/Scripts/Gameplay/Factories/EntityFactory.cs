@@ -8,6 +8,7 @@ namespace Gameplay.Factories
     public class EntityFactory<T> : IFactoryStorage<T> where T : MonoBehaviour
     {
         private readonly Pool<T> _pool;
+        
 
         public EntityFactory(T prefab, int poolSize)
         {
@@ -24,6 +25,6 @@ namespace Gameplay.Factories
         }
         
         
-        public void ReturnToStorage(T item) => _pool.ReturnToPool(item);
+        void IFactoryStorage<T>.ReturnToStorage(T item) => _pool.ReturnToPool(item);
     }
 }

@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -17,21 +16,21 @@ namespace BT
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterGrounded>()
-                .Inc<CharacterView>()
+                .Inc<HitInteraction>()
                 .Exc<CharacterSitDown>()
                 .End();
 
             var inputPool = world.GetPool<CharacterCommand>();
             var heroAttackPool = world.GetPool<HeroAttack>();
-            var viewPool = world.GetPool<CharacterView>();
+            var hitInteractionPool = world.GetPool<HitInteraction>();
 
             foreach (var e in entities)
             {
                 ref var input = ref inputPool.Get(e);
                 ref var attack = ref heroAttackPool.Get(e);
-                ref var view = ref viewPool.Get(e);
+                ref var hitInteraction = ref hitInteractionPool.Get(e);
 
-                SetComboAttack(ref input, ref attack, ref view, world, config);
+                SetComboAttack(ref input, ref attack, ref hitInteraction, world, config);
                 AddActionQueue(ref input, ref attack);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
@@ -39,8 +38,8 @@ namespace BT
         }
         
 
-        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  ref CharacterView view, 
-            EcsWorld world, GameConfig config)
+        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  
+            ref HitInteraction hitInteraction, EcsWorld world, GameConfig config)
         {
             if (attack.IsActiveAttack) return;
 
@@ -68,7 +67,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(attack.HitBoxes, view.HitView, attack.CurrentPunch, world, attack.CurrentDamage);
+                CreateHitEvent(ref hitInteraction, attack.CurrentPunch, world, attack.CurrentDamage);
             }            
             else if (input.IsKick)
             {
@@ -81,7 +80,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(attack.HitBoxes, view.HitView, attack.CurrentKick, world, attack.CurrentDamage);
+                CreateHitEvent(ref hitInteraction, attack.CurrentKick, world, attack.CurrentDamage);
             }            
         }
 
@@ -141,9 +140,10 @@ namespace BT
         }
 
 
-        private void CreateHitEvent(HitBox[] hitBoxes, IHitReceiver responder, HeroAttackAnimationData attackData, EcsWorld world, int damage)
+        private void CreateHitEvent(ref HitInteraction hitInteraction, HeroAttackAnimationData attackData, 
+            EcsWorld world, int damage)
         {
-            var hitBox = hitBoxes.FirstOrDefault(h => h.Type == attackData.HitType);
+            var hitBox = hitInteraction.HitBoxes.FirstOrDefault(h => h.Type == attackData.HitType);
 
             if (hitBox == null) return;
 
@@ -151,7 +151,7 @@ namespace BT
             var hitPool = world.GetPool<HitDelayAction>(); 
             ref var hit = ref hitPool.Add(hitEntity);
 
-            hit.Responder = responder;
+            hit.Responder = hitInteraction.HitView;
             hit.Collider = hitBox.Collider;
             hit.Type = hitBox.Type;
             hit.Damage = damage;

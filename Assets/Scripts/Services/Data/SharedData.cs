@@ -9,5 +9,6 @@ namespace BT
         public GameConfig Config;
         public WorldData WorldData;
         public VisualFXController VFXController;
+        public EnemyFactory EnemyFactory;
     }
 }

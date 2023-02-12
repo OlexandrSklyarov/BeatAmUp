@@ -10,6 +10,7 @@ namespace BT
         [SerializeField] private WorldData _worldData;
         [Space(10f), SerializeField] private GameConfig _gameConfig;
         [Space(10f), SerializeField] private VfxData _vfxConfig;
+        [Space(10f), SerializeField] private EnemyData _enemyConfig;
 
         private EcsWorld _world;
         private IEcsSystems _initSystems;
@@ -28,7 +29,8 @@ namespace BT
                 InputProvider = new InputHandleProvider(inputService),
                 Config = _gameConfig,
                 WorldData = _worldData,
-                VFXController = new VisualFXController(_vfxConfig)
+                VFXController = new VisualFXController(_vfxConfig),
+                EnemyFactory = new EnemyFactory(_enemyConfig)
             };
             
             _initSystems = new EcsSystems(_world, data);
@@ -58,6 +60,7 @@ namespace BT
                 .Add(new InitWorldSystem())
                 .Add(new InitHeroSystem())
                 .Add(new InitCameraSystem())
+                .Add(new InitSpawnEnemyZoneSystem())
                 .Add(new InitTestPunchBoxSystem())
                 .Init();
         }
@@ -80,6 +83,7 @@ namespace BT
                 .Add(new TakeDamageSystem())
                 .Add(new HeroAnimationSystem())
                 .Add(new DestroyVfxItemSystem())
+                .Add(new CreateEnemySystem())
                 .Init();
             
             _fixedUpdateSystems
