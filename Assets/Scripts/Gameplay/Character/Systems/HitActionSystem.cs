@@ -1,3 +1,4 @@
+using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -48,7 +49,8 @@ namespace BT
         }
 
 
-        private void TryApplyDamage(Collider c, EcsFilter hpViewFilter, EcsWorld world, ref HitDelayAction hitAction)
+        private void TryApplyDamage(Collider c, EcsFilter hpViewFilter, EcsWorld world, 
+            ref HitDelayAction hitAction)
         {
             var responder = hitAction.Responder;
 
@@ -65,9 +67,7 @@ namespace BT
 
                     if (viewComp.HitView == receiver)
                     {
-                        var damageEventPool = world.GetPool<TakeDamageEvent>();
-                        ref var damageEventComp = ref damageEventPool.Add(e);
-                        damageEventComp.DamageAmount = hitAction.Damage;
+                        CreateTakeDamageEvent(world, e, ref hitAction);                        
 
                         foreach (var e2 in hpViewFilter)
                         {
@@ -91,6 +91,15 @@ namespace BT
                     }                   
                 }
             }
-        }        
+        }
+
+
+        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref HitDelayAction hitAction)
+        {
+            var damageEventPool = world.GetPool<TakeDamageEvent>();
+            ref var damageEventComp = ref damageEventPool.Add(damageEntity);
+            damageEventComp.DamageAmount = hitAction.Damage;
+            damageEventComp.HitPoint = hitAction.Collider.transform.position;
+        }
     }
 }

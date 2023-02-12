@@ -11,6 +11,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world.Filter<HeroTag>()
                 .Inc<HeroAttack>()
@@ -30,7 +31,7 @@ namespace BT
                 ref var attack = ref heroAttackPool.Get(e);
                 ref var view = ref viewPool.Get(e);
 
-                SetComboAttack(ref input, ref attack, ref view, world);
+                SetComboAttack(ref input, ref attack, ref view, world, config);
                 AddActionQueue(ref input, ref attack);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
@@ -38,19 +39,23 @@ namespace BT
         }
         
 
-        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  ref CharacterView view, EcsWorld world)
+        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  ref CharacterView view, 
+            EcsWorld world, GameConfig config)
         {
             if (attack.IsActiveAttack) return;
 
-            attack.CurrentDamage = 10;
+            if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;   
+
+            attack.CurrentDamage = config.HeroAttackData.DefaultDamage;
             
-            if(attack.LastTargetHP < 20)
+            if(attack.IsActiveAttack && 
+                attack.LastTargetHP > 0 && 
+                attack.LastTargetHP <= config.HeroAttackData.MaxDamage)
             {
                 attack.IsNeedFinishAttack = true;
-                attack.CurrentDamage = 20;
+                attack.CurrentDamage = config.HeroAttackData.MaxDamage;
+                Util.Debug.PrintColor("Max damage", Color.magenta);
             }
-
-            if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;   
 
             if (input.IsPunch)
             {                
@@ -77,9 +82,7 @@ namespace BT
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
                 CreateHitEvent(attack.HitBoxes, view.HitView, attack.CurrentKick, world, attack.CurrentDamage);
-            }
-
-            attack.LastTargetHP = 100;
+            }            
         }
 
 
@@ -99,7 +102,7 @@ namespace BT
             if (input.IsKick && attack.KickQueue.Count < attack.KickData.Length - 1)
             {
                 attack.NextPunchState = 0;
-                
+
                 attack.NextKickState++;
                 attack.NextKickState %= attack.KickData.Length;
                 attack.KickQueue.Enqueue(attack.KickData[attack.NextKickState]);

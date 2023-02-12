@@ -1,4 +1,6 @@
 
+using Gameplay.FX;
+
 namespace BT
 {
     public class SharedData
@@ -6,5 +8,6 @@ namespace BT
         public InputHandleProvider InputProvider;
         public GameConfig Config;
         public WorldData WorldData;
+        public VisualFXController VFXController;
     }
 }

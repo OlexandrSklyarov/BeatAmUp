@@ -22,7 +22,7 @@ MonoBehaviour:
     _clip: {fileID: 7232228851601863464, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
   - <StateName>k__BackingField: PUNCH_3
-    <HitType>k__BackingField: 1
+    <HitType>k__BackingField: 4
     _clip: {fileID: -744097596311149743, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
   <PunchAnimationFinishData>k__BackingField:
@@ -31,7 +31,7 @@ MonoBehaviour:
     _clip: {fileID: 7197861529635569335, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
   - <StateName>k__BackingField: PUNCH_FINISH_2
-    <HitType>k__BackingField: 1
+    <HitType>k__BackingField: 5
     _clip: {fileID: -6932546222299759752, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
       type: 3}
     _animSpeed: 1
@@ -46,3 +46,7 @@ MonoBehaviour:
     <HitType>k__BackingField: 3
     _clip: {fileID: 7244992392561737592, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
+  <DefaultDamage>k__BackingField: 10
+  <MaxDamage>k__BackingField: 20
+  <HitVFX>k__BackingField: {fileID: 4540693010267786210, guid: 889454be753a8358fa267897810e0ade,
+    type: 3}

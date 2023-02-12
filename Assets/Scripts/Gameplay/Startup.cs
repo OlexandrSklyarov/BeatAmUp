@@ -1,4 +1,4 @@
-using System;
+using Gameplay.FX;
 using Leopotam.EcsLite;
 using UnityEngine;
 using Util.Console;
@@ -9,6 +9,7 @@ namespace BT
     {        
         [SerializeField] private WorldData _worldData;
         [Space(10f), SerializeField] private GameConfig _gameConfig;
+        [Space(10f), SerializeField] private VfxData _vfxConfig;
 
         private EcsWorld _world;
         private IEcsSystems _initSystems;
@@ -26,7 +27,8 @@ namespace BT
             {
                 InputProvider = new InputHandleProvider(inputService),
                 Config = _gameConfig,
-                WorldData = _worldData
+                WorldData = _worldData,
+                VFXController = new VisualFXController(_vfxConfig)
             };
             
             _initSystems = new EcsSystems(_world, data);
@@ -77,6 +79,7 @@ namespace BT
                 .Add(new ApplyHorizontalVelocitySystem())
                 .Add(new TakeDamageSystem())
                 .Add(new HeroAnimationSystem())
+                .Add(new DestroyVfxItemSystem())
                 .Init();
             
             _fixedUpdateSystems
