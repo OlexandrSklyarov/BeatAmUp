@@ -26,16 +26,14 @@ namespace BT
             {
                 ref var hitAction = ref hitActionPool.Get(e);
 
-                if (hitAction.Timer > 0f)
-                {
-                    hitAction.Timer -= Time.deltaTime;
-                    continue;
-                }
+                hitAction.Timer -= Time.deltaTime;
+
+                if (hitAction.Timer > 0f) continue;                
 
                 var col = Physics.OverlapSphere
                 (
                     hitAction.Collider.transform.position,
-                    hitAction.Collider.radius,
+                    config.CharacterData.HitRadius,
                     config.CharacterData.HitLayerMask
                 );
 

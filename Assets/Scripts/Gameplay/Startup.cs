@@ -74,16 +74,16 @@ namespace BT
                 .Add(new PlayerInputSystem())
                 .Add(new PlayerSittingSystem())
                 .Add(new HeroComboAttackSystem())
-                .Add(new HitActionSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new CharacterRotateViewSystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
                 .Add(new StopMovementWhenAttackingSystem())
                 .Add(new ApplyHorizontalVelocitySystem())
+                .Add(new HitActionSystem())
                 .Add(new TakeDamageSystem())
-                .Add(new HeroAnimationSystem())
                 .Add(new DestroyVfxItemSystem())
                 .Add(new CreateEnemySystem())
+                .Add(new HeroAnimationSystem())
                 .Init();
             
             _fixedUpdateSystems

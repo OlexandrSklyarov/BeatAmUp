@@ -140,10 +140,11 @@ namespace BT
         }
 
 
-        private void CreateHitEvent(ref HitInteraction hitInteraction, HeroAttackAnimationData attackData, 
-            EcsWorld world, int damage)
+        private void CreateHitEvent(ref HitInteraction hitInteraction, 
+            HeroAttackAnimationData attackData, EcsWorld world, int damage)
         {
-            var hitBox = hitInteraction.HitBoxes.FirstOrDefault(h => h.Type == attackData.HitType);
+            var hitBox = hitInteraction.HitBoxes
+                .FirstOrDefault(h => h.Type == attackData.HitType);
 
             if (hitBox == null) return;
 
@@ -155,7 +156,7 @@ namespace BT
             hit.Collider = hitBox.Collider;
             hit.Type = hitBox.Type;
             hit.Damage = damage;
-            hit.Timer = attackData.AttackTime * 0.65f;
+            hit.Timer = attackData.AttackTime * attackData.DamageTimeMultiplier;
         }
     }
 }
