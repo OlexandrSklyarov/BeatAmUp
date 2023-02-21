@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 namespace BT
 {
-    public class CreateEnemySystem : IEcsRunSystem
+    public sealed class CreateEnemySystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -29,26 +29,27 @@ namespace BT
         private void SpawnEnemy(SharedData data, EcsWorld world, EnemyType type,
             Vector3 createPosition, Quaternion createRotation)
         {
-            var enemyView = data.EnemyFactory.GetEnemyView(type);
+            var enemyViewProvider = data.EnemyFactory.GetEnemyView(type);
 
             var e = world.NewEntity();
 
             //enemy
-            var enemyPool = world.GetPool<EnemyTag>();
-            enemyPool.Add(e);
+            var enemyPool = world.GetPool<Enemy>();
+            ref var enemyComp = ref enemyPool.Add(e);
+            enemyComp.ViewProvider = enemyViewProvider;
 
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(e);
-            view.ViewTransform = enemyView.transform;
-            view.ViewTransform.SetPositionAndRotation(createPosition, createRotation);
-            view.Animator = enemyView.GetComponentInChildren<Animator>();
+            view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
+            view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();
+            view.Height = enemyViewProvider.GetComponent<CapsuleCollider>().height;
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(e);
-            hit.HitView = enemyView.GetComponent<IHitReceiver>();
-            hit.HitBoxes = enemyView.GetComponentsInChildren<HitBox>();
+            hit.HitView = enemyViewProvider.GetComponent<IHitReceiver>();
+            hit.HitBoxes = enemyViewProvider.GetComponentsInChildren<HitBox>();
             Array.ForEach(hit.HitBoxes, h => h.Init());
 
             //hp
@@ -57,14 +58,16 @@ namespace BT
             hp.HP = hp.MaxHP = 100;
 
             //AI
-            var aiPool = world.GetPool<EnemyAI>();
+            var aiPool = world.GetPool<MovementAI>();
             ref var ai = ref aiPool.Add(e);
-            ai.NavAgent = enemyView.GetComponent<NavMeshAgent>();
+            ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
+            ai.MyTransform = enemyViewProvider.transform;
+            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);
 
             //Physics body
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             ref var comp = ref bodyPool.Add(e);
-            comp.Body = enemyView.GetComponent<Rigidbody>();
+            comp.Body = enemyViewProvider.GetComponent<Rigidbody>();
             comp.Body.isKinematic = true;
         }
     }

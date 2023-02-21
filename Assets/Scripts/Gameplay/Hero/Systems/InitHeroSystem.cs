@@ -29,11 +29,19 @@ namespace BT
             var inputDataPool =  world.GetPool<CharacterCommand>();
             inputDataPool.Add(heroEntity);
 
+            //movement
+            var movementPool =  world.GetPool<Movement>();
+            ref var movement = ref movementPool.Add(heroEntity);
+            var characterController = heroGO.GetComponent<CharacterController>();
+            movement.characterController = characterController;
+            movement.Transform = heroGO.transform;   
+
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(heroEntity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
             view.ViewTransform = heroGO.transform.GetChild(0).transform; 
+            view.Height = characterController.height;
           
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
@@ -41,12 +49,7 @@ namespace BT
             hit.HitView = heroGO.GetComponent<IHitReceiver>();
             hit.HitBoxes = heroGO.GetComponentsInChildren<HitBox>();
             Array.ForEach(hit.HitBoxes, h => h.Init());
-
-            //movement
-            var movementPool =  world.GetPool<Movement>();
-            ref var movement = ref movementPool.Add(heroEntity);
-            movement.characterController = heroGO.GetComponent<CharacterController>();
-            movement.Transform = heroGO.transform;   
+            
 
            //attack
             var heroHandleAttackPool = world.GetPool<HeroAttack>();

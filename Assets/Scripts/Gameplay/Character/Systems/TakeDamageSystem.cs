@@ -1,3 +1,4 @@
+using System;
 using Gameplay.FX;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -31,8 +32,49 @@ namespace BT
                 hpComp.HP = Mathf.Max(0, hpComp.HP - damageEvent.DamageAmount); 
                 
                 CreateHitVfxEntity(world, vfxController, damageEvent.HitPoint);
+                AddStunComponent(world, e);
+                AddDamageViewComponent(world, e, ref damageEvent, ref hpComp, ref view);
+                TryAddDeathComponent(world, e, ref hpComp);
                 
                 damageEventPool.Del(e);                
+            }
+        }
+
+
+        private void TryAddDeathComponent(EcsWorld world, int damageEntity, ref Health hpComp)
+        {
+            if (hpComp.HP > 0) return;
+
+            var pool = world.GetPool<Death>();
+            ref var deathComp = ref pool.Add(damageEntity);
+            deathComp.Timer = ConstPrm.Character.DEATH_TIME;
+        }
+
+
+        private void AddDamageViewComponent(EcsWorld world, int damageEntity, 
+            ref TakeDamageEvent damageEvent, ref Health hp, ref CharacterView view)
+        {
+            var pool = world.GetPool<DamageView>();
+            ref var damageViewComp = ref pool.Add(damageEntity);
+            damageViewComp.IsFinalDamage = hp.HP <= 0;
+            damageViewComp.IsTopBodyDamage = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height / 2f;
+            damageViewComp.IsHammeringDamage = damageEvent.IsHammeringDamage;
+        }
+
+
+        private void AddStunComponent(EcsWorld world, int damageEntity)
+        {
+            var pool = world.GetPool<Stun>();
+
+            if (pool.Has(damageEntity))
+            {
+                ref var stunComp = ref pool.Get(damageEntity);
+                stunComp.Timer = ConstPrm.Character.STUN_TIME;
+            }
+            else
+            {
+                ref var stunComp = ref pool.Add(damageEntity);
+                stunComp.Timer = ConstPrm.Character.STUN_TIME;
             }
         }
 

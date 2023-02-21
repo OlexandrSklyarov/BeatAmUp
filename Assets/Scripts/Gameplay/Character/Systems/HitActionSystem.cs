@@ -17,6 +17,7 @@ namespace BT
             var hpViewFilter = world
                 .Filter<Health>()
                 .Inc<CharacterView>()
+                .Exc<Death>()
                 .End();
 
             var hitActionPool = world.GetPool<HitDelayAction>();
@@ -97,6 +98,7 @@ namespace BT
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             damageEventComp.DamageAmount = hitAction.Damage;
             damageEventComp.HitPoint = hitAction.Collider.transform.position;
+            damageEventComp.IsHammeringDamage = hitAction.Type == HitType.UP_TWO_HAND_BIG;
         }
     }
 }

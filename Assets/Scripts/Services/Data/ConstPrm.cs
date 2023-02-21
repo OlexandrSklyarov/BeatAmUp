@@ -9,6 +9,9 @@ namespace BT
             public const string MOVE = "MOVE";
             public const string MOVE_SPEED = "SPEED";
             public const string DEATH = "DEATH";
+            public const string DAMAGE = "DAMAGE";
+            public const string DAMAGE_TYPE = "DAMAGE_TYPE";
+            public const string HAMMERING_DAMAGE = "HAMMERING_DAMAGE";
             public const string ATTACK = "ATTACK";
             public const string ATTACK_SPEED_MULTIPLIER_PRM = "ATTACK_SPEED_MULTIPLIER";
             public const string RUN_SPEED_MULTIPLIER_PRM = "RUN_SPEED_MULTIPLIER";
@@ -32,6 +35,13 @@ namespace BT
         public static class Hero
         {                
             public const float ACTION_TIME_MULTIPLIER = 2f; 
+        }
+
+
+        public static class Character
+        {
+            public const float STUN_TIME = 0.5f;
+            public const float DEATH_TIME = 3f;
         }
     }
 }

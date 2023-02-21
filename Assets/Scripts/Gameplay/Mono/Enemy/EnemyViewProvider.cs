@@ -6,10 +6,10 @@ namespace BT
 {
     [SelectionBase]
     [RequireComponent(typeof(NavMeshAgent), typeof(CapsuleCollider), typeof(Rigidbody))]
-    public class EnemyViewProvider : MonoBehaviour, IHitReceiver, IFactoryStorage<EnemyViewProvider>
+    public class EnemyViewProvider : MonoBehaviour, IHitReceiver
     {
         private IFactoryStorage<EnemyViewProvider> _storage;
-   
+
 
         public void Init(IFactoryStorage<EnemyViewProvider> storage)
         {
@@ -17,9 +17,6 @@ namespace BT
         }
         
         
-        void IFactoryStorage<EnemyViewProvider>.ReturnToStorage(EnemyViewProvider item)
-        {
-            _storage?.ReturnToStorage(item);
-        }
+        public void ReturnToStorage() => _storage?.ReturnToStorage(this);        
     }
 }

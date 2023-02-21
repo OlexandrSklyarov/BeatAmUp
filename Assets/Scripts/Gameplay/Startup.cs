@@ -69,9 +69,9 @@ namespace BT
         private void AddSystems()
         {
             _updateSystems  
+                .Add(new PlayerInputSystem())
                 .Add(new CheckGroundSystem())
                 .Add(new ApplyGravitySystem())
-                .Add(new PlayerInputSystem())
                 .Add(new PlayerSittingSystem())
                 .Add(new HeroComboAttackSystem())
                 .Add(new HeroJumpSystem())
@@ -82,8 +82,11 @@ namespace BT
                 .Add(new HitActionSystem())
                 .Add(new TakeDamageSystem())
                 .Add(new DestroyVfxItemSystem())
-                .Add(new CreateEnemySystem())
                 .Add(new HeroAnimationSystem())
+                .Add(new CharacterDamageAnimationSystem())
+                .Add(new CreateEnemySystem())
+                .Add(new CharacterDieSystem())
+                .Add(new CharacterReleaseStunSystem())
                 .Init();
             
             _fixedUpdateSystems
