@@ -41,7 +41,7 @@ namespace BT
         public static class Character
         {
             public const float STUN_TIME = 0.5f;
-            public const float DEATH_TIME = 3f;
+            public const float DEATH_TIME = 5f;
         }
     }
 }

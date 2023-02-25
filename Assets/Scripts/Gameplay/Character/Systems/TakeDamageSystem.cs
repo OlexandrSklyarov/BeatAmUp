@@ -1,4 +1,3 @@
-using System;
 using Gameplay.FX;
 using Leopotam.EcsLite;
 using UnityEngine;

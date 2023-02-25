@@ -23,13 +23,15 @@ namespace BT
 
                 if (damageView.IsFinalDamage)
                 {
-                    view.Animator.SetTrigger(ConstPrm.Animation.DEATH);
+                    if (damageView.IsHammeringDamage)
+                        view.Animator.SetTrigger(ConstPrm.Animation.HAMMERING_DAMAGE);
+                    else
+                        view.Animator.SetTrigger(ConstPrm.Animation.DEATH);
                 }
                 else
-                {
+                {                    
                     var damageType = (damageView.IsTopBodyDamage) ? 0 : 1;
                     view.Animator.SetInteger(ConstPrm.Animation.DAMAGE_TYPE, damageType);
-                    view.Animator.SetBool(ConstPrm.Animation.HAMMERING_DAMAGE, damageView.IsHammeringDamage);
                     view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE);
                 }
 
