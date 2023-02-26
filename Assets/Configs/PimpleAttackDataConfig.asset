@@ -23,11 +23,6 @@ MonoBehaviour:
     <DamageTimeMultiplier>k__BackingField: 0.52
     _clip: {fileID: 7232228851601863464, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
-  - <StateName>k__BackingField: PUNCH_3
-    <HitType>k__BackingField: 4
-    <DamageTimeMultiplier>k__BackingField: 0.32
-    _clip: {fileID: -744097596311149743, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
-    _animSpeed: 1
   <PunchAnimationFinishData>k__BackingField:
   - <StateName>k__BackingField: PUNCH_FINISH_1
     <HitType>k__BackingField: 1
@@ -39,6 +34,11 @@ MonoBehaviour:
     <DamageTimeMultiplier>k__BackingField: 0.47
     _clip: {fileID: -6932546222299759752, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
       type: 3}
+    _animSpeed: 1
+  - <StateName>k__BackingField: PUNCH_FINISH_3
+    <HitType>k__BackingField: 4
+    <DamageTimeMultiplier>k__BackingField: 0.32
+    _clip: {fileID: -744097596311149743, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
   <KickAnimationData>k__BackingField:
   - <StateName>k__BackingField: KICK_1
