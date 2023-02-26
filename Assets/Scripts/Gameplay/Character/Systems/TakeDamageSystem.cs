@@ -56,7 +56,7 @@ namespace BT
             var pool = world.GetPool<DamageView>();
             ref var damageViewComp = ref pool.Add(damageEntity);
             damageViewComp.IsFinalDamage = hp.HP <= 0;
-            damageViewComp.IsTopBodyDamage = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height / 2f;
+            damageViewComp.IsTopBodyDamage = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height * 0.6f;
             damageViewComp.IsHammeringDamage = damageEvent.IsHammeringDamage;
         }
 
