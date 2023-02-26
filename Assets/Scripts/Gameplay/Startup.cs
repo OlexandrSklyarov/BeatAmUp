@@ -87,6 +87,7 @@ namespace BT
                 .Add(new HeroAnimationSystem())
                 .Add(new CharacterDamageAnimationSystem())
                 .Add(new DestroyVfxItemSystem())
+                .Add(new EnemyFindTargetSystem())
                 .Init();
             
             _fixedUpdateSystems
