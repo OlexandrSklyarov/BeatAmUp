@@ -81,11 +81,11 @@ namespace BT
                 .Add(new ApplyHorizontalVelocitySystem())
                 .Add(new HitActionSystem())
                 .Add(new TakeDamageSystem())
-                .Add(new HeroAnimationSystem())
-                .Add(new CharacterDamageAnimationSystem())
                 .Add(new CreateEnemySystem())
                 .Add(new CharacterDieSystem())
                 .Add(new CharacterReleaseStunSystem())
+                .Add(new HeroAnimationSystem())
+                .Add(new CharacterDamageAnimationSystem())
                 .Add(new DestroyVfxItemSystem())
                 .Init();
             
