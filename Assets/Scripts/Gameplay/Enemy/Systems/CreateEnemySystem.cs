@@ -38,12 +38,21 @@ namespace BT
             ref var enemyComp = ref enemyPool.Add(e);
             enemyComp.ViewProvider = enemyViewProvider;
 
+            //Physics body
+            var bodyPool = world.GetPool<CharacterPhysicsBody>();
+            ref var comp = ref bodyPool.Add(e);
+            comp.Body = enemyViewProvider.GetComponent<Rigidbody>();
+            comp.Body.isKinematic = true;
+            var collider = enemyViewProvider.GetComponent<CapsuleCollider>();
+            collider.enabled = true;
+            comp.Collider = collider;
+
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(e);
             view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
-            view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();
-            view.Height = enemyViewProvider.GetComponent<CapsuleCollider>().height;
+            view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
+            view.Height = collider.height;
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
@@ -62,13 +71,7 @@ namespace BT
             ref var ai = ref aiPool.Add(e);
             ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
             ai.MyTransform = enemyViewProvider.transform;
-            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);
-
-            //Physics body
-            var bodyPool = world.GetPool<CharacterPhysicsBody>();
-            ref var comp = ref bodyPool.Add(e);
-            comp.Body = enemyViewProvider.GetComponent<Rigidbody>();
-            comp.Body.isKinematic = true;
+            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);            
         }
     }
 }
