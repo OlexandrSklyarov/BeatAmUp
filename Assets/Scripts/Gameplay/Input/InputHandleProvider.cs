@@ -4,7 +4,7 @@ using UnityEngine.InputSystem;
 
 namespace BT
 {
-    public class InputHandleProvider
+    public sealed class InputHandleProvider
     {
         public Vector2 Direction {get; private set;}
         public bool IsJump {get; private set;}

@@ -6,7 +6,7 @@ using BT;
 
 namespace Gameplay.Factories
 {
-    public class VfxFactory
+    public sealed class VfxFactory
     {
         private readonly Dictionary<VfxType, Pool<GameWorldVFX>> _poolCollection;
 

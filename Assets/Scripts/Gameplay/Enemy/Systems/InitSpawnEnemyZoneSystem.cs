@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class InitSpawnEnemyZoneSystem : IEcsInitSystem
+    public sealed class InitSpawnEnemyZoneSystem : IEcsInitSystem
     {
         public void Init(IEcsSystems systems)
         {

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public class EnemySpawnPointHolder : MonoBehaviour
+    public sealed class EnemySpawnPointHolder : MonoBehaviour
     {
         public IEnumerable<Transform> GetSpawnPoints()
         {

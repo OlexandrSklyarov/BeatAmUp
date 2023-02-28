@@ -3,7 +3,7 @@ using Gameplay.Factories;
 
 namespace BT
 {
-    public class EnemyFactory
+    public sealed class EnemyFactory
     {
         private readonly Dictionary<EnemyType, EntityFactory<EnemyViewProvider>> _factories;
 

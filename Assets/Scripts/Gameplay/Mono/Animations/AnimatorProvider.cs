@@ -3,7 +3,7 @@ using System;
 
 namespace BT
 {
-    public class AnimatorProvider : MonoBehaviour
+    public sealed class AnimatorProvider : MonoBehaviour
     {
         public event Action<HitType> ActiveHitBoxEvent;
 

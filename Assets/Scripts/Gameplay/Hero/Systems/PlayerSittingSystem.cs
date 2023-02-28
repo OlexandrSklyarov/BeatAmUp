@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class PlayerSittingSystem : IEcsRunSystem
+    public sealed class PlayerSittingSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

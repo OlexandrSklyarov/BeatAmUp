@@ -27,17 +27,12 @@ namespace BT
 
                 if (!input.IsMoved) continue;
 
-                var dir = move.HorizontalVelocity.normalized;
-                var angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
-                var targetRotation = Quaternion.Euler(new Vector3(0f, angle, 0f));
-
                 view.ViewTransform.rotation = Quaternion.RotateTowards
                 (
                     view.ViewTransform.rotation,
-                    targetRotation,
+                    Util.Vector3Math.DirToQuaternion(move.HorizontalVelocity),
                     Time.deltaTime * config.PlayerData.RotateSpeed
                 );
-
             }
         }
     }

@@ -71,6 +71,7 @@ namespace BT
             _updateSystems  
                 .Add(new PlayerInputSystem())
                 .Add(new CheckGroundSystem())
+                .Add(new HeroMoveToNearestEnemySystem())
                 .Add(new ApplyGravitySystem())
                 .Add(new PlayerSittingSystem())
                 .Add(new HeroComboAttackSystem())

@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class EnemyFindTargetSystem : IEcsRunSystem
+    public sealed class EnemyFindTargetSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

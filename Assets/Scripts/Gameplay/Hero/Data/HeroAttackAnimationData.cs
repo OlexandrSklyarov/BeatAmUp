@@ -4,7 +4,7 @@ using UnityEngine;
 namespace BT
 {
     [Serializable]
-    public class HeroAttackAnimationData
+    public sealed class HeroAttackAnimationData
     {
         public float AttackTime => _clip.length / _animSpeed;
 
