@@ -35,10 +35,9 @@ namespace BT
         public static class Hero
         {
             public const float ACTION_TIME_MULTIPLIER = 2f;
-            public const float MAX_DIST_TO_ENEMY = 1.5f;
-            public const float MIN_DIST_TO_ENEMY = 0.9f;
-            public const float VIEW_ENEMY_ANGLE = 70f;
-            public const float SLIDE_TO_TARGET_TIME = 0.3f;
+            public const float VIEW_ENEMY_ANGLE = 85f;
+            public const float SLIDE_TO_TARGET_TIME = 0.15f;
+            public const float ATTACK_RADIUS_MULTIPLIER = 2f;
         }
 
 
@@ -46,6 +45,7 @@ namespace BT
         {
             public const float ViewTargetRadius = 15f;
         }
+
 
         public static class Character
         {

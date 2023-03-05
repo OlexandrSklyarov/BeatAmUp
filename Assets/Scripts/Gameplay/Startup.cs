@@ -18,6 +18,7 @@ namespace BT
         private IEcsSystems _fixedUpdateSystems;
         private IEcsSystems _lateUpdateSystems;
 
+
         private void Start()
         {   
             _world = new EcsWorld();
@@ -95,7 +96,6 @@ namespace BT
                 .Init();
 
             _lateUpdateSystems
-                .Add(new ResetPlayerInputDataSystem())
                 .Init();
         }
 

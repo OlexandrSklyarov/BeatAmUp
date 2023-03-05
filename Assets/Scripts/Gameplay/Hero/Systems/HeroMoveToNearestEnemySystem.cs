@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -6,24 +5,23 @@ namespace BT
 {
     public sealed class HeroMoveToNearestEnemySystem : IEcsRunSystem
     {
-        public object ANGLE { get; private set; }
-
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var heroes = world.Filter<HeroTag>()
                 .Inc<CharacterCommand>()
                 .Inc<Movement>()
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
+                .Exc<HeroSlideTag>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();
 
             var enemies = world.Filter<Enemy>()
                 .Inc<MovementAI>()
+                .Inc<CharacterView>()
                 .Exc<Death>()
                 .End();
 
@@ -43,35 +41,47 @@ namespace BT
                     foreach (var e in enemies)
                     {
                         ref var enemyMovement = ref movementAIPool.Get(e);
+                        ref var enemyView = ref viewPool.Get(e);
 
-                        if (TrySlideToNearestTarget(ref heroView, ref heroMovement, ref enemyMovement))
+                        if (TrySlideToNearestTarget(h, ref heroView, ref heroMovement, world,
+                            enemyMovement.MyTransform.position, enemyView.BodyRadius))
                             break;
                     }
                 }
             }
         }
 
-        private bool TrySlideToNearestTarget(ref CharacterView heroView, ref Movement heroMovement, ref MovementAI enemyMovement)
+
+        private bool TrySlideToNearestTarget(int heroEntity, ref CharacterView heroView, ref Movement heroMovement, EcsWorld world,
+            Vector3 targetPos, float targetRadius)
         {
             var heroPos = heroMovement.Transform.position;
-            var enemyPos = enemyMovement.MyTransform.position;
-            enemyPos.y = heroPos.y;
+            targetPos.y = heroPos.y;
 
-            var toTarget = enemyPos - heroPos;
+            if (Mathf.Abs(heroPos.y - targetPos.y) > heroView.Height) return false;
+            
+            var toTarget = targetPos - heroPos;
             var sqDist = toTarget.sqrMagnitude;
+            var maxDist = targetRadius + heroView.BodyRadius * ConstPrm.Hero.ATTACK_RADIUS_MULTIPLIER;
 
-            if (Mathf.Abs(heroPos.y - enemyPos.y) > heroView.Height) return false;
-            if (sqDist > ConstPrm.Hero.MAX_DIST_TO_ENEMY * ConstPrm.Hero.MAX_DIST_TO_ENEMY) return false;
+            if (sqDist > maxDist * maxDist) return false;
             if (Vector3.Angle(toTarget, heroView.ViewTransform.forward) > ConstPrm.Hero.VIEW_ENEMY_ANGLE) return false;
 
-            if (sqDist > ConstPrm.Hero.MIN_DIST_TO_ENEMY * ConstPrm.Hero.MIN_DIST_TO_ENEMY)
+            var minDistToTarget = targetRadius + heroView.BodyRadius;
+
+            if (sqDist > minDistToTarget * minDistToTarget)
             {
-                var targetPoint = heroPos + toTarget * (toTarget.magnitude - ConstPrm.Hero.MIN_DIST_TO_ENEMY);
-                var end = Vector3.MoveTowards(heroPos, targetPoint, 1f);
-                heroMovement.Transform.LeanMove(end, ConstPrm.Hero.SLIDE_TO_TARGET_TIME);
+                var end = targetPos - toTarget.normalized * minDistToTarget;
+                heroMovement.Transform.LeanMove(end, ConstPrm.Hero.SLIDE_TO_TARGET_TIME);                    
             };
 
-            heroView.ViewTransform.rotation = Util.Vector3Math.DirToQuaternion(toTarget);
+            var slidePool = world.GetPool<HeroSlideTag>();
+            slidePool.Add(heroEntity);
+
+            var angle = Util.Vector3Math.GetUpAxisAngleRotate(toTarget);
+            heroView.ViewTransform
+                .LeanRotateY(angle, ConstPrm.Hero.SLIDE_TO_TARGET_TIME)
+                .setOnComplete(() => slidePool.Del(heroEntity));
 
             return true;
         }

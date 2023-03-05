@@ -23,6 +23,11 @@ namespace BT
             {
                 ref var command = ref commandPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
+                
+                if (!command.IsJump) 
+                {
+                    movement.IsJumpProcess = false;
+                }
 
                 if (!movement.IsJumpProcess && command.IsJump)
                 {

@@ -22,7 +22,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var control = systems.GetShared<SharedData>().InputProvider;
-
             var world = systems.GetWorld();
 
             var entities = world

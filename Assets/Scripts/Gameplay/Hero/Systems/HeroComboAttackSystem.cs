@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -30,13 +31,21 @@ namespace BT
                 ref var attack = ref heroAttackPool.Get(e);
                 ref var hitInteraction = ref hitInteractionPool.Get(e);
 
+                ResetPreviousAttack(ref attack);
                 SetComboAttack(ref input, ref attack, ref hitInteraction, world, config);
                 AddActionQueue(ref input, ref attack);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
             }
         }
-        
+
+
+        private void ResetPreviousAttack(ref HeroAttack attack)
+        {
+            attack.CurrentKick = null;
+            attack.CurrentPunch = null;
+        }
+
 
         private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  
             ref HitInteraction hitInteraction, EcsWorld world, GameConfig config)

@@ -8,6 +8,7 @@ namespace BT
         public Animator Animator;
         public Transform ViewTransform;        
         public float Height;
+        public float BodyRadius;
     }
 }
 

@@ -84,9 +84,15 @@ namespace Util
 
         public static Quaternion DirToQuaternion(Vector3 dir)
         {
-            dir.Normalize();
-            var angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+            var angle = GetUpAxisAngleRotate(dir);
             return Quaternion.Euler(new Vector3(0f, angle, 0f));
+        }
+
+
+        public static float GetUpAxisAngleRotate(Vector3 dir)
+        {
+            dir.Normalize();
+            return Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
         }
     }
 }

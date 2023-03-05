@@ -53,6 +53,7 @@ namespace BT
             view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
             view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
             view.Height = collider.height;
+            view.BodyRadius = collider.radius;
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
@@ -70,8 +71,9 @@ namespace BT
             var aiPool = world.GetPool<MovementAI>();
             ref var ai = ref aiPool.Add(e);
             ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
+            ai.NavAgent.Warp(createPosition);         
             ai.MyTransform = enemyViewProvider.transform;
-            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);            
+            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);   
         }
     }
 }

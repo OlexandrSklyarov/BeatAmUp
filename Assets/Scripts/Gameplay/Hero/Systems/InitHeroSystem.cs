@@ -42,6 +42,7 @@ namespace BT
             view.Animator = heroGO.GetComponentInChildren<Animator>();
             view.ViewTransform = heroGO.transform.GetChild(0).transform; 
             view.Height = characterController.height;
+            view.BodyRadius = characterController.radius;
           
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
