@@ -18,7 +18,6 @@ namespace BT
         public float ResetNextActionTimer;
         public bool IsActiveAttack;
         public bool IsNeedFinishAttack;
-        public int LastTargetHP;
         public int CurrentDamage;
     }
 }

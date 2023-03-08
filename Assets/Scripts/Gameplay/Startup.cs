@@ -73,7 +73,7 @@ namespace BT
                 //hero
                 .Add(new PlayerInputSystem())
                 .Add(new CharacterControllerCheckGroundSystem())
-                .Add(new HeroMoveToNearestEnemySystem())
+                .Add(new HeroSlideToNearestEnemySystem())
                 .Add(new CharacterControllerApplyGravitySystem())
                 .Add(new HeroSittingSystem())
                 .Add(new HeroComboAttackSystem())

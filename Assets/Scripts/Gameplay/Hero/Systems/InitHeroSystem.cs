@@ -65,7 +65,6 @@ namespace BT
             heroAttack.KickData = data.Config.HeroAttackData.KickAnimationData;
             heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
             heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
-            heroAttack.LastTargetHP = 100;  
 
             //HP
             var healthPool = world.GetPool<Health>();

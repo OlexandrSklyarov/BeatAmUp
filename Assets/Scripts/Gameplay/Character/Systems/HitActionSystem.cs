@@ -54,7 +54,6 @@ namespace BT
 
             var hpPool = world.GetPool<Health>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
-            var attackPool = world.GetPool<HeroAttack>();
 
             if (c.TryGetComponent(out IHitReceiver receiver) && receiver != responder)
             {
@@ -71,18 +70,8 @@ namespace BT
                         {
                             ref var hitIntComp2 = ref hitInteractionPool.Get(e2);
 
-                            if (hitIntComp.HitView == hitIntComp2.HitView) continue;
-
-                            if (hitIntComp2.HitView == responder)
-                            {                                
-                                if (attackPool.Has(e2))
-                                {
-                                    ref var attackComp = ref attackPool.Get(e2);
-                                    attackComp.LastTargetHP = Mathf.Max(0, hpComp.HP - hitAction.Damage);
-                                }
-
-                                break;
-                            }                            
+                            if (hitIntComp.HitView == hitIntComp2.HitView) 
+                                continue;                                                       
                         }
 
                         break;

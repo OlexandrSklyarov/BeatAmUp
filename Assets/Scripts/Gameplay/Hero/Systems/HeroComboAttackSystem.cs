@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -54,16 +53,9 @@ namespace BT
 
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;   
 
-            attack.CurrentDamage = config.HeroAttackData.DefaultDamage;
-            
-            if(attack.IsActiveAttack && 
-                attack.LastTargetHP > 0 && 
-                attack.LastTargetHP <= config.HeroAttackData.MaxDamage)
-            {
-                attack.IsNeedFinishAttack = true;
-                attack.CurrentDamage = config.HeroAttackData.MaxDamage;
-                Util.Debug.PrintColor("Max damage", Color.magenta);
-            }
+            attack.CurrentDamage = (attack.IsActiveAttack && attack.IsNeedFinishAttack) ?
+                config.HeroAttackData.MaxDamage :
+                config.HeroAttackData.DefaultDamage; 
 
             if (input.IsPunch)
             {                
