@@ -26,7 +26,7 @@ namespace BT
 
                     if (evt.Timer > 0f)
                     {
-                        evt.Timer -=Time.deltaTime;
+                        evt.Timer -= Time.deltaTime;
 
                         camera.Shake.m_AmplitudeGain = data.Config.CameraConfig.CameraShakeAmplitude;
                         camera.Shake.m_FrequencyGain = data.Config.CameraConfig.CameraShakeFrequency;
