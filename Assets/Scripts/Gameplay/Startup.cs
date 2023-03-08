@@ -100,6 +100,7 @@ namespace BT
 
                 //vfx
                 .Add(new DestroyVfxItemSystem())
+                .Add(new ShakeCameraSystem())
                 .Init();
             
             _fixedUpdateSystems

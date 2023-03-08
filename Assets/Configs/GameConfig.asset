@@ -40,3 +40,6 @@ MonoBehaviour:
     type: 2}
   <CameraConfig>k__BackingField:
     <Offset>k__BackingField: {x: 0, y: 7, z: -11}
+    <CameraShakeAmplitude>k__BackingField: 1.5
+    <CameraShakeFrequency>k__BackingField: 4
+    <ShakeDuration>k__BackingField: 0.3

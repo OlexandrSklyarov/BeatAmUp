@@ -8,7 +8,7 @@ namespace BT
     public class WorldData
     {
         public Transform HeroSpawnPoint;
-        public CinemachineVirtualCamera GameVC;
+        public CinemachineVirtualCamera GameVirtualCamera;
         public GameUI GamaUI;
     }
 }

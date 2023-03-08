@@ -46,5 +46,8 @@ namespace BT
     public sealed class CameraConfig
     {
         [field: SerializeField] public Vector3 Offset { get; private set; }
+        [field: SerializeField, Min(0.1f)] public float CameraShakeAmplitude { get; private set; } = 1.5f;
+        [field: SerializeField, Min(0.1f)] public float CameraShakeFrequency { get; private set; } = 3f;
+        [field: SerializeField, Min(0.1f)] public float ShakeDuration { get; private set; } = 0.2f;
     }
 }

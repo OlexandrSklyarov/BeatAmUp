@@ -9,7 +9,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var vfxController = systems.GetShared<SharedData>().VFXController;
+            var data = systems.GetShared<SharedData>();
 
             var filter = world
                 .Filter<TakeDamageEvent>()
@@ -28,10 +28,10 @@ namespace BT
                 ref var damageEvent = ref damageEventPool.Get(e);
 
                 ChangeHP(ref hpComp, ref damageEvent);                
-                CreateHitVfxEntity(world, vfxController, damageEvent.HitPoint);
+                CreateHitVfxEntity(world, data.VFXController, damageEvent.HitPoint);
                 AddStunComponent(world, e);
                 AddDamageViewComponent(world, e, ref damageEvent, ref hpComp, ref view);
-                TryAddDeathComponent(world, e, ref hpComp);
+                TryAddDeathComponent(world, e, data, ref hpComp);
                 
                 damageEventPool.Del(e);                
             }
@@ -46,13 +46,18 @@ namespace BT
         }
 
 
-        private void TryAddDeathComponent(EcsWorld world, int damageEntity, ref Health hpComp)
+        private void TryAddDeathComponent(EcsWorld world, int damageEntity, SharedData data, ref Health hpComp)
         {
             if (hpComp.HP > 0) return;
 
             var pool = world.GetPool<Death>();
             ref var deathComp = ref pool.Add(damageEntity);
             deathComp.Timer = ConstPrm.Character.DEATH_TIME;
+
+            var eventEntity = world.NewEntity();
+            var shakeEventPool = world.GetPool<ShakeCameraEvent>();
+            ref var evt = ref shakeEventPool.Add(eventEntity);
+            evt.Timer = data.Config.CameraConfig.ShakeDuration;
         }
 
 
