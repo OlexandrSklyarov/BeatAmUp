@@ -6,6 +6,7 @@ namespace BT
     {
         public Transform Transform;
         public CharacterController characterController;
+        public Vector3 Direction;
         public Vector3 HorizontalVelocity;
         public float VerticalVelocity;
         public float CurrentSpeed;

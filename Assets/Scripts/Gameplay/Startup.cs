@@ -88,8 +88,9 @@ namespace BT
                 .Add(new CharacterReleaseStunSystem())
                 .Add(new HeroAnimationSystem())
                 .Add(new CharacterDamageAnimationSystem())
-                .Add(new DestroyVfxItemSystem())
                 .Add(new EnemyFindTargetSystem())
+                .Add(new DestroyVfxItemSystem())
+                .Add(new DrawCharacterUISystem())
                 .Init();
             
             _fixedUpdateSystems

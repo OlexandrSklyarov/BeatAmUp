@@ -9,6 +9,6 @@ namespace BT
     {
         public Transform HeroSpawnPoint;
         public CinemachineVirtualCamera GameVC;
-
+        public GameUI GamaUI;
     }
 }

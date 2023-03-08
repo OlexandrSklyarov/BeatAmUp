@@ -30,27 +30,28 @@ namespace BT
                 .Inc<HeroTag>()
                 .End();
 
-            var inputDataPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<Movement>();
 
             foreach(var e in entities)
             {
-                ref var input = ref inputDataPool.Get(e); 
+                ref var command = ref commandPool.Get(e); 
                 ref var movement = ref movementPool.Get(e);       
 
                 var relativeDirection = movement.Transform
                     .TransformDirection(new Vector3(control.Direction.x, 0f, control.Direction.y));
 
-                input.IsKick = control.IsKick;
-                input.IsPunch = control.IsPunch;
+                command.IsKick = control.IsKick;
+                command.IsPunch = control.IsPunch;
 
-                var isAttack = (input.IsKick || input.IsPunch);
+                var isAttack = (command.IsKick || command.IsPunch);
 
-                input.Direction = (!isAttack) ? relativeDirection : Vector3.zero;
-                input.IsMoved = !isAttack && control.IsMoved;
-                input.IsJump = control.IsJump;
-                input.IsRunning = control.IsRunning;
-                input.IsSitting = control.IsSitting;
+                movement.Direction = (!isAttack) ? relativeDirection : Vector3.zero;
+
+                command.IsMoved = !isAttack && control.IsMoved;
+                command.IsJump = control.IsJump;
+                command.IsRunning = control.IsRunning;
+                command.IsSitting = control.IsSitting;
 
                 control.ResetInput();                
             }

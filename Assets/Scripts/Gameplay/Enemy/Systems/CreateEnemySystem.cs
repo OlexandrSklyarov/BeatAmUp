@@ -64,8 +64,8 @@ namespace BT
 
             //hp
             var hpPool = world.GetPool<Health>();
-            ref var hp = ref hpPool.Add(e);
-            hp.HP = hp.MaxHP = 100;
+            ref var hpComp = ref hpPool.Add(e);
+            hpComp.HP = hpComp.MaxHP = 100;
 
             //AI
             var aiPool = world.GetPool<MovementAI>();

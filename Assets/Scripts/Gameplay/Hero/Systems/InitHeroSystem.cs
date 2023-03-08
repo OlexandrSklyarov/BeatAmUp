@@ -70,9 +70,8 @@ namespace BT
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(heroEntity); 
-            heroHealth.HP = data.Config.PlayerData.StartHP;
-            heroHealth.MaxHP = data.Config.PlayerData.StartHP;            
-
+            heroHealth.HP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;          
+            heroHealth.IsChangeValue = true;
             Util.Debug.Print($"hero init...");
         }
     }

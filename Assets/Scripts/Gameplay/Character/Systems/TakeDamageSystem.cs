@@ -27,9 +27,7 @@ namespace BT
                 ref var view = ref viewPool.Get(e);
                 ref var damageEvent = ref damageEventPool.Get(e);
 
-                var prev = hpComp.HP;
-                hpComp.HP = Mathf.Max(0, hpComp.HP - damageEvent.DamageAmount); 
-                
+                ChangeHP(ref hpComp, ref damageEvent);                
                 CreateHitVfxEntity(world, vfxController, damageEvent.HitPoint);
                 AddStunComponent(world, e);
                 AddDamageViewComponent(world, e, ref damageEvent, ref hpComp, ref view);
@@ -37,6 +35,14 @@ namespace BT
                 
                 damageEventPool.Del(e);                
             }
+        }
+
+
+        private void ChangeHP(ref Health hpComp, ref TakeDamageEvent damageEvent)
+        {
+            hpComp.PreviousHP = hpComp.HP;
+            hpComp.HP = Mathf.Max(0, hpComp.HP - damageEvent.DamageAmount); 
+            hpComp.IsChangeValue = true;
         }
 
 
@@ -63,16 +69,16 @@ namespace BT
 
         private void AddStunComponent(EcsWorld world, int damageEntity)
         {
-            var pool = world.GetPool<Stun>();
+            var stunPool = world.GetPool<Stun>();
 
-            if (pool.Has(damageEntity))
+            if (stunPool.Has(damageEntity))
             {
-                ref var stunComp = ref pool.Get(damageEntity);
+                ref var stunComp = ref stunPool.Get(damageEntity);
                 stunComp.Timer = ConstPrm.Character.STUN_TIME;
             }
             else
             {
-                ref var stunComp = ref pool.Add(damageEntity);
+                ref var stunComp = ref stunPool.Add(damageEntity);
                 stunComp.Timer = ConstPrm.Character.STUN_TIME;
             }
         }

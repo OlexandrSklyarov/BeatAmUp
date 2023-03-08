@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -36,19 +35,19 @@ namespace BT
                     continue;
                 }
 
-                ApplyAcceleration(ref movement, command, config);
+                ApplyAcceleration(ref movement, ref command, config);
                 ApplySpeed(ref movement, config.PlayerData.Speed, isGrounded);
-                ChangeVelocity(ref movement, command, config, isGrounded);
+                ChangeVelocity(ref movement, config, isGrounded);
             }
         }
 
 
-        private void ChangeVelocity(ref Movement movement, CharacterCommand command, GameConfig config, bool isGrounded)
+        private void ChangeVelocity(ref Movement movement, GameConfig config, bool isGrounded)
         {
             var newVelocity = GetMovementVelocity
             (
                 movement.characterController.velocity,
-                command.Direction,
+                movement.Direction,
                 movement.CurrentSpeed
             );
 
@@ -64,9 +63,10 @@ namespace BT
             );
         }
 
-        private void ApplyAcceleration(ref Movement movement, CharacterCommand command, GameConfig config)
+
+        private void ApplyAcceleration(ref Movement movement, ref CharacterCommand command, GameConfig config)
         {
-            if ((command.IsMoved))
+            if (command.IsMoved)
             {
                 var accelerationValue = (command.IsRunning) ?
                     config.PlayerData.AccelerationRun :

@@ -27,8 +27,6 @@ namespace BT
 
         public static class PrefsKey
         {
-            public const string PLAYER_POINTS = "PlayerPoints";
-            public const string HERO_STATS = "HeroStats";
         }
 
 
@@ -38,6 +36,7 @@ namespace BT
             public const float VIEW_ENEMY_ANGLE = 85f;
             public const float SLIDE_TO_TARGET_TIME = 0.15f;
             public const float ATTACK_RADIUS_MULTIPLIER = 2f;
+            public const float MIN_VELOCITY_MULTIPLIER = 0.01f;
         }
 
 
@@ -51,6 +50,12 @@ namespace BT
         {
             public const float STUN_TIME = 0.5f;
             public const float DEATH_TIME = 5f;
+        }
+
+
+        public static class UI
+        {
+            public const float CHANGE_HP_BAR_DURATION = 0.3f;
         }
     }
 }
