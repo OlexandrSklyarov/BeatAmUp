@@ -29,7 +29,7 @@ MonoBehaviour:
     <GroundLayer>k__BackingField:
       serializedVersion: 2
       m_Bits: 64
-    <CheckGroundRadius>k__BackingField: 0.35
+    <CheckGroundRadius>k__BackingField: 0.5
     <MinVerticalVelocity>k__BackingField: 3
     <FallGravityMultiplier>k__BackingField: 2
     <HitLayerMask>k__BackingField:

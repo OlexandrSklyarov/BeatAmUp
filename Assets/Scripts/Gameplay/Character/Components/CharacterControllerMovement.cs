@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct Movement
+    public struct CharacterControllerMovement
     {
         public Transform Transform;
         public CharacterController characterController;

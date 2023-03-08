@@ -11,7 +11,7 @@ namespace BT
 
             var heroes = world.Filter<HeroTag>()
                 .Inc<CharacterCommand>()
-                .Inc<Movement>()
+                .Inc<CharacterControllerMovement>()
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
                 .Exc<HeroSlideTag>()
@@ -26,7 +26,7 @@ namespace BT
                 .End();
 
             var commandPool = world.GetPool<CharacterCommand>();
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             var viewPool = world.GetPool<CharacterView>();
             var movementAIPool = world.GetPool<MovementAI>();
 
@@ -52,7 +52,7 @@ namespace BT
         }
 
 
-        private bool TrySlideToNearestTarget(int heroEntity, ref CharacterView heroView, ref Movement heroMovement, EcsWorld world,
+        private bool TrySlideToNearestTarget(int heroEntity, ref CharacterView heroView, ref CharacterControllerMovement heroMovement, EcsWorld world,
             Vector3 targetPos, float targetRadius)
         {
             var heroPos = heroMovement.Transform.position;

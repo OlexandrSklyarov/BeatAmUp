@@ -70,27 +70,34 @@ namespace BT
         private void AddSystems()
         {
             _updateSystems  
+                //hero
                 .Add(new PlayerInputSystem())
-                .Add(new CheckGroundSystem())
+                .Add(new CharacterControllerCheckGroundSystem())
                 .Add(new HeroMoveToNearestEnemySystem())
-                .Add(new ApplyGravitySystem())
-                .Add(new PlayerSittingSystem())
+                .Add(new CharacterControllerApplyGravitySystem())
+                .Add(new HeroSittingSystem())
                 .Add(new HeroComboAttackSystem())
                 .Add(new HeroJumpSystem())
-                .Add(new CharacterRotateViewSystem())
+                .Add(new HeroRotateViewSystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
-                .Add(new StopMovementWhenAttackingSystem())
+                .Add(new HeroSlowDownHorizontalVelocitySystem())
                 .Add(new ApplyHorizontalVelocitySystem())
+                .Add(new HeroAnimationSystem())
+
+                //character hit
                 .Add(new HitActionSystem())
                 .Add(new TakeDamageSystem())
+
+                //enemy
                 .Add(new CreateEnemySystem())
-                .Add(new CharacterDieSystem())
+                .Add(new EnemyCharacterDieSystem())
                 .Add(new CharacterReleaseStunSystem())
-                .Add(new HeroAnimationSystem())
                 .Add(new CharacterDamageAnimationSystem())
                 .Add(new EnemyFindTargetSystem())
-                .Add(new DestroyVfxItemSystem())
                 .Add(new DrawCharacterUISystem())
+
+                //vfx
+                .Add(new DestroyVfxItemSystem())
                 .Init();
             
             _fixedUpdateSystems

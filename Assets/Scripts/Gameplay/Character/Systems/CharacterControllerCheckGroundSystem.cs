@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CheckGroundSystem : IEcsRunSystem
+    public sealed class CharacterControllerCheckGroundSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -11,10 +11,10 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
-                .Filter<Movement>()
+                .Filter<CharacterControllerMovement>()
                 .End();
 
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)

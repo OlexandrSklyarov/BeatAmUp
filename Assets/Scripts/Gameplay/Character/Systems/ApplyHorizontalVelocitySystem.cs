@@ -10,10 +10,10 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<Movement>()
+                .Filter<CharacterControllerMovement>()
                 .End();
                 
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach (var e in entities)
             {    

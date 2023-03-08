@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public sealed class PlayerSittingSystem : IEcsRunSystem
+    public sealed class HeroSittingSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -26,24 +26,17 @@ namespace BT
 
                 if (!isGrounded)
                 {
-                    if (isSitting) sitingPool.Del(e); 
-                                       
+                    if (isSitting) sitingPool.Del(e);                                        
                     continue;
                 }
 
                 if (command.IsSitting)
                 {
-                    if (!isSitting) 
-                    {
-                        sitingPool.Add(e);                       
-                    }
+                    if (!isSitting) sitingPool.Add(e); 
                 }   
                 else
                 {
-                    if (isSitting) 
-                    {
-                        sitingPool.Del(e); 
-                    }
+                    if (isSitting) sitingPool.Del(e);
                 }  
             }
         }

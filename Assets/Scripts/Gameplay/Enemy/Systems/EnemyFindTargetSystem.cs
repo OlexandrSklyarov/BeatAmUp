@@ -14,13 +14,13 @@ namespace BT
                 .End();
 
             var heroes = world.Filter<HeroTag>()
-                .Inc<Movement>()
+                .Inc<CharacterControllerMovement>()
                 .Exc<Death>()
                 .End();
 
             var enemyTargetPool = world.GetPool<EnemyTarget>();
             var movementPool = world.GetPool<MovementAI>();
-            var heroMovement = world.GetPool<Movement>();
+            var heroMovement = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)
             {

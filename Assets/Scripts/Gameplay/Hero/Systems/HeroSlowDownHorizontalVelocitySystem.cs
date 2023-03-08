@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public sealed class StopMovementWhenAttackingSystem : IEcsRunSystem
+    public sealed class HeroSlowDownHorizontalVelocitySystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -10,12 +10,12 @@ namespace BT
 
             var entities = world
                 .Filter<HeroAttack>()
-                .Inc<Movement>()  
+                .Inc<CharacterControllerMovement>()  
                 .Inc<CharacterGrounded>()  
                 .End();
 
             var attackPool = world.GetPool<HeroAttack>();
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)
             {

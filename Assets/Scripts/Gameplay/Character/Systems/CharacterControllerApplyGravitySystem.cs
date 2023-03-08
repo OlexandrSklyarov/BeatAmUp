@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class ApplyGravitySystem : IEcsRunSystem
+    public sealed class CharacterControllerApplyGravitySystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -11,11 +11,11 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<Movement>()
+                .Filter<CharacterControllerMovement>()
                 .Inc<CharacterCommand>()
                 .End();
 
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             var commandPool = world.GetPool<CharacterCommand>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 

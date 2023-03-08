@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterDieSystem : IEcsRunSystem
+    public sealed class EnemyCharacterDieSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

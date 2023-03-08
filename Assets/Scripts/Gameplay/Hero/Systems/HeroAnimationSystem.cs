@@ -10,16 +10,15 @@ namespace BT
 
             var world = systems.GetWorld();
 
-            var entities = world
-                .Filter<CharacterView>()
+            var entities = world.Filter<HeroTag>()
+                .Inc<CharacterView>()
                 .Inc<CharacterCommand>()
-                .Inc<Movement>()
-                .Inc<HeroTag>()
+                .Inc<CharacterControllerMovement>()                
                 .End();
 
             var viewPool = world.GetPool<CharacterView>();
             var inputPool = world.GetPool<CharacterCommand>();
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             var heroAttackPool = world.GetPool<HeroAttack>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sittingPool = world.GetPool<CharacterSitDown>();
@@ -37,8 +36,7 @@ namespace BT
                 var sqVelocity = movement.HorizontalVelocity.sqrMagnitude;
                 var isWalk = isGrounded && sqVelocity > 0f;
                 var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
-                var isJumping = isGrounded && movement.VerticalVelocity > 0f;
-           
+                var isJumping = isGrounded && movement.VerticalVelocity > 0f;           
 
                 var vel = movement.HorizontalVelocity;
                 vel.y = 0f;

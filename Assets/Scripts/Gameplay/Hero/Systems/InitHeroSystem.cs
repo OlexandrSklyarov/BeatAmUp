@@ -30,7 +30,7 @@ namespace BT
             inputDataPool.Add(heroEntity);
 
             //movement
-            var movementPool =  world.GetPool<Movement>();
+            var movementPool =  world.GetPool<CharacterControllerMovement>();
             ref var movement = ref movementPool.Add(heroEntity);
             var characterController = heroGO.GetComponent<CharacterController>();
             movement.characterController = characterController;

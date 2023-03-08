@@ -3,21 +3,23 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterRotateViewSystem : IEcsRunSystem
+    public sealed class HeroRotateViewSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var entities = world.Filter<CharacterCommand>()
+            var entities = world.Filter<HeroTag>()
+                .Inc<CharacterCommand>()
                 .Inc<CharacterView>()
+                .Inc<CharacterControllerMovement>()
                 .Exc<CharacterSitDown>()
                 .End();
                 
             var inputPool = world.GetPool<CharacterCommand>();
             var viewPool = world.GetPool<CharacterView>();
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach (var e in entities)
             {

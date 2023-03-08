@@ -12,10 +12,10 @@ namespace BT
 
             var entities = world.
                 Filter<HeroTag>()
-                .Inc<Movement>()
+                .Inc<CharacterControllerMovement>()
                 .End();
 
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)
             {

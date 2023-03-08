@@ -12,11 +12,11 @@ namespace BT
 
             var entities = world
                 .Filter<CharacterCommand>()
-                .Inc<Movement>()
+                .Inc<CharacterControllerMovement>()
                 .End();
 
             var commandPool = world.GetPool<CharacterCommand>();
-            var movementPool = world.GetPool<Movement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sitingPool = world.GetPool<CharacterSitDown>();
 
@@ -42,7 +42,7 @@ namespace BT
         }
 
 
-        private void ChangeVelocity(ref Movement movement, GameConfig config, bool isGrounded)
+        private void ChangeVelocity(ref CharacterControllerMovement movement, GameConfig config, bool isGrounded)
         {
             var newVelocity = GetMovementVelocity
             (
@@ -64,7 +64,7 @@ namespace BT
         }
 
 
-        private void ApplyAcceleration(ref Movement movement, ref CharacterCommand command, GameConfig config)
+        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref CharacterCommand command, GameConfig config)
         {
             if (command.IsMoved)
             {
@@ -81,7 +81,7 @@ namespace BT
         }
 
 
-        private void ApplySpeed(ref Movement movement, float speed, bool isHasGrounded)
+        private void ApplySpeed(ref CharacterControllerMovement movement, float speed, bool isHasGrounded)
         {
             if (isHasGrounded)
             {
@@ -95,7 +95,7 @@ namespace BT
         }
 
 
-        private void ChangeAcceleration(ref Movement movement, float targetAcceleration, float time)
+        private void ChangeAcceleration(ref CharacterControllerMovement movement, float targetAcceleration, float time)
         {
             movement.Acceleration = Mathf.MoveTowards
             (
