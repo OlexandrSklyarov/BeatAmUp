@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace BT
 {
@@ -8,8 +7,8 @@ namespace BT
     public class HUD
     {
         [SerializeField] private RectTransform _root;
-        [SerializeField] private Slider _heroHpBar;
-        [SerializeField] private Slider _enemyHpBar;
+        [SerializeField] private CharacterViewInfo _heroViewInfo;
+        [SerializeField] private CharacterViewInfo _enemyViewInfo;
 
 
         public void Init()
@@ -26,8 +25,7 @@ namespace BT
 
         public void ChangePlayerHP(float previous, float current)
         {
-            LeanTween.value(previous, current, ConstPrm.UI.CHANGE_HP_BAR_DURATION)
-                .setOnUpdate((v) => _heroHpBar.value = v);
+            _heroViewInfo.ChangeHpBarWithDelay(previous, current, ConstPrm.UI.CHANGE_HP_BAR_DURATION);
         }
 
 
@@ -35,12 +33,13 @@ namespace BT
         {
             EnableEnemyHPBar(true);
 
-            LeanTween.value(previous, current, ConstPrm.UI.CHANGE_HP_BAR_DURATION)
-                .setOnUpdate((v) => _enemyHpBar.value = v)
-                .setOnComplete(() => EnableEnemyHPBar(false));
+            _enemyViewInfo.ChangeHpBarWithDelay(previous, current, ConstPrm.UI.CHANGE_HP_BAR_DURATION, () =>
+            {
+                EnableEnemyHPBar(false);
+            });
         }
 
 
-        private void EnableEnemyHPBar(bool isActive) => _enemyHpBar.gameObject.SetActive(isActive);
+        private void EnableEnemyHPBar(bool isActive) => _enemyViewInfo.gameObject.SetActive(isActive);
     }
 }

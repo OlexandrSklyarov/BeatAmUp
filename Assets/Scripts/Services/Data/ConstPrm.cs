@@ -55,7 +55,7 @@ namespace BT
 
         public static class UI
         {
-            public const float CHANGE_HP_BAR_DURATION = 0.3f;
+            public const float CHANGE_HP_BAR_DURATION = 0.5f;
         }
     }
 }

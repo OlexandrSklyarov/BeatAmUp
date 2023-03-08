@@ -12,15 +12,18 @@ namespace BT
         }
 
 
-        public void ChangePlayerHP(float previous, float current)
+        public void ChangeCharacterHP(float previous, float current, CharacterType type)
         {
-            _hud.ChangePlayerHP(previous, current);
-        }
+            switch(type)
+            {
+                case CharacterType.HERO:
+                    _hud.ChangePlayerHP(previous, current);
+                break;
 
-
-        public void ChangeEnemyHP(float previous, float current)
-        {
-            _hud.ChangeEnemyHP(previous, current);
-        }
+                case CharacterType.ENEMY:
+                    _hud.ChangeEnemyHP(previous, current);
+                break;
+            }
+        }        
     }
 }

@@ -33,10 +33,11 @@ namespace BT
                 
                 if (heroHP.IsChangeValue)
                 {
-                    ui.ChangePlayerHP
+                    ui.ChangeCharacterHP
                     (
                         (float)heroHP.PreviousHP / heroHP.MaxHP, 
-                        (float)heroHP.HP / heroHP.MaxHP
+                        (float)heroHP.HP / heroHP.MaxHP,
+                        CharacterType.HERO
                     );
                 }
 
@@ -49,10 +50,11 @@ namespace BT
                 
                 if (enemyHP.IsChangeValue)
                 {
-                    ui.ChangeEnemyHP
+                    ui.ChangeCharacterHP
                     (
                         (float)enemyHP.PreviousHP / enemyHP.MaxHP, 
-                        (float)enemyHP.HP / enemyHP.MaxHP
+                        (float)enemyHP.HP / enemyHP.MaxHP,
+                        CharacterType.ENEMY
                     );
                 }
 
