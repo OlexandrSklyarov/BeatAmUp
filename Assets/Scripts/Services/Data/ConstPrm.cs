@@ -43,6 +43,8 @@ namespace BT
         public static class Enemy
         {
             public const float ViewTargetRadius = 15f;
+
+            public const float TARGET_ENCIRCLEMENT_RADIUS = 2f;
         }
 
 

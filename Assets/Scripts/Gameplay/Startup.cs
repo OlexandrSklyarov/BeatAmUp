@@ -93,6 +93,7 @@ namespace BT
                 //enemy
                 .Add(new CreateEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
+                .Add(new EnemySetTargetDestinationSystem())
                 .Add(new EnemyCharacterDieSystem())
 
                 //UI
