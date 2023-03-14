@@ -1,12 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Leopotam.EcsLite;
-using UnityEngine;
 using Util;
 
 namespace BT
 {
-    public class EnemySetTargetDestinationSystem : IEcsRunSystem
+    public sealed class EnemySetTargetDestinationSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -34,7 +31,7 @@ namespace BT
                 if (stunPool.Has(e))
                 {
                     index--;
-                    movement.NavAgent.SetDestination(movement.MyTransform.position);
+                    movement.NavAgent.isStopped = true;
                     continue;
                 }
 

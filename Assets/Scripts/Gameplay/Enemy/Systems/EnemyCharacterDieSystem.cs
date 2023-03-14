@@ -12,15 +12,20 @@ namespace BT
             var enemyEntities = world
                 .Filter<Death>()
                 .Inc<Enemy>()
+                .Inc<MovementAI>()
                 .End();
 
             var deathPool = world.GetPool<Death>();
             var enemyPool = world.GetPool<Enemy>();
+            var movementPool = world.GetPool<MovementAI>();
 
             foreach (var e in enemyEntities)
             {
                 ref var death = ref deathPool.Get(e);
                 ref var enemy = ref enemyPool.Get(e);
+                ref var movement = ref movementPool.Get(e);
+                
+                movement.NavAgent.isStopped = true;
                 
                 death.Timer -= Time.deltaTime;
 
