@@ -52,18 +52,7 @@ namespace BT
                 command.IsMoved = !isAttack && control.IsMoved;
                 command.IsJump = control.IsJump;
                 command.IsRunning = control.IsRunning;
-                command.IsSitting = control.IsSitting;
-
-                Util.Debug.PrintColor($"++++++++++++++++++++++\n", Color.cyan);
-                Util.Debug.Print($"command.IsKick {command.IsKick}");
-                Util.Debug.Print($"command.IsPunch {command.IsPunch}");
-                Util.Debug.Print($"movement.Direction {movement.Direction}");
-                Util.Debug.Print($"command.IsMoved  {command.IsMoved }");
-                Util.Debug.Print($"command.IsJump {command.IsJump}");
-                Util.Debug.Print($"command.IsRunning {command.IsRunning}");
-                Util.Debug.Print($"command.IsSitting {command.IsSitting}");
-                Util.Debug.PrintColor($"======================\n", Color.blue);
-
+                command.IsSitting = control.IsSitting;              
 
                 control.ResetInput();                
             }

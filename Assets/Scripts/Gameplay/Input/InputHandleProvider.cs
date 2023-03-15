@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -19,8 +20,26 @@ namespace BT
         public InputHandleProvider(InputServices control)
         {
             _control = control;
+
+            CheckChangeDevice();
         }
 
+        private void CheckChangeDevice()
+        {
+            InputSystem.onDeviceChange += (device, change) =>
+            {
+                switch (change)
+                {
+                    case InputDeviceChange.Added:
+                        Util.Debug.PrintColor($"New device added: {device}", Color.green);
+                        break;
+
+                    case InputDeviceChange.Removed:
+                        Util.Debug.PrintColor($"Device removed: {device}", Color.magenta);
+                        break;
+                }
+            };
+        }
 
         public void ResetInput()
         {
