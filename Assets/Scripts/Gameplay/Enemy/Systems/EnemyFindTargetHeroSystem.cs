@@ -28,6 +28,8 @@ namespace BT
 
                 foreach(var h in heroes)
                 {
+                    if (enemyTargetPool.Has(e)) continue;
+
                     ref var heroTR = ref heroMovement.Get(h).Transform;
 
                     var sqDist = (aiComp.MyTransform.position - heroTR.position).sqrMagnitude;

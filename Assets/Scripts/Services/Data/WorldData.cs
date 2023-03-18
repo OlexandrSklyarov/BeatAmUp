@@ -7,8 +7,9 @@ namespace BT
     [Serializable]
     public class WorldData
     {
-        public Transform HeroSpawnPoint;
+        public Transform[] HeroSpawnPoints;
         public CinemachineVirtualCamera GameVirtualCamera;
+        public CinemachineTargetGroup TargetGroup;
         public GameUI GamaUI;
     }
 }

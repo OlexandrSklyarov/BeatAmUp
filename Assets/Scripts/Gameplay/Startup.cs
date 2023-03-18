@@ -59,7 +59,6 @@ namespace BT
         {
             _initSystems                
                 .Add(new InitWorldSystem())
-                .Add(new InitHeroSystem())
                 .Add(new InitCameraSystem())
                 .Add(new InitSpawnEnemyZoneSystem())
                 .Add(new InitTestPunchBoxSystem())
@@ -71,6 +70,7 @@ namespace BT
         {
             _updateSystems  
                 //hero
+                .Add(new SpawnHeroSystem())
                 .Add(new PlayerInputSystem())
                 .Add(new CharacterControllerCheckGroundSystem())
                 .Add(new HeroSlideToNearestEnemySystem())
@@ -99,9 +99,12 @@ namespace BT
                 //UI
                 .Add(new DrawCharacterUISystem())
 
+                //Camera
+                .Add(new CameraUpdateTargetSystem())
+                .Add(new ShakeCameraSystem())
+
                 //vfx
                 .Add(new DestroyVfxItemSystem())
-                .Add(new ShakeCameraSystem())
                 .Init();
             
             _fixedUpdateSystems

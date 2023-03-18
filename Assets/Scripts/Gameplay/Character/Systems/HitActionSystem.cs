@@ -84,6 +84,9 @@ namespace BT
         private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref HitDelayAction hitAction)
         {
             var damageEventPool = world.GetPool<TakeDamageEvent>();
+
+            if (damageEventPool.Has(damageEntity)) return;
+
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             damageEventComp.DamageAmount = hitAction.Damage;
             damageEventComp.HitPoint = hitAction.Collider.transform.position;

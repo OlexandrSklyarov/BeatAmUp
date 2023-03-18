@@ -5,40 +5,65 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class InitHeroSystem : IEcsInitSystem
+    public sealed class SpawnHeroSystem : IEcsRunSystem
     {
-        public void Init(IEcsSystems systems)
+        public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
+            var entities = world.Filter<CreateHeroRequest>().End();
+            var requestPool = world.GetPool<CreateHeroRequest>();
+
+            foreach(var e in entities)
+            {
+                ref var request = ref requestPool.Get(e);
+
+                Spawn(world, data, ref request);
+                SpawnHeroEvent(world);
+                
+                requestPool.Del(e);
+            }
+        }
+
+
+        private void SpawnHeroEvent(EcsWorld world)
+        {
+            var entity = world.NewEntity();
+            var eventPool = world.GetPool<HeroCreatedEvent>();
+            eventPool.Add(entity);
+        }
+
+
+        private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest request)
+        {
             var heroGO = UnityEngine.Object.Instantiate
             (
                 data.Config.PlayerData.Prefab, 
-                data.WorldData.HeroSpawnPoint.position, 
+                data.WorldData.HeroSpawnPoints[request.HeroID].position, 
                 Quaternion.identity
             );
 
-            var heroEntity = world.NewEntity();
+            var entity = world.NewEntity();
 
             //hero
-            var heroTagPool =  world.GetPool<HeroTag>();
-            heroTagPool.Add(heroEntity);
+            var heroTagPool = world.GetPool<HeroTag>();
+            heroTagPool.Add(entity);
 
             //input
             var inputDataPool =  world.GetPool<CharacterCommand>();
-            inputDataPool.Add(heroEntity);
+            inputDataPool.Add(entity);
 
             //movement
             var movementPool =  world.GetPool<CharacterControllerMovement>();
-            ref var movement = ref movementPool.Add(heroEntity);
+            ref var movement = ref movementPool.Add(entity);
             var characterController = heroGO.GetComponent<CharacterController>();
             movement.characterController = characterController;
             movement.Transform = heroGO.transform;   
 
             //view
             var viewPool = world.GetPool<CharacterView>();
-            ref var view = ref viewPool.Add(heroEntity);
+            ref var view = ref viewPool.Add(entity);
             view.Animator = heroGO.GetComponentInChildren<Animator>();
             view.ViewTransform = heroGO.transform.GetChild(0).transform; 
             view.Height = characterController.height;
@@ -46,7 +71,7 @@ namespace BT
           
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
-            ref var hit = ref hitPool.Add(heroEntity);
+            ref var hit = ref hitPool.Add(entity);
             hit.HitView = heroGO.GetComponent<IHitReceiver>();
             hit.HitBoxes = heroGO.GetComponentsInChildren<HitBox>();
             Array.ForEach(hit.HitBoxes, h => h.Init());
@@ -54,7 +79,7 @@ namespace BT
 
            //attack
             var heroHandleAttackPool = world.GetPool<HeroAttack>();
-            ref var heroAttack = ref heroHandleAttackPool.Add(heroEntity);            
+            ref var heroAttack = ref heroHandleAttackPool.Add(entity);            
             heroAttack.IsActiveAttack = false;    
             heroAttack.IsNeedFinishAttack = false;
             heroAttack.CurrentPunch = null; 
@@ -68,10 +93,20 @@ namespace BT
 
             //HP
             var healthPool = world.GetPool<Health>();
-            ref var heroHealth = ref healthPool.Add(heroEntity); 
+            ref var heroHealth = ref healthPool.Add(entity); 
             heroHealth.HP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;          
             heroHealth.IsChangeValue = true;
             Util.Debug.Print($"hero init...");
-        }
+
+            //input
+            var heroInputPool = world.GetPool<HeroInput>();
+            ref var input = ref heroInputPool.Add(entity);
+            var inputService = new InputServices();            
+            input.InputProvider = new InputHandleProvider(inputService);
+            input.InputProvider.Enable();
+            input.InputProvider.ResetInput();
+            input.Device = request.Device;
+        }   
+        
     }
 }

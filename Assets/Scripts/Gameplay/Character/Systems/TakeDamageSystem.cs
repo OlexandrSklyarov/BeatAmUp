@@ -65,6 +65,9 @@ namespace BT
             ref TakeDamageEvent damageEvent, ref Health hp, ref CharacterView view)
         {
             var pool = world.GetPool<DamageView>();
+
+            if (pool.Has(damageEntity)) return;
+
             ref var damageViewComp = ref pool.Add(damageEntity);
             damageViewComp.IsFinalDamage = hp.HP <= 0;
             damageViewComp.IsTopBodyDamage = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height * 0.6f;

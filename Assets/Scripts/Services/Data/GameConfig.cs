@@ -6,7 +6,8 @@ namespace BT
     [CreateAssetMenu(menuName = "SO/GameConfig")]
     public class GameConfig : ScriptableObject
     {
-        [field: SerializeField] public PlayerConfig PlayerData { get; private set; }
+        [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
+        [field: Space(20f), SerializeField] public PlayerConfig PlayerData { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
         [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }        

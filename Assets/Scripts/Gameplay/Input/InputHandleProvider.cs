@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -16,30 +15,14 @@ namespace BT
 
         private readonly InputServices _control;
 
+        private bool _isActive;
+
 
         public InputHandleProvider(InputServices control)
         {
             _control = control;
-
-            CheckChangeDevice();
         }
 
-        private void CheckChangeDevice()
-        {
-            InputSystem.onDeviceChange += (device, change) =>
-            {
-                switch (change)
-                {
-                    case InputDeviceChange.Added:
-                        Util.Debug.PrintColor($"New device added: {device}", Color.green);
-                        break;
-
-                    case InputDeviceChange.Removed:
-                        Util.Debug.PrintColor($"Device removed: {device}", Color.magenta);
-                        break;
-                }
-            };
-        }
 
         public void ResetInput()
         {
@@ -49,6 +32,8 @@ namespace BT
 
         public void Enable()
         {
+            if (_isActive) return;
+
             _control.Enable();
 
             _control.Player.Movement.performed += SetDirection;
@@ -61,11 +46,15 @@ namespace BT
             _control.Player.Punch.started += ActivePunch;
             _control.Player.Sitting.started += ActiveSitting;
             _control.Player.Sitting.canceled += ActiveSitting;
+
+            _isActive = true;
         }
 
 
         public void Disable()
         {
+            if (!_isActive) return;
+
             _control.Player.Movement.performed -= SetDirection;
             _control.Player.Movement.canceled -= ReleaseDirection;
             _control.Player.Jump.started -= ActiveJump;
@@ -78,6 +67,8 @@ namespace BT
             _control.Player.Sitting.canceled -= ActiveSitting;
 
             _control.Disable();
+
+            _isActive = false;
         }
 
 

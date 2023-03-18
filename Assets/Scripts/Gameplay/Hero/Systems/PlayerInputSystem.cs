@@ -3,58 +3,61 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class PlayerInputSystem : IEcsInitSystem, IEcsRunSystem, IEcsDestroySystem
-    {        
-        public void Init(IEcsSystems systems) 
-        {
-            var control = systems.GetShared<SharedData>().InputProvider;
-            control.Enable();
-            control.ResetInput(); 
-        }
-
-
+    public sealed class PlayerInputSystem : IEcsRunSystem, IEcsDestroySystem
+    {   
         public void Destroy(IEcsSystems systems)
         {
-            var control = systems.GetShared<SharedData>().InputProvider;
-            control.Disable();            
+            var world = systems.GetWorld();
+            var entities = world.Filter<HeroInput>().End();
+            var inputPool = world.GetPool<HeroInput>();
+
+            foreach(var e in entities)
+            {
+                ref var input = ref inputPool.Get(e);
+                input.InputProvider.Disable();            
+            }
         }
         
 
         public void Run(IEcsSystems systems)
         {
-            var control = systems.GetShared<SharedData>().InputProvider;
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<CharacterCommand>()
+                .Filter<HeroInput>()
+                .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<HeroTag>()
                 .End();
 
+            var inputPool = world.GetPool<HeroInput>();
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)
             {
+                ref var input = ref inputPool.Get(e); 
                 ref var command = ref commandPool.Get(e); 
-                ref var movement = ref movementPool.Get(e);       
+                ref var movement = ref movementPool.Get(e); 
+
+                var provider = input.InputProvider;     
 
                 var relativeDirection = movement.Transform
-                    .TransformDirection(new Vector3(control.Direction.x, 0f, control.Direction.y));
+                    .TransformDirection(new Vector3(provider.Direction.x, 0f, provider.Direction.y));
 
-                command.IsKick = control.IsKick;
-                command.IsPunch = control.IsPunch;
+                command.IsKick = provider.IsKick;
+                command.IsPunch = provider.IsPunch;
 
                 var isAttack = (command.IsKick || command.IsPunch);
 
                 movement.Direction = (!isAttack) ? relativeDirection : Vector3.zero;
 
-                command.IsMoved = !isAttack && control.IsMoved;
-                command.IsJump = control.IsJump;
-                command.IsRunning = control.IsRunning;
-                command.IsSitting = control.IsSitting;              
+                command.IsMoved = !isAttack && provider.IsMoved;
+                command.IsJump = provider.IsJump;
+                command.IsRunning = provider.IsRunning;
+                command.IsSitting = provider.IsSitting;              
 
-                control.ResetInput();                
+                provider.ResetInput();                
             }
         }        
     }
