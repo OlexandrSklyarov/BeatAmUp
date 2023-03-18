@@ -5,8 +5,7 @@ namespace BT
 {
     public struct CreateHeroRequest
     {
-        public InputDevice Device ;
-        public int Count;
+        public InputDevice Device;
         public int HeroID;
     }
 }

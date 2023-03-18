@@ -47,9 +47,9 @@ namespace BT
             }
 
             var requestEntity = world.NewEntity();
-            var pool = world.GetPool<CreateHeroRequest>();            
-            ref var request = ref pool.Add(requestEntity);
-            request.Count = 1;
+            var pool = world.GetPool<CreateHeroRequest>(); 
+                       
+            ref var request = ref pool.Add(requestEntity);            
             request.HeroID = heroCount;
             request.Device = device;
         }
