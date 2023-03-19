@@ -3,6 +3,12 @@ namespace BT
 {
     public static class ConstPrm
     {
+        public static class DevicesName
+        {
+            public const string KEYBOARD = "Keyboard";
+            public const string GAMEPAD = "Gamepad";
+        }
+
         public static class Animation
         {
             public const string IDLE = "IDLE";

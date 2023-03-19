@@ -1,0 +1,13 @@
+using Leopotam.EcsLite;
+using UnityEngine;
+
+namespace #NAMESPACE#
+{
+    public sealed class #SCRIPTNAME# : IEcsRunSystem
+    {
+        public void Run(IEcsSystems systems)
+        {
+            var world  = systems.GetWorld();
+        }
+    }
+}

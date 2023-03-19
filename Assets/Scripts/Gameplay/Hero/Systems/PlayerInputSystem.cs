@@ -8,8 +8,8 @@ namespace BT
         public void Destroy(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var entities = world.Filter<HeroInput>().End();
-            var inputPool = world.GetPool<HeroInput>();
+            var entities = world.Filter<HeroInputUser>().End();
+            var inputPool = world.GetPool<HeroInputUser>();
 
             foreach(var e in entities)
             {
@@ -24,13 +24,13 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<HeroInput>()
+                .Filter<HeroInputUser>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<HeroTag>()
                 .End();
 
-            var inputPool = world.GetPool<HeroInput>();
+            var inputPool = world.GetPool<HeroInputUser>();
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 

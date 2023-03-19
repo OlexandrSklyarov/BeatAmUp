@@ -1,0 +1,9 @@
+using Leopotam.EcsLite;
+using UnityEngine;
+
+namespace #NAMESPACE#
+{
+    public struct #SCRIPTNAME#
+    {
+    }
+}

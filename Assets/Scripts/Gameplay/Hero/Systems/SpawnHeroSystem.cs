@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
+using UnityEngine.InputSystem.Users;
 
 namespace BT
 {
@@ -96,17 +98,28 @@ namespace BT
             ref var heroHealth = ref healthPool.Add(entity); 
             heroHealth.HP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;          
             heroHealth.IsChangeValue = true;
-            Util.Debug.Print($"hero init...");
 
             //input
-            var heroInputPool = world.GetPool<HeroInput>();
+            var heroInputPool = world.GetPool<HeroInputUser>();
             ref var input = ref heroInputPool.Add(entity);
-            var inputService = new InputServices();            
-            input.InputProvider = new InputHandleProvider(inputService);
+            var action = new InputServices();   
+            input.InputProvider = new InputHandleProvider(action);
             input.InputProvider.Enable();
             input.InputProvider.ResetInput();
             input.Device = request.Device;
-        }   
-        
+            input.User = InputUser.PerformPairingWithDevice(request.Device);
+
+            BindDeviceToUser(action, ref input);
+
+            Util.Debug.PrintColor($"Hero init: {input.Device.name}", UnityEngine.Color.green);
+        }
+
+
+        private void BindDeviceToUser(InputServices action, ref HeroInputUser inputUser)
+        {
+            var deviceName = inputUser.Device.name;
+            inputUser.User.ActivateControlScheme(action.controlSchemes.First(s => s.name.Equals(deviceName)));
+            inputUser.User.AssociateActionsWithUser(action);
+        }
     }
 }
