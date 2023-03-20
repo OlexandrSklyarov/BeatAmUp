@@ -37,13 +37,14 @@ namespace BT
 
             foreach (var hero in heroes)
             {
-                ref var heroAttack = ref attackPool.Get(hero);
                 ref var command = ref commandPool.Get(hero);
-                ref var heroMovement = ref movementPool.Get(hero);
-                ref var heroView = ref viewPool.Get(hero);
 
                 if (command.IsPunch || command.IsKick)
                 {
+                    ref var heroAttack = ref attackPool.Get(hero);
+                    ref var heroMovement = ref movementPool.Get(hero);
+                    ref var heroView = ref viewPool.Get(hero);
+
                     foreach (var enemy in enemies)
                     {
                         ref var enemyMovement = ref movementAIPool.Get(enemy);

@@ -7,13 +7,13 @@ namespace BT
     {
         private readonly Dictionary<EnemyType, EntityFactory<EnemyViewProvider>> _factories;
 
-        public EnemyFactory(EnemyData config)
+        public EnemyFactory(EnemyPoolData[] poolData)
         {
             _factories = new Dictionary<EnemyType, EntityFactory<EnemyViewProvider>>();
 
-            for(int i = 0; i < config.Enemies.Length; i++)
+            for(int i = 0; i < poolData.Length; i++)
             {
-                var data = config.Enemies[i];
+                var data = poolData[i];
                 var factory = new EntityFactory<EnemyViewProvider>(data.Prefab, data.PoolSize);
 
                 _factories.Add(data.Type, factory);

@@ -11,6 +11,7 @@ namespace BT
             var entities = world.Filter<Enemy>()
                 .Inc<MovementAI>()
                 .Exc<EnemyTarget>()
+                .Exc<Stun>()
                 .End();
 
             var heroes = world.Filter<HeroTag>()
@@ -33,7 +34,7 @@ namespace BT
                     ref var heroTR = ref heroMovement.Get(h).Transform;
 
                     var sqDist = (aiComp.MyTransform.position - heroTR.position).sqrMagnitude;
-                    var r = ConstPrm.Enemy.ViewTargetRadius * ConstPrm.Enemy.ViewTargetRadius;
+                    var r = ConstPrm.Enemy.VIEW_TARGET_RADIUS * ConstPrm.Enemy.VIEW_TARGET_RADIUS;
                     
                     if (sqDist <= r)
                     {

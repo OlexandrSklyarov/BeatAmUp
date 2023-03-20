@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629e972438c8f63b2b20e1ec771302b8, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
+  <MaxPlayerCount>k__BackingField: 2
   <PlayerData>k__BackingField:
     <Prefab>k__BackingField: {fileID: 1153458557421773201, guid: 8c9e65a1a4e3009969067d48003c4c92,
       type: 3}
@@ -43,3 +44,9 @@ MonoBehaviour:
     <CameraShakeAmplitude>k__BackingField: 1.5
     <CameraShakeFrequency>k__BackingField: 4
     <ShakeDuration>k__BackingField: 0.3
+  <VfxConfig>k__BackingField: {fileID: 11400000, guid: e45bd0ec2c0285b38b26e003091337da,
+    type: 2}
+  <EnemyConfig>k__BackingField: {fileID: 11400000, guid: fcd1b7cc5598c4dc7b230a9691f86177,
+    type: 2}
+  <GameDebugConfig>k__BackingField:
+    <ShowDeviceInfo>k__BackingField: 1

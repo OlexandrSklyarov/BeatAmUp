@@ -37,7 +37,7 @@ namespace BT
                 {                    
                     var damageType = (damageView.IsTopBodyDamage) ? 0 : 1;
                     view.Animator.SetInteger(ConstPrm.Animation.DAMAGE_TYPE, damageType);
-                    view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE);
+                    view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE);                    
                 }
 
                 damageViewPool.Del(e);

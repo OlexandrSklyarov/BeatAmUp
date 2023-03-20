@@ -71,7 +71,10 @@ namespace BT
             var aiPool = world.GetPool<MovementAI>();
             ref var ai = ref aiPool.Add(e);
             ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
-            ai.NavAgent.Warp(createPosition);         
+            ai.NavAgent.Warp(createPosition);  
+            ai.NavAgent.updateRotation = false;
+            ai.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;   
+            ai.NavAgent.angularSpeed = data.Config.EnemyConfig.Movement.AngularSpeed;   
             ai.MyTransform = enemyViewProvider.transform;
             ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);   
         }

@@ -22,10 +22,8 @@ namespace BT
                 
                 stun.Timer -= Time.deltaTime;
 
-                if (stun.Timer <= 0f)
-                {
-                    stunPool.Del(e);
-                }   
+                var isStunEnd = stun.Timer <= 0f;
+                if (isStunEnd) stunPool.Del(e);                
             }
         }
     }

@@ -19962,8 +19962,6 @@ MonoBehaviour:
     TargetGroup: {fileID: 1681544082}
     GamaUI: {fileID: 1931344340}
   _gameConfig: {fileID: 11400000, guid: a3935c85fef19cf359d8004a1135fd7a, type: 2}
-  _vfxConfig: {fileID: 11400000, guid: e45bd0ec2c0285b38b26e003091337da, type: 2}
-  _enemyConfig: {fileID: 11400000, guid: fcd1b7cc5598c4dc7b230a9691f86177, type: 2}
 --- !u!114 &1931344340 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7467512971296464203, guid: 36b26dd022e2b31c588047225f5d41d3,

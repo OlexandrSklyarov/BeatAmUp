@@ -10,7 +10,10 @@ namespace BT
         [field: Space(20f), SerializeField] public PlayerConfig PlayerData { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
-        [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }        
+        [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }
+        [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
+        [field: Space(20f), SerializeField] public EnemyData EnemyConfig { get; private set; }
+        [field: Space(20f), SerializeField] public GameDebug GameDebugConfig { get; private set; }
     }
 
 
@@ -50,5 +53,12 @@ namespace BT
         [field: SerializeField, Min(0.1f)] public float CameraShakeAmplitude { get; private set; } = 1.5f;
         [field: SerializeField, Min(0.1f)] public float CameraShakeFrequency { get; private set; } = 3f;
         [field: SerializeField, Min(0.1f)] public float ShakeDuration { get; private set; } = 0.2f;
+    }
+
+
+    [Serializable]
+    public sealed class GameDebug
+    {        
+        [field: SerializeField] public bool ShowDeviceInfo { get; private set; }
     }
 }

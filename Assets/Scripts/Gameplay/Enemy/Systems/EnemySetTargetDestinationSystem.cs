@@ -24,21 +24,22 @@ namespace BT
             var index = count;
 
             foreach (var e in enemyEntities)
-            {
+            {                
                 ref var movement = ref movementPool.Get(e);
                 ref var target = ref targetPool.Get(e);
 
                 if (stunPool.Has(e))
                 {
                     index--;
-                    movement.NavAgent.isStopped = true;
+                    movement.NavAgent.SetDestination(movement.MyTransform.position);
+                    targetPool.Del(e);
                     continue;
                 }
 
                 var bodyRadius = movement.NavAgent.radius;
                 var r = bodyRadius + ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS;
                 var destination = MathUtility.GetCirclePosition2D(target.MyTarget.position, 360, count, index, r);
-                
+                                
                 movement.NavAgent.SetDestination(destination);
                 movement.NavAgent.stoppingDistance = bodyRadius * 2f;
 

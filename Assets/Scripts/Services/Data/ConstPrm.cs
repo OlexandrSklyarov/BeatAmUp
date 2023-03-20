@@ -16,6 +16,7 @@ namespace BT
             public const string MOVE_SPEED = "SPEED";
             public const string DEATH = "DEATH";
             public const string DAMAGE = "DAMAGE";
+            public const string STUN = "STUN";
             public const string DAMAGE_TYPE = "DAMAGE_TYPE";
             public const string HAMMERING_DAMAGE = "HAMMERING_DAMAGE";
             public const string ATTACK = "ATTACK";
@@ -48,15 +49,15 @@ namespace BT
 
         public static class Enemy
         {
-            public const float ViewTargetRadius = 15f;
-
+            public const float VIEW_TARGET_RADIUS = 15f;
             public const float TARGET_ENCIRCLEMENT_RADIUS = 2f;
+            public const float MIN_VELOCITY_OFFSET = 0.1f;
         }
 
 
         public static class Character
         {
-            public const float STUN_TIME = 0.5f;
+            public const float STUN_TIME = 3f;
             public const float DEATH_TIME = 5f;
         }
 
