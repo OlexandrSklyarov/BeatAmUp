@@ -52,9 +52,11 @@ namespace BT
             var heroTagPool = world.GetPool<HeroTag>();
             heroTagPool.Add(entity);
 
+
             //input
             var inputDataPool =  world.GetPool<CharacterCommand>();
             inputDataPool.Add(entity);
+
 
             //movement
             var movementPool =  world.GetPool<CharacterControllerMovement>();
@@ -62,6 +64,7 @@ namespace BT
             var characterController = heroGO.GetComponent<CharacterController>();
             movement.characterController = characterController;
             movement.Transform = heroGO.transform;   
+
 
             //view
             var viewPool = world.GetPool<CharacterView>();
@@ -71,6 +74,7 @@ namespace BT
             view.Height = characterController.height;
             view.BodyRadius = characterController.radius;
           
+
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
@@ -93,11 +97,13 @@ namespace BT
             heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
             heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
 
+
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(entity); 
             heroHealth.HP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;          
             heroHealth.IsChangeValue = true;
+
 
             //input
             var heroInputPool = world.GetPool<HeroInputUser>();

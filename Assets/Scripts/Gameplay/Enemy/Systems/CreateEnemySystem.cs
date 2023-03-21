@@ -31,16 +31,16 @@ namespace BT
         {
             var enemyViewProvider = data.EnemyFactory.GetEnemyView(type);
 
-            var e = world.NewEntity();
+            var entity = world.NewEntity();
 
             //enemy
             var enemyPool = world.GetPool<Enemy>();
-            ref var enemyComp = ref enemyPool.Add(e);
+            ref var enemyComp = ref enemyPool.Add(entity);
             enemyComp.ViewProvider = enemyViewProvider;
 
             //Physics body
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
-            ref var comp = ref bodyPool.Add(e);
+            ref var comp = ref bodyPool.Add(entity);
             comp.Body = enemyViewProvider.GetComponent<Rigidbody>();
             comp.Body.isKinematic = true;
             var collider = enemyViewProvider.GetComponent<CapsuleCollider>();
@@ -49,7 +49,7 @@ namespace BT
 
             //view
             var viewPool = world.GetPool<CharacterView>();
-            ref var view = ref viewPool.Add(e);
+            ref var view = ref viewPool.Add(entity);
             view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
             view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
             view.Height = collider.height;
@@ -57,19 +57,20 @@ namespace BT
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
-            ref var hit = ref hitPool.Add(e);
+            ref var hit = ref hitPool.Add(entity);
             hit.HitView = enemyViewProvider.GetComponent<IHitReceiver>();
             hit.HitBoxes = enemyViewProvider.GetComponentsInChildren<HitBox>();
             Array.ForEach(hit.HitBoxes, h => h.Init());
 
+
             //hp
             var hpPool = world.GetPool<Health>();
-            ref var hpComp = ref hpPool.Add(e);
+            ref var hpComp = ref hpPool.Add(entity);
             hpComp.HP = hpComp.MaxHP = 100;
 
             //AI
             var aiPool = world.GetPool<MovementAI>();
-            ref var ai = ref aiPool.Add(e);
+            ref var ai = ref aiPool.Add(entity);
             ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
             ai.NavAgent.Warp(createPosition);  
             ai.NavAgent.updateRotation = false;

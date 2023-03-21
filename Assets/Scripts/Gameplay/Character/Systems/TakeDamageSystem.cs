@@ -11,7 +11,7 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var filter = world
+            var damageReceivers = world
                 .Filter<TakeDamageEvent>()
                 .Inc<Health>()
                 .Inc<CharacterView>()
@@ -21,7 +21,7 @@ namespace BT
             var viewPool = world.GetPool<CharacterView>();
             var hpPool = world.GetPool<Health>();
 
-            foreach (var e in filter)
+            foreach (var e in damageReceivers)
             {
                 ref var hpComp = ref hpPool.Get(e);
                 ref var view = ref viewPool.Get(e);
@@ -29,7 +29,7 @@ namespace BT
 
                 ChangeHP(ref hpComp, ref damageEvent);                
                 CreateHitVfxEntity(world, data.VFXController, damageEvent.HitPoint);
-                AddStunComponent(world, e);
+                TryAddStunComponent(world, e);
                 AddDamageViewComponent(world, e, ref damageEvent, ref hpComp, ref view);
                 TryAddDeathComponent(world, e, data, ref hpComp);
                 
@@ -75,7 +75,7 @@ namespace BT
         }
 
 
-        private void AddStunComponent(EcsWorld world, int damageEntity)
+        private void TryAddStunComponent(EcsWorld world, int damageEntity)
         {
             var stunPool = world.GetPool<Stun>();
 

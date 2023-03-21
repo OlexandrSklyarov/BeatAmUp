@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct HitDelayAction
+    public struct TryHitActionEvent
     {
-        public IHitReceiver Responder;
+        public IHitReceiver Attacker;
         public SphereCollider Collider;
         public HitType Type;
         public float Timer;

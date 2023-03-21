@@ -59,6 +59,7 @@ namespace BT
         {
             public const float STUN_TIME = 3f;
             public const float DEATH_TIME = 5f;
+            public const float HIT_COUNT_RESET_TIME = 1f;
         }
 
 

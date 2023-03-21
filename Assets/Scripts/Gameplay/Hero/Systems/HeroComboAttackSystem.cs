@@ -150,10 +150,10 @@ namespace BT
             if (hitBox == null) return;
 
             var hitEntity = world.NewEntity();
-            var hitPool = world.GetPool<HitDelayAction>(); 
+            var hitPool = world.GetPool<TryHitActionEvent>(); 
             ref var hit = ref hitPool.Add(hitEntity);
 
-            hit.Responder = hitInteraction.HitView;
+            hit.Attacker = hitInteraction.HitView;
             hit.Collider = hitBox.Collider;
             hit.Type = hitBox.Type;
             hit.Damage = damage;
