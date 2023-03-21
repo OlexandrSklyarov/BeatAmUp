@@ -6,7 +6,7 @@ namespace BT
     {
         public IHitReceiver Attacker;
         public SphereCollider Collider;
-        public HitType Type;
+        public DamageType Type;
         public float Timer;
         public int Damage;
     }

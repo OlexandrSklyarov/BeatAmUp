@@ -18,6 +18,7 @@ namespace BT
         public float ResetNextActionTimer;
         public bool IsActiveAttack;
         public bool IsNeedFinishAttack;
-        public int CurrentDamage;
+        public bool IsCanThrowBackOpponent;
+
     }
 }

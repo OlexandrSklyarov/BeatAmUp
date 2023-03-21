@@ -6,5 +6,6 @@ namespace BT
         public bool IsTopBodyDamage;
         public bool IsFinalDamage;
         public bool IsHammeringDamage;
+        public bool IsThrowingBody;
     }
 }

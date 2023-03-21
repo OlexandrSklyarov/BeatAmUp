@@ -32,8 +32,7 @@ namespace BT
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var viewPool = world.GetPool<CharacterView>();
-            var movementAIPool = world.GetPool<MovementAI>();
-            var hpPool = world.GetPool<Health>();
+            var movementAIPool = world.GetPool<MovementAI>();            
 
             foreach (var hero in heroes)
             {
@@ -50,10 +49,10 @@ namespace BT
                         ref var enemyMovement = ref movementAIPool.Get(enemy);
                         ref var enemyView = ref viewPool.Get(enemy);
 
-                        if (TrySlideToNearestTarget(world, enemyMovement.MyTransform.position, enemyView.BodyRadius, 
-                            hero, ref heroView, ref heroMovement))
+                        if (TrySlideToNearestTarget(world, enemyMovement.MyTransform.position, 
+                            enemyView.BodyRadius, hero, ref heroView, ref heroMovement))
                         {
-                            TryAddFinishAttack(enemy, hpPool, config.HeroAttackData.MaxDamage, ref heroAttack);
+                            TryAddFinishAttack(world, enemy, config.HeroAttackData.MaxDamage, ref heroAttack);
 
                             break;
                         }
@@ -63,12 +62,21 @@ namespace BT
         }
 
 
-        private void TryAddFinishAttack(int enemy, EcsPool<Health> hpPool, int damageThreshold, ref HeroAttack heroAttack)
+        private void TryAddFinishAttack(EcsWorld world, int enemy, int damageThreshold, ref HeroAttack heroAttack)
         {
-            if (!hpPool.Has(enemy)) return;
+            var hpPool = world.GetPool<Health>();
+            if (hpPool.Has(enemy))
+            {
+                ref var enemyHP = ref hpPool.Get(enemy);
+                heroAttack.IsNeedFinishAttack = enemyHP.HP <= damageThreshold;
+            }
 
-            ref var enemyHP = ref hpPool.Get(enemy);
-            heroAttack.IsNeedFinishAttack = enemyHP.HP <= damageThreshold;
+            var hitCounterPool = world.GetPool<HitCounter>();
+            if (hitCounterPool.Has(enemy))
+            {
+                ref var counter = ref hitCounterPool.Get(enemy);
+                heroAttack.IsCanThrowBackOpponent = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
+            }            
         }
 
 

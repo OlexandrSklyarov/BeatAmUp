@@ -27,17 +27,27 @@ namespace BT
                 if (damageView.IsFinalDamage)
                 {
                     if (damageView.IsHammeringDamage)
+                    {
                         view.Animator.SetTrigger(ConstPrm.Animation.HAMMERING_DAMAGE);
+                    }
                     else
-                        view.Animator.SetTrigger(ConstPrm.Animation.DEATH);
-
-                    body.Collider.enabled = false;
+                    {
+                        view.Animator.SetBool(ConstPrm.Animation.DEATH, true);
+                        view.Animator.SetTrigger(ConstPrm.Animation.THROW_BODY);
+                    }
                 }
                 else
-                {                    
-                    var damageType = (damageView.IsTopBodyDamage) ? 0 : 1;
-                    view.Animator.SetInteger(ConstPrm.Animation.DAMAGE_TYPE, damageType);
-                    view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE);                    
+                {     
+                    if (damageView.IsThrowingBody)
+                    {
+                        view.Animator.SetTrigger(ConstPrm.Animation.THROW_BODY);      
+                    }
+                    else
+                    {
+                        var damageZone = (damageView.IsTopBodyDamage) ? 0 : 1;
+                        view.Animator.SetInteger(ConstPrm.Animation.DAMAGE_TYPE, damageZone);
+                        view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE); 
+                    }           
                 }
 
                 damageViewPool.Del(e);

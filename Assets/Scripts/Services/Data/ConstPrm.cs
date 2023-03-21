@@ -17,6 +17,7 @@ namespace BT
             public const string DEATH = "DEATH";
             public const string DAMAGE = "DAMAGE";
             public const string STUN = "STUN";
+            public const string THROW_BODY = "THROW_BODY";
             public const string DAMAGE_TYPE = "DAMAGE_TYPE";
             public const string HAMMERING_DAMAGE = "HAMMERING_DAMAGE";
             public const string ATTACK = "ATTACK";
@@ -60,6 +61,7 @@ namespace BT
             public const float STUN_TIME = 3f;
             public const float DEATH_TIME = 5f;
             public const float HIT_COUNT_RESET_TIME = 1f;
+            public const int MAX_HIT_COUNT = 3;
         }
 
 

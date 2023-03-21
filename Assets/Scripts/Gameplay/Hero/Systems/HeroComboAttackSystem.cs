@@ -53,9 +53,9 @@ namespace BT
 
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;   
 
-            attack.CurrentDamage = (attack.IsActiveAttack && attack.IsNeedFinishAttack) ?
+            var damage = (attack.IsActiveAttack && attack.IsNeedFinishAttack) ?
                 config.HeroAttackData.MaxDamage :
-                config.HeroAttackData.DefaultDamage; 
+                config.HeroAttackData.DefaultDamage;             
 
             if (input.IsPunch)
             {                
@@ -68,7 +68,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(ref hitInteraction, attack.CurrentPunch, world, attack.CurrentDamage);
+                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentPunch, world, damage);
             }            
             else if (input.IsKick)
             {
@@ -81,7 +81,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(ref hitInteraction, attack.CurrentKick, world, attack.CurrentDamage);
+                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentKick, world, damage);
             }            
         }
 
@@ -110,15 +110,39 @@ namespace BT
         }
         
 
+        private void CreateHitEvent(ref HitInteraction hitInteraction, ref HeroAttack attack,
+            HeroAttackAnimationData attackAnimData, EcsWorld world, int damage)
+        {
+            var hitBox = hitInteraction.HitBoxes
+                .FirstOrDefault(h => h.Type == attackAnimData.HitType);
+
+            if (hitBox == null) return;
+
+            var hitEntity = world.NewEntity();
+            var hitPool = world.GetPool<TryHitActionEvent>(); 
+            ref var hit = ref hitPool.Add(hitEntity);
+
+            hit.Attacker = hitInteraction.HitView;
+            hit.Collider = hitBox.Collider;
+            hit.Damage = damage;
+            hit.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
+
+            hit.Type = (attackAnimData.HitType == HitType.UP_TWO_HAND_BIG) ? DamageType.HAMMERING : 
+                (attack.IsNeedFinishAttack || attack.IsCanThrowBackOpponent) ? DamageType.POWERFUL : 
+                    DamageType.SIMPLE;
+        }
+
+
         private void ResetComboState(ref HeroAttack attack)
         {     
             if (attack.IsActiveAttack && attack.AttackTimer <= 0f)
             {
+                attack.AttackTimer = 0f;                
                 attack.CurrentKick = null;
                 attack.CurrentPunch = null;
                 attack.IsActiveAttack = false;
                 attack.IsNeedFinishAttack = false;
-                attack.AttackTimer = 0f;                
+                attack.IsCanThrowBackOpponent = false;
             }
             else
             {
@@ -138,26 +162,6 @@ namespace BT
             {
                 attack.ResetNextActionTimer -= Time.deltaTime;
             }
-        }
-
-
-        private void CreateHitEvent(ref HitInteraction hitInteraction, 
-            HeroAttackAnimationData attackData, EcsWorld world, int damage)
-        {
-            var hitBox = hitInteraction.HitBoxes
-                .FirstOrDefault(h => h.Type == attackData.HitType);
-
-            if (hitBox == null) return;
-
-            var hitEntity = world.NewEntity();
-            var hitPool = world.GetPool<TryHitActionEvent>(); 
-            ref var hit = ref hitPool.Add(hitEntity);
-
-            hit.Attacker = hitInteraction.HitView;
-            hit.Collider = hitBox.Collider;
-            hit.Type = hitBox.Type;
-            hit.Damage = damage;
-            hit.Timer = attackData.AttackTime * attackData.DamageTimeMultiplier;
         }
     }
 }

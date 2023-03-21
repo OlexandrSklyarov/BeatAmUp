@@ -72,6 +72,7 @@ namespace BT
             damageViewComp.IsFinalDamage = hp.HP <= 0;
             damageViewComp.IsTopBodyDamage = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height * 0.6f;
             damageViewComp.IsHammeringDamage = damageEvent.IsHammeringDamage;
+            damageViewComp.IsThrowingBody = damageEvent.IsThrowingBody;
         }
 
 

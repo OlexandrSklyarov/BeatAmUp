@@ -98,7 +98,10 @@ namespace BT
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             damageEventComp.DamageAmount = hitAction.Damage;
             damageEventComp.HitPoint = hitAction.Collider.transform.position;
-            damageEventComp.IsHammeringDamage = hitAction.Type == HitType.UP_TWO_HAND_BIG;
+            damageEventComp.IsHammeringDamage = hitAction.Type == DamageType.HAMMERING;
+            damageEventComp.IsThrowingBody = hitAction.Type == DamageType.POWERFUL;
+
+            Util.Debug.PrintColor($"TakeDamage type {hitAction.Type}", Color.magenta);
         }
     }
 }
