@@ -86,16 +86,16 @@ namespace BT
                 //character hit
                 .Add(new CharacterHitHandlerSystem())
                 .Add(new ResetHitCountSystem())
-                .Add(new TakeDamageSystem())
-                .Add(new CharacterDamageAnimationSystem())
+                .Add(new CharacterTakeDamageSystem())
                 .Add(new CharacterReleaseStunSystem())
 
                 //enemy
                 .Add(new CreateEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemySetTargetDestinationSystem())
-                .Add(new EnemyCharacterDieSystem())
                 .Add(new EnemyBodyRotateSystem())
+                .Add(new EnemyDamageHandlerSystem())
+                .Add(new EnemyCharacterDieSystem())
                 .Add(new EnemyAnimationSystem())
 
                 //UI

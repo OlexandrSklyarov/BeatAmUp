@@ -1,10 +1,11 @@
+using UnityEngine;
 
 namespace BT
 {
-    public struct DamageView
+    public struct DamageViewEvent
     {
+        public Vector3 HitDirection;
         public bool IsTopBodyDamage;
-        public bool IsFinalDamage;
         public bool IsHammeringDamage;
         public bool IsThrowingBody;
     }
