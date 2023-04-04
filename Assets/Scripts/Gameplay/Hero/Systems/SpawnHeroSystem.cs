@@ -111,7 +111,6 @@ namespace BT
             var action = new InputServices();   
             input.InputProvider = new InputHandleProvider(action);
             input.InputProvider.Enable();
-            input.InputProvider.ResetInput();
             input.Device = request.Device;
             input.User = InputUser.PerformPairingWithDevice(request.Device);
 

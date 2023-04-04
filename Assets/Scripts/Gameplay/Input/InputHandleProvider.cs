@@ -22,13 +22,7 @@ namespace BT
         {
             _control = control;
         }
-
-
-        public void ResetInput()
-        {
-            IsKick = IsPunch = false;            
-        }
-
+        
 
         public void Enable()
         {
@@ -98,6 +92,12 @@ namespace BT
         {
             Direction = ctx.ReadValue<Vector2>();
             IsMoved = false;
+        }
+        
+
+        public void ResetInputValue()
+        {
+            IsKick = IsPunch = false;
         }
     }
 }
