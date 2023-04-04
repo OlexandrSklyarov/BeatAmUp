@@ -25,10 +25,7 @@ namespace BT
                 ref var command = ref commandPool.Get(e);
                 var isHasGrounded = groundedPool.Has(e);
 
-                if (isHasGrounded  && movement.VerticalVelocity < 0f)
-                {
-                    movement.VerticalVelocity = -config.CharacterData.MinVerticalVelocity;
-                }
+                ClampVerticalVelocity(ref movement, isHasGrounded, config);
                 
                 var gravityMultiplier = (!isHasGrounded && movement.IsJumpProcess && !command.IsJump) ? 
                     config.CharacterData.FallGravityMultiplier : 1f;
@@ -38,6 +35,15 @@ namespace BT
                 
                 movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
             }
+        }
+
+        
+        private void ClampVerticalVelocity(ref CharacterControllerMovement movement, bool isHasGrounded, GameConfig config)
+        {
+            if (!isHasGrounded) return;
+            if (movement.VerticalVelocity >= 0f) return;
+            
+            movement.VerticalVelocity = -config.CharacterData.MinVerticalVelocity;
         }
     }
 }

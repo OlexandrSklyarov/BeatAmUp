@@ -74,7 +74,7 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Sitting"",
-                    ""type"": ""Button"",
+                    ""type"": ""PassThrough"",
                     ""id"": ""07d56511-6c13-48c4-bab9-ab4d13833d08"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
