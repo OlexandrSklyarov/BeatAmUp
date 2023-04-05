@@ -24,8 +24,9 @@ namespace BT
     [Serializable]
     public class EnemyMovementConfig
     {
-        [field: SerializeField, Min(0.01f)] public float Speed {get; private set;} = 3f;      
-        [field: SerializeField, Min(0.01f)] public float AngularSpeed {get; private set;} = 300f;  
+        [field: SerializeField, Min(0.01f)] public float Speed {get; private set;} = 4f;      
+        [field: SerializeField, Min(0.01f)] public float Acceleration {get; private set;} =8f;      
+        [field: SerializeField, Min(0.01f)] public float AngularSpeed {get; private set;} = 800f;
     }
 
 

@@ -33,7 +33,7 @@ namespace BT
                 movement.VerticalVelocity += Physics.gravity.y * gravityMultiplier * Time.deltaTime; 
                 movement.VerticalVelocity = Mathf.Max(Physics.gravity.y, movement.VerticalVelocity);
                 
-                movement.characterController.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
+                movement.CharacterController.Move(Vector3.up * movement.VerticalVelocity * Time.deltaTime);
             }
         }
 

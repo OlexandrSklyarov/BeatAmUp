@@ -46,7 +46,7 @@ namespace BT
         {
             var newVelocity = GetMovementVelocity
             (
-                movement.characterController.velocity,
+                movement.CharacterController.velocity,
                 movement.Direction,
                 movement.CurrentSpeed
             );

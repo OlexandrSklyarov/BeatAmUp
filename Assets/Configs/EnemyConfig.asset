@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
   <Movement>k__BackingField:
-    <Speed>k__BackingField: 3.5
-    <AngularSpeed>k__BackingField: 360
+    <Speed>k__BackingField: 4
+    <Acceleration>k__BackingField: 8
+    <AngularSpeed>k__BackingField: 800
   <Animation>k__BackingField:
     <ChangeSpeedCurve>k__BackingField:
       serializedVersion: 2

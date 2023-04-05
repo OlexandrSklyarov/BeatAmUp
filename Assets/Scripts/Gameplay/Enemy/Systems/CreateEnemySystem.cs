@@ -2,6 +2,7 @@ using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 namespace BT
 {
@@ -62,7 +63,6 @@ namespace BT
             hit.HitBoxes = enemyViewProvider.GetComponentsInChildren<HitBox>();
             Array.ForEach(hit.HitBoxes, h => h.Init());
 
-
             //hp
             var hpPool = world.GetPool<Health>();
             ref var hpComp = ref hpPool.Add(entity);
@@ -72,10 +72,12 @@ namespace BT
             var aiPool = world.GetPool<MovementAI>();
             ref var ai = ref aiPool.Add(entity);
             ai.NavAgent = enemyViewProvider.GetComponent<NavMeshAgent>();
-            ai.NavAgent.Warp(createPosition);  
-            ai.NavAgent.updateRotation = false;
+            ai.NavAgent.Warp(createPosition);
+            ai.NavAgent.avoidancePriority = 50 + Random.Range(0, 45);
             ai.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;   
+            ai.NavAgent.acceleration = data.Config.EnemyConfig.Movement.Acceleration;   
             ai.NavAgent.angularSpeed = data.Config.EnemyConfig.Movement.AngularSpeed;   
+            ai.NavAgent.updateRotation = false;
             ai.MyTransform = enemyViewProvider.transform;
             ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);   
         }

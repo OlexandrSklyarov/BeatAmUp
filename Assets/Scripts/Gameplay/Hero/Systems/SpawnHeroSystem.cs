@@ -62,7 +62,7 @@ namespace BT
             var movementPool =  world.GetPool<CharacterControllerMovement>();
             ref var movement = ref movementPool.Add(entity);
             var characterController = heroGO.GetComponent<CharacterController>();
-            movement.characterController = characterController;
+            movement.CharacterController = characterController;
             movement.Transform = heroGO.transform;   
 
 

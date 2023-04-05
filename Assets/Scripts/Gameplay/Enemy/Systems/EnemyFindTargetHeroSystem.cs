@@ -15,13 +15,13 @@ namespace BT
                 .End();
 
             var heroes = world.Filter<HeroTag>()
-                .Inc<CharacterControllerMovement>()
+                .Inc<CharacterView>()
                 .Exc<Death>()
                 .End();
 
             var enemyTargetPool = world.GetPool<EnemyTarget>();
             var movementPool = world.GetPool<MovementAI>();
-            var heroMovement = world.GetPool<CharacterControllerMovement>();
+            var heroCharacterView = world.GetPool<CharacterView>();
 
             foreach(var e in entities)
             {
@@ -31,7 +31,7 @@ namespace BT
                 {
                     if (enemyTargetPool.Has(e)) continue;
 
-                    ref var heroTR = ref heroMovement.Get(h).Transform;
+                    ref var heroTR = ref heroCharacterView.Get(h).ViewTransform;
 
                     var sqDist = (aiComp.MyTransform.position - heroTR.position).sqrMagnitude;
                     var r = ConstPrm.Enemy.VIEW_TARGET_RADIUS * ConstPrm.Enemy.VIEW_TARGET_RADIUS;
