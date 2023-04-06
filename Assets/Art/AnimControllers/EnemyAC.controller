@@ -114,7 +114,7 @@ AnimatorState:
   - {fileID: -2052689721773727676}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -238,7 +238,7 @@ AnimatorState:
   - {fileID: -6735090154700373156}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -288,7 +288,7 @@ AnimatorState:
   - {fileID: -627112073265303382}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -365,7 +365,7 @@ AnimatorState:
   - {fileID: 4594580442380195688}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -572,7 +572,7 @@ AnimatorState:
   - {fileID: -8697541862633350445}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -600,7 +600,7 @@ AnimatorState:
   - {fileID: -864396114915563355}
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0
@@ -680,13 +680,13 @@ AnimatorStateMachine:
     m_Position: {x: 260, y: -250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -3339558515538176638}
-    m_Position: {x: 260, y: -130, z: 0}
+    m_Position: {x: 270, y: -130, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -6764642193548110757}
     m_Position: {x: 260, y: -190, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3508466868555104959}
-    m_Position: {x: 260, y: 200, z: 0}
+    m_Position: {x: 260, y: 150, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1286169630005664243}
     m_Position: {x: 270, y: 60, z: 0}
@@ -729,7 +729,7 @@ AnimatorState:
   m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
-  m_IKOnFeet: 0
+  m_IKOnFeet: 1
   m_WriteDefaultValues: 1
   m_Mirror: 0
   m_SpeedParameterActive: 0

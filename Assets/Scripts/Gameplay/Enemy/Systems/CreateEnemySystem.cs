@@ -42,8 +42,10 @@ namespace BT
             //Physics body
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             ref var comp = ref bodyPool.Add(entity);
-            comp.Body = enemyViewProvider.GetComponent<Rigidbody>();
-            comp.Body.isKinematic = true;
+            
+            comp.BodyRagdoll = enemyViewProvider.RagdollElements;
+            foreach (var r in comp.BodyRagdoll) r.isKinematic = true;
+            
             var collider = enemyViewProvider.GetComponent<CapsuleCollider>();
             collider.enabled = true;
             comp.Collider = collider;
@@ -59,9 +61,10 @@ namespace BT
             //hit
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
-            hit.HitView = enemyViewProvider.GetComponent<IHitReceiver>();
             hit.HitBoxes = enemyViewProvider.GetComponentsInChildren<HitBox>();
-            Array.ForEach(hit.HitBoxes, h => h.Init());
+            
+            hit.HurtBoxes = enemyViewProvider.GetComponentsInChildren<HurtBox>();
+            foreach(var h in hit.HurtBoxes) h.Init();
 
             //hp
             var hpPool = world.GetPool<Health>();

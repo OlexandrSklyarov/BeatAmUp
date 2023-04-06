@@ -1,9 +1,11 @@
 
+using System.Collections.Generic;
+
 namespace BT
 {
     public struct HitInteraction
     {        
-        public IHitReceiver HitView;
-        public HitBox[] HitBoxes;
+        public IEnumerable<HitBox> HitBoxes;
+        public IEnumerable<HurtBox> HurtBoxes;
     }
 }

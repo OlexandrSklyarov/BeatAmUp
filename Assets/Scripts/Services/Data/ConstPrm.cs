@@ -62,6 +62,7 @@ namespace BT
             public const float DEATH_TIME = 5f;
             public const float HIT_COUNT_RESET_TIME = 1f;
             public const int MAX_HIT_COUNT = 3;
+            public const string HIT_LAYER_NAME = "HIT";
         }
 
 

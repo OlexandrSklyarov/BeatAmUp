@@ -1,10 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BT
 {
     public struct CharacterPhysicsBody
     {
-        public Rigidbody Body;
+        public IEnumerable<Rigidbody> BodyRagdoll;
         public CapsuleCollider Collider;
     }
 }

@@ -78,9 +78,9 @@ namespace BT
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
-            hit.HitView = heroGO.GetComponent<IHitReceiver>();
             hit.HitBoxes = heroGO.GetComponentsInChildren<HitBox>();
-            Array.ForEach(hit.HitBoxes, h => h.Init());
+            hit.HurtBoxes = heroGO.GetComponentsInChildren<HurtBox>();
+            foreach(var h in hit.HurtBoxes) h.Init();
             
 
            //attack

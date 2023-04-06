@@ -18,6 +18,7 @@ namespace BT
                 .Filter<Health>()
                 .Inc<CharacterView>()
                 .Inc<HitInteraction>()
+                .Exc<TakeDamageEvent>()
                 .Exc<Death>()
                 .End();
 
@@ -54,17 +55,19 @@ namespace BT
         private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters, 
             EcsPool<HitInteraction> hitInteractionPool, ref TryHitActionEvent hitAction)
         {
-            var attacker = hitAction.Attacker;
-
             if (!col.TryGetComponent(out IHitReceiver receiver)) return;
-            if (receiver == attacker) return;            
+            
+            //if this attacker?
+            foreach (var h in hitAction.AttackerHitBoxes) if (h == receiver) break;
 
             foreach (var entity in liveCharacters)
             {
                 ref var interaction = ref hitInteractionPool.Get(entity);
 
-                if (interaction.HitView == receiver)
+                foreach (var hitBox in interaction.HitBoxes)
                 {
+                    if (hitBox != receiver) continue;
+                    
                     IncreaseHitCounter(world, entity);
                     CreateTakeDamageEvent(world, entity, ref hitAction); 
                     break;

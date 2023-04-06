@@ -2,21 +2,29 @@ using UnityEngine;
 
 namespace BT
 {
-    [RequireComponent(typeof(SphereCollider))]
-    public class HitBox : MonoBehaviour
+    [RequireComponent(typeof(Rigidbody))]
+    public class HitBox : MonoBehaviour, IHitReceiver
     {
-        public SphereCollider Collider => _collider;
-        public HitType Type => _type;
+        private Rigidbody _rb;
 
-        [SerializeField] private HitType _type;
-
-        private SphereCollider _collider;
-
-
-        public void Init()
+        private void Awake()
         {
-            _collider = GetComponent<SphereCollider>();
-            _collider.isTrigger = true;
+            _rb = GetComponent<Rigidbody>();
+            _rb.isKinematic = true;
+            
+            gameObject.layer = LayerMask.NameToLayer(ConstPrm.Character.HIT_LAYER_NAME);
+        }
+
+
+        private void OnValidate()
+        {
+            gameObject.layer = LayerMask.NameToLayer(ConstPrm.Character.HIT_LAYER_NAME);
+        }
+
+
+        public void AddForceDamage(Vector3 force)
+        {
+            _rb.AddForce(force, ForceMode.Impulse);
         }
     }
 }

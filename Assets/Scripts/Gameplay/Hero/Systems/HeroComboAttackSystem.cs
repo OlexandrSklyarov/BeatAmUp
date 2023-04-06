@@ -113,17 +113,18 @@ namespace BT
         private void CreateHitEvent(ref HitInteraction hitInteraction, ref HeroAttack attack,
             HeroAttackAnimationData attackAnimData, EcsWorld world, int damage)
         {
-            var hitBox = hitInteraction.HitBoxes
+            var hurtBox = hitInteraction.HurtBoxes
                 .FirstOrDefault(h => h.Type == attackAnimData.HitType);
 
-            if (hitBox == null) return;
+            if (hurtBox == null) return;
 
             var hitEntity = world.NewEntity();
             var hitPool = world.GetPool<TryHitActionEvent>(); 
             ref var hit = ref hitPool.Add(hitEntity);
 
-            hit.Attacker = hitInteraction.HitView;
-            hit.Collider = hitBox.Collider;
+            hit.AttackerHurtBox = hurtBox;
+            hit.AttackerHitBoxes = hitInteraction.HitBoxes;
+            hit.Collider = hurtBox.Collider;
             hit.Damage = damage;
             hit.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
 

@@ -59,7 +59,6 @@ namespace BT
                 .Add(new InitWorldSystem())
                 .Add(new InitCameraSystem())
                 .Add(new InitSpawnEnemyZoneSystem())
-                .Add(new InitTestPunchBoxSystem())
                 .Add(new InitPlayerControlSystem())
                 .Init();
         }
