@@ -1,3 +1,6 @@
+using System;
+using System.Diagnostics;
+using UnityEditor;
 using UnityEngine;
 
 namespace BT
@@ -11,18 +14,22 @@ namespace BT
         {
             _rb = GetComponent<Rigidbody>();
             _rb.isKinematic = true;
-            
-            gameObject.layer = LayerMask.NameToLayer(ConstPrm.Character.HIT_LAYER_NAME);
         }
 
-
+        private void Start() => OnValidate();
+        
+        
+        [Conditional("UNITY_EDITOR")]
         private void OnValidate()
         {
-            gameObject.layer = LayerMask.NameToLayer(ConstPrm.Character.HIT_LAYER_NAME);
+            EditorApplication.delayCall += () =>
+            {
+                gameObject.layer = LayerMask.NameToLayer(ConstPrm.Character.HIT_LAYER_NAME);
+            };
         }
 
 
-        public void AddForceDamage(Vector3 force)
+        void IHitReceiver.AddForceDamage(Vector3 force)
         {
             _rb.AddForce(force, ForceMode.Impulse);
         }

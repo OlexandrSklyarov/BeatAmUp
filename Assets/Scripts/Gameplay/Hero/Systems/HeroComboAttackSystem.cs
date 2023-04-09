@@ -123,8 +123,7 @@ namespace BT
             ref var hit = ref hitPool.Add(hitEntity);
 
             hit.AttackerHurtBox = hurtBox;
-            hit.AttackerHitBoxes = hitInteraction.HitBoxes;
-            hit.Collider = hurtBox.Collider;
+            hit.IgnoredAttackerHitBoxes = hitInteraction.HitBoxes;
             hit.Damage = damage;
             hit.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
 

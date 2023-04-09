@@ -36,7 +36,7 @@ namespace BT
 
                 var colliders = Physics.OverlapSphere
                 (
-                    hitEvent.Collider.transform.position,
+                    hitEvent.AttackerHurtBox.Collider.transform.position,
                     config.CharacterData.HitRadius,
                     config.CharacterData.HitLayerMask
                 );
@@ -55,10 +55,13 @@ namespace BT
         private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters, 
             EcsPool<HitInteraction> hitInteractionPool, ref TryHitActionEvent hitAction)
         {
-            if (!col.TryGetComponent(out IHitReceiver receiver)) return;
+            if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
             //if this attacker?
-            foreach (var h in hitAction.AttackerHitBoxes) if (h == receiver) break;
+            foreach (var hitBox in hitAction.IgnoredAttackerHitBoxes)
+            {
+                if (hitBox == receiveHitBox) return;
+            }
 
             foreach (var entity in liveCharacters)
             {
@@ -66,7 +69,7 @@ namespace BT
 
                 foreach (var hitBox in interaction.HitBoxes)
                 {
-                    if (hitBox != receiver) continue;
+                    if (hitBox != receiveHitBox) continue;
                     
                     IncreaseHitCounter(world, entity);
                     CreateTakeDamageEvent(world, entity, ref hitAction); 
@@ -100,7 +103,7 @@ namespace BT
 
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             damageEventComp.DamageAmount = hitAction.Damage;
-            damageEventComp.HitPoint = hitAction.Collider.transform.position;
+            damageEventComp.HitPoint = hitAction.AttackerHurtBox.Collider.transform.position;
             damageEventComp.IsHammeringDamage = hitAction.Type == DamageType.HAMMERING;
             damageEventComp.IsThrowingBody = hitAction.Type == DamageType.POWERFUL;
 
