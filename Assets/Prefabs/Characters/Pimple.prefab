@@ -111,7 +111,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -123,7 +123,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 538601325389109348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00103, y: 0.00451, z: 0}
+  m_LocalPosition: {x: -0.00279, y: 0.00263, z: 0.00156}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -149,7 +149,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0045
+  m_Radius: 0.0055
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8428934789715865861
 MonoBehaviour:
@@ -282,7 +282,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -294,7 +294,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1475253502063502245}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00103, y: 0.00457, z: 0}
+  m_LocalPosition: {x: 0.00144, y: 0.00286, z: 0.00108}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -320,7 +320,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0045
+  m_Radius: 0.0055
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5048790224836606542
 MonoBehaviour:
@@ -349,7 +349,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBoxUpTwoHandBig
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -447,7 +447,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -485,7 +485,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0045
+  m_Radius: 0.0055
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &4426598109698190208
 MonoBehaviour:
@@ -514,7 +514,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBoxUpForwardBig
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -612,7 +612,7 @@ GameObject:
   m_Layer: 0
   m_Name: HurtBox
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -624,7 +624,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8422659440554430453}
   m_LocalRotation: {x: -0.5527669, y: -0.10685232, z: -0.103699744, w: 0.8199254}
-  m_LocalPosition: {x: 0.00053, y: 0.00572, z: -0.00072}
+  m_LocalPosition: {x: 0.0004, y: 0.00351, z: -0.00334}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -650,7 +650,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0045
+  m_Radius: 0.0055
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &8656317589773865919
 MonoBehaviour:

@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterHitHandlerSystem : IEcsRunSystem
+    public sealed class CharacterTryTakeDamageSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -11,7 +11,7 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var attackingEntities = world
-                .Filter<TryHitActionEvent>()
+                .Filter<TryDamageEvent>()
                 .End();
 
             var liveCharacters = world
@@ -22,7 +22,7 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var hitEventPool = world.GetPool<TryHitActionEvent>();
+            var hitEventPool = world.GetPool<TryDamageEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
 
             foreach (var atk in attackingEntities)
@@ -53,12 +53,12 @@ namespace BT
 
 
         private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters, 
-            EcsPool<HitInteraction> hitInteractionPool, ref TryHitActionEvent hitAction)
+            EcsPool<HitInteraction> hitInteractionPool, ref TryDamageEvent damage)
         {
             if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
             //if this attacker?
-            foreach (var hitBox in hitAction.IgnoredAttackerHitBoxes)
+            foreach (var hitBox in damage.IgnoredAttackerHitBoxes)
             {
                 if (hitBox == receiveHitBox) return;
             }
@@ -72,7 +72,7 @@ namespace BT
                     if (hitBox != receiveHitBox) continue;
                     
                     IncreaseHitCounter(world, entity);
-                    CreateTakeDamageEvent(world, entity, ref hitAction); 
+                    CreateTakeDamageEvent(world, entity, ref damage); 
                     break;
                 }
             }
@@ -97,17 +97,18 @@ namespace BT
         }
 
 
-        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref TryHitActionEvent hitAction)
+        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref TryDamageEvent damage)
         {
             var damageEventPool = world.GetPool<TakeDamageEvent>();
 
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
-            damageEventComp.DamageAmount = hitAction.Damage;
-            damageEventComp.HitPoint = hitAction.AttackerHurtBox.Collider.transform.position;
-            damageEventComp.IsHammeringDamage = hitAction.Type == DamageType.HAMMERING;
-            damageEventComp.IsThrowingBody = hitAction.Type == DamageType.POWERFUL;
+            
+            damageEventComp.DamageAmount = damage.Damage;
+            damageEventComp.HitPoint = damage.AttackerHurtBox.Collider.transform.position;
+            damageEventComp.IsHammeringDamage = damage.Type == DamageType.HAMMERING;
+            damageEventComp.IsThrowingBody = damage.Type == DamageType.POWERFUL;
 
-            Util.Debug.PrintColor($"TakeDamage type {hitAction.Type}", Color.magenta);
+            Util.Debug.PrintColor($"TakeDamage type {damage.Type}", Color.magenta);
         }
     }
 }

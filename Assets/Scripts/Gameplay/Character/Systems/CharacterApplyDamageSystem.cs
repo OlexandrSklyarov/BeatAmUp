@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterTakeDamageSystem : IEcsRunSystem
+    public sealed class CharacterApplyDamageSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

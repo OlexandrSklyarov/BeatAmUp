@@ -118,16 +118,16 @@ namespace BT
 
             if (hurtBox == null) return;
 
-            var hitEntity = world.NewEntity();
-            var hitPool = world.GetPool<TryHitActionEvent>(); 
-            ref var hit = ref hitPool.Add(hitEntity);
+            var entity = world.NewEntity();
+            var eventPool = world.GetPool<TryDamageEvent>(); 
+            ref var damageEvent = ref eventPool.Add(entity);
 
-            hit.AttackerHurtBox = hurtBox;
-            hit.IgnoredAttackerHitBoxes = hitInteraction.HitBoxes;
-            hit.Damage = damage;
-            hit.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
+            damageEvent.AttackerHurtBox = hurtBox;
+            damageEvent.IgnoredAttackerHitBoxes = hitInteraction.HitBoxes;
+            damageEvent.Damage = damage;
+            damageEvent.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
 
-            hit.Type = (attackAnimData.HitType == HitType.UP_TWO_HAND_BIG) ? DamageType.HAMMERING : 
+            damageEvent.Type = (attackAnimData.HitType == HitType.UP_TWO_HAND_BIG) ? DamageType.HAMMERING : 
                 (attack.IsNeedFinishAttack || attack.IsCanThrowBackOpponent) ? DamageType.POWERFUL : 
                     DamageType.SIMPLE;
         }
