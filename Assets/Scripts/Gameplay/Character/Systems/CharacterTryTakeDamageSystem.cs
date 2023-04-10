@@ -34,10 +34,11 @@ namespace BT
                 //wait attack
                 if (hitEvent.Timer > 0f) continue;
 
-                var colliders = Physics.OverlapSphere
+                var colliders = Physics.OverlapBox
                 (
-                    hitEvent.AttackerHurtBox.Collider.transform.position,
-                    config.CharacterData.HitRadius,
+                    hitEvent.AttackerHurtBox.Position,
+                    hitEvent.AttackerHurtBox.HalfExtend,
+                    Quaternion.identity,
                     config.CharacterData.HitLayerMask
                 );
 
@@ -104,7 +105,7 @@ namespace BT
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             
             damageEventComp.DamageAmount = damage.Damage;
-            damageEventComp.HitPoint = damage.AttackerHurtBox.Collider.transform.position;
+            damageEventComp.HitPoint = damage.AttackerHurtBox.Position;
             damageEventComp.IsHammeringDamage = damage.Type == DamageType.HAMMERING;
             damageEventComp.IsThrowingBody = damage.Type == DamageType.POWERFUL;
 
