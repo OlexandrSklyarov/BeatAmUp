@@ -3,8 +3,16 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterTryTakeDamageSystem : IEcsRunSystem
+    public sealed class CharacterTryTakeDamageSystem : IEcsInitSystem, IEcsRunSystem
     {
+        private Collider[] _result;
+        
+        public void Init(IEcsSystems systems)
+        {
+            _result = new Collider[10];
+        }
+        
+
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
@@ -34,17 +42,19 @@ namespace BT
                 //wait attack
                 if (hitEvent.Timer > 0f) continue;
 
-                var colliders = Physics.OverlapSphere
+                var count = Physics.OverlapBoxNonAlloc
                 (
-                    hitEvent.AttackerHurtBox.Collider.transform.position,
-                    config.CharacterData.HitRadius,
+                    hitEvent.AttackerHurtBox.Position,
+                    hitEvent.AttackerHurtBox.HalfExtend,
+                    _result,
+                    Quaternion.identity,
                     config.CharacterData.HitLayerMask
                 );
 
                 //try hit
-                foreach (var col in colliders)
+                for (int i = 0; i < count; i++)
                 {
-                    TryApplyDamage(world, col, liveCharacters, hitInteractionPool, ref hitEvent);
+                    TryApplyDamage(world, _result[i], liveCharacters, hitInteractionPool, ref hitEvent);
                 }
 
                 hitEventPool.Del(atk);
@@ -104,7 +114,7 @@ namespace BT
             ref var damageEventComp = ref damageEventPool.Add(damageEntity);
             
             damageEventComp.DamageAmount = damage.Damage;
-            damageEventComp.HitPoint = damage.AttackerHurtBox.Collider.transform.position;
+            damageEventComp.HitPoint = damage.AttackerHurtBox.Position;
             damageEventComp.IsHammeringDamage = damage.Type == DamageType.HAMMERING;
             damageEventComp.IsThrowingBody = damage.Type == DamageType.POWERFUL;
 

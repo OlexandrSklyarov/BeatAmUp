@@ -127,7 +127,7 @@ namespace BT
             damageEvent.Damage = damage;
             damageEvent.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
 
-            damageEvent.Type = (attackAnimData.HitType == HitType.UP_TWO_HAND_BIG) ? DamageType.HAMMERING : 
+            damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFULL) ? DamageType.HAMMERING : 
                 (attack.IsNeedFinishAttack || attack.IsCanThrowBackOpponent) ? DamageType.POWERFUL : 
                     DamageType.SIMPLE;
         }

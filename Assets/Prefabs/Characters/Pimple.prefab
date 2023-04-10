@@ -32,6 +32,11 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 985726599099992327}
+  - {fileID: 6399132460405575185}
+  - {fileID: 1662222832095218467}
+  - {fileID: 6842449142416254108}
+  - {fileID: 8990074905179333784}
+  - {fileID: 2257228556622357186}
   m_Father: {fileID: 1153458557421773200}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -97,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07a580a9b5df41daa9225571c6ea1868, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &538601325389109348
+--- !u!1 &243322784082251065
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -105,38 +110,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 149944951454256015}
-  - component: {fileID: 7785846087095551519}
-  - component: {fileID: 8428934789715865861}
+  - component: {fileID: 2257228556622357186}
+  - component: {fileID: 3895902799878625162}
+  - component: {fileID: 3529182663179757117}
   m_Layer: 0
-  m_Name: HurtBox
+  m_Name: Hurtbox_FootPowerfull
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &149944951454256015
+--- !u!4 &2257228556622357186
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538601325389109348}
+  m_GameObject: {fileID: 243322784082251065}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00279, y: 0.00263, z: 0.00156}
+  m_LocalPosition: {x: 0, y: 1.643, z: 0.668}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7553228026137519199}
+  m_Father: {fileID: 7098360219838911113}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7785846087095551519
-SphereCollider:
+--- !u!65 &3895902799878625162
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538601325389109348}
+  m_GameObject: {fileID: 243322784082251065}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -149,21 +154,88 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0055
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8428934789715865861
+--- !u!114 &3529182663179757117
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 538601325389109348}
+  m_GameObject: {fileID: 243322784082251065}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 0
+  _type: 4
+--- !u!1 &880178189335392040
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1662222832095218467}
+  - component: {fileID: 5817664330030764914}
+  - component: {fileID: 7798520986795040050}
+  m_Layer: 0
+  m_Name: Hurtbox_HandPowerfull
+  m_TagString: Untagged
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1662222832095218467
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880178189335392040}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.352, z: 0.715}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7098360219838911113}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &5817664330030764914
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880178189335392040}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &7798520986795040050
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880178189335392040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _type: 2
 --- !u!1 &1153458557421773201
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +340,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &1475253502063502245
+--- !u!1 &2499327041278252233
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -276,38 +348,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3763056246848440714}
-  - component: {fileID: 2302062966748401081}
-  - component: {fileID: 5048790224836606542}
+  - component: {fileID: 6399132460405575185}
+  - component: {fileID: 5509638450264617697}
+  - component: {fileID: 4918282090031108563}
   m_Layer: 0
-  m_Name: HurtBox
+  m_Name: Hurtbox_Hand
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3763056246848440714
+--- !u!4 &6399132460405575185
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475253502063502245}
+  m_GameObject: {fileID: 2499327041278252233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.00144, y: 0.00286, z: 0.00108}
+  m_LocalPosition: {x: 0, y: 1.352, z: 0.562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3832561690438716743}
+  m_Father: {fileID: 7098360219838911113}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &2302062966748401081
-SphereCollider:
+--- !u!65 &5509638450264617697
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475253502063502245}
+  m_GameObject: {fileID: 2499327041278252233}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -320,88 +392,21 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0055
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5048790224836606542
+--- !u!114 &4918282090031108563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475253502063502245}
+  m_GameObject: {fileID: 2499327041278252233}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 1
---- !u!1 &1498460715702255466
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4422151181384237931}
-  - component: {fileID: 3253990275253202954}
-  - component: {fileID: 8287918888232677185}
-  m_Layer: 0
-  m_Name: HurtBoxUpTwoHandBig
-  m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &4422151181384237931
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498460715702255466}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.00621, z: 0.01527}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8870851698613286160}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &3253990275253202954
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498460715702255466}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.007
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8287918888232677185
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1498460715702255466}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 5
+  _type: 0
 --- !u!1 &2603136265323224597
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,7 +438,7 @@ Transform:
   m_Father: {fileID: 1153458557421773200}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2702671300296142691
+--- !u!1 &3210165359942557892
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -441,105 +446,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7329511691361919952}
-  - component: {fileID: 6633786334744783963}
-  - component: {fileID: 4426598109698190208}
+  - component: {fileID: 6842449142416254108}
+  - component: {fileID: 3873246099351796594}
+  - component: {fileID: 4664558956307277990}
   m_Layer: 0
-  m_Name: HurtBox
+  m_Name: Hurtbox_TwoHandPowerfull
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7329511691361919952
+--- !u!4 &6842449142416254108
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702671300296142691}
-  m_LocalRotation: {x: -0.5527666, y: 0.10685328, z: 0.10370166, w: 0.8199252}
-  m_LocalPosition: {x: -0.00027377837, y: 0.0057635773, z: -0.0008400796}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1052671048302224952}
-  m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &6633786334744783963
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702671300296142691}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.0055
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &4426598109698190208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2702671300296142691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _type: 2
---- !u!1 &5989437118553491934
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5766749119523835399}
-  - component: {fileID: 8012618751916923660}
-  - component: {fileID: 3499643183157389581}
-  m_Layer: 0
-  m_Name: HurtBoxUpForwardBig
-  m_TagString: Untagged
-  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &5766749119523835399
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5989437118553491934}
+  m_GameObject: {fileID: 3210165359942557892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.00621, z: 0.01373}
+  m_LocalPosition: {x: 0, y: 0.934, z: 0.562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8870851698613286160}
+  m_Father: {fileID: 7098360219838911113}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8012618751916923660
-SphereCollider:
+--- !u!65 &3873246099351796594
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5989437118553491934}
+  m_GameObject: {fileID: 3210165359942557892}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -552,21 +490,21 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.007
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3499643183157389581
+--- !u!114 &4664558956307277990
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5989437118553491934}
+  m_GameObject: {fileID: 3210165359942557892}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 4
+  _type: 3
 --- !u!1 &8168185489275417610
 GameObject:
   m_ObjectHideFlags: 0
@@ -598,7 +536,7 @@ Transform:
   m_Father: {fileID: 1153458557421773200}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &8422659440554430453
+--- !u!1 &8574383878575993866
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -606,38 +544,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5765660894460659278}
-  - component: {fileID: 705888139446285029}
-  - component: {fileID: 8656317589773865919}
+  - component: {fileID: 8990074905179333784}
+  - component: {fileID: 3387154120640404660}
+  - component: {fileID: 873602529278244308}
   m_Layer: 0
-  m_Name: HurtBox
+  m_Name: Hurtbox_Foot
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5765660894460659278
+--- !u!4 &8990074905179333784
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422659440554430453}
-  m_LocalRotation: {x: -0.5527669, y: -0.10685232, z: -0.103699744, w: 0.8199254}
-  m_LocalPosition: {x: 0.0004, y: 0.00351, z: -0.00334}
+  m_GameObject: {fileID: 8574383878575993866}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.537, z: 0.706}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 6279299860628914194}
+  m_Father: {fileID: 7098360219838911113}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &705888139446285029
-SphereCollider:
+--- !u!65 &3387154120640404660
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422659440554430453}
+  m_GameObject: {fileID: 8574383878575993866}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -650,21 +588,21 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.0055
+  m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &8656317589773865919
+--- !u!114 &873602529278244308
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8422659440554430453}
+  m_GameObject: {fileID: 8574383878575993866}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2fa414fe4a1308b36baea07f6df04ca9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _type: 3
+  _type: 1
 --- !u!1001 &730911779038637804
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -936,12 +874,12 @@ PrefabInstance:
     - target: {fileID: -1539698247611047579, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.089694604
+      value: 0.08969461
       objectReference: {fileID: 0}
     - target: {fileID: -1539698247611047579, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.01717415
+      value: -0.017174153
       objectReference: {fileID: 0}
     - target: {fileID: -1245622666817454706, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
@@ -1200,31 +1138,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: -1063094714816996356, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5766749119523835399}
-    - targetCorrespondingSourceObject: {fileID: -1063094714816996356, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4422151181384237931}
-    - targetCorrespondingSourceObject: {fileID: 7131112172289821363, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 149944951454256015}
-    - targetCorrespondingSourceObject: {fileID: 4542802640603571115, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3763056246848440714}
-    - targetCorrespondingSourceObject: {fileID: -8881258039100094252, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7329511691361919952}
-    - targetCorrespondingSourceObject: {fileID: -2521956865293848834, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5765660894460659278}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
         type: 3}
@@ -1824,12 +1738,6 @@ Transform:
 --- !u!4 &8801296920271487186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -1152705411510784450, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
-    type: 3}
-  m_PrefabInstance: {fileID: 730911779038637804}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &8870851698613286160 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -1063094714816996356, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
     type: 3}
   m_PrefabInstance: {fileID: 730911779038637804}
   m_PrefabAsset: {fileID: 0}
