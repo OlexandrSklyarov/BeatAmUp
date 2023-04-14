@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct DamageViewEvent
+    public struct DamageInZoneEvent
     {
         public Vector3 HitDirection;
         public bool IsTopBodyDamage;

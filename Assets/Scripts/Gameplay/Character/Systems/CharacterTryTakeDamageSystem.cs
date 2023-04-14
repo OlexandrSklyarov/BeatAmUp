@@ -42,14 +42,7 @@ namespace BT
                 //wait attack
                 if (hitEvent.Timer > 0f) continue;
 
-                var count = Physics.OverlapBoxNonAlloc
-                (
-                    hitEvent.AttackerHurtBox.Position,
-                    hitEvent.AttackerHurtBox.HalfExtend,
-                    _result,
-                    Quaternion.identity,
-                    config.CharacterData.HitLayerMask
-                );
+                var count = CheckHitCount(ref hitEvent, config, _result);
 
                 //try hit
                 for (int i = 0; i < count; i++)
@@ -59,6 +52,19 @@ namespace BT
 
                 hitEventPool.Del(atk);
             }
+        }
+        
+
+        private int CheckHitCount(ref TryDamageEvent hitEvent, GameConfig config, Collider[] result)
+        {
+            return Physics.OverlapBoxNonAlloc
+            (
+                hitEvent.AttackerHurtBox.Position,
+                hitEvent.AttackerHurtBox.HalfExtend,
+                result,
+                Quaternion.identity,
+                config.CharacterData.HitLayerMask
+            );
         }
 
 
@@ -116,7 +122,7 @@ namespace BT
             damageEventComp.DamageAmount = damage.Damage;
             damageEventComp.HitPoint = damage.AttackerHurtBox.Position;
             damageEventComp.IsHammeringDamage = damage.Type == DamageType.HAMMERING;
-            damageEventComp.IsThrowingBody = damage.Type == DamageType.POWERFUL;
+            damageEventComp.IsPowerDamage = damage.Type == DamageType.POWERFUL;
 
             Util.Debug.PrintColor($"TakeDamage type {damage.Type}", Color.magenta);
         }

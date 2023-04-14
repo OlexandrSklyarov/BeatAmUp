@@ -61,25 +61,7 @@ namespace BT
             }
         }
 
-
-        private void TryAddFinishAttack(EcsWorld world, int enemy, int damageThreshold, ref HeroAttack heroAttack)
-        {
-            var hpPool = world.GetPool<Health>();
-            if (hpPool.Has(enemy))
-            {
-                ref var enemyHP = ref hpPool.Get(enemy);
-                heroAttack.IsNeedFinishAttack = enemyHP.HP <= damageThreshold;
-            }
-
-            var hitCounterPool = world.GetPool<HitCounter>();
-            if (hitCounterPool.Has(enemy))
-            {
-                ref var counter = ref hitCounterPool.Get(enemy);
-                heroAttack.IsCanThrowBackOpponent = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
-            }            
-        }
-
-
+        
         private bool TrySlideToNearestTarget(EcsWorld world, Vector3 targetPos, float targetBodyRadius, int heroEntity, 
             ref CharacterView heroView, ref CharacterControllerMovement heroMovement)
         {
@@ -98,6 +80,24 @@ namespace BT
             SlideToTarget(targetPos, targetDir, world, heroEntity, targetBodyRadius, sqDist, ref heroView, ref heroMovement);
 
             return true;
+        }
+        
+
+        private void TryAddFinishAttack(EcsWorld world, int enemy, int damageThreshold, ref HeroAttack heroAttack)
+        {
+            var hpPool = world.GetPool<Health>();
+            if (hpPool.Has(enemy))
+            {
+                ref var enemyHP = ref hpPool.Get(enemy);
+                heroAttack.IsNeedFinishAttack = enemyHP.HP <= damageThreshold;
+            }
+
+            var hitCounterPool = world.GetPool<HitCounter>();
+            if (hitCounterPool.Has(enemy))
+            {
+                ref var counter = ref hitCounterPool.Get(enemy);
+                heroAttack.IsCanThrowBackOpponent = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
+            }            
         }
 
 

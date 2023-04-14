@@ -29,37 +29,31 @@ namespace BT
 
             foreach(var h in heroEntities)
             {
-                ref var heroHP = ref hpPool.Get(h);
-                
-                if (heroHP.IsChangeValue)
-                {
-                    ui.ChangeCharacterHP
-                    (
-                        (float)heroHP.PreviousHP / heroHP.MaxHP, 
-                        (float)heroHP.HP / heroHP.MaxHP,
-                        CharacterType.HERO
-                    );
-                }
-
-                heroHP.IsChangeValue = false;
+                ref var heroHealth = ref hpPool.Get(h);
+                TryChangeHealthUI(ref heroHealth, CharacterType.HERO, ui);
             }
 
             foreach(var e in enemyEntities)
             {
-                ref var enemyHP = ref hpPool.Get(e);
-                
-                if (enemyHP.IsChangeValue)
-                {
-                    ui.ChangeCharacterHP
-                    (
-                        (float)enemyHP.PreviousHP / enemyHP.MaxHP, 
-                        (float)enemyHP.HP / enemyHP.MaxHP,
-                        CharacterType.ENEMY
-                    );
-                }
-
-                enemyHP.IsChangeValue = false;
+                ref var enemyHealth = ref hpPool.Get(e);
+                TryChangeHealthUI(ref enemyHealth, CharacterType.ENEMY, ui);
             }
+        }
+
+
+        private void TryChangeHealthUI(ref Health hp, CharacterType type, GameUI ui)
+        {
+            if (hp.IsChangeValue)
+            {
+                ui.ChangeCharacterHP
+                (
+                    (float)hp.PreviousHP / hp.MaxHP, 
+                    (float)hp.HP / hp.MaxHP,
+                    type
+                );
+            }
+
+            hp.IsChangeValue = false;
         }
     }
 }

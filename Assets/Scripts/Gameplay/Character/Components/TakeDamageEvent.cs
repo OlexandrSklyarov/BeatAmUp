@@ -8,6 +8,6 @@ namespace BT
         public Vector3 HitPoint;
         public int DamageAmount;
         public bool IsHammeringDamage;
-        public bool IsThrowingBody;
+        public bool IsPowerDamage;
     }
 }

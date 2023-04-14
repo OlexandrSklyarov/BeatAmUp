@@ -12,13 +12,13 @@ namespace BT
             var data = systems.GetShared<SharedData>();
 
             var entities = world
-                .Filter<DamageViewEvent>()
+                .Filter<DamageInZoneEvent>()
                 .Inc<CharacterView>()
                 .Inc<Health>()
                 .Inc<CharacterPhysicsBody>()
                 .End();
 
-            var damageViewPool = world.GetPool<DamageViewEvent>();
+            var damageViewPool = world.GetPool<DamageInZoneEvent>();
             var viewPool = world.GetPool<CharacterView>();
             var hpPool = world.GetPool<Health>();
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
@@ -63,16 +63,16 @@ namespace BT
         }
 
 
-        private void DeathProcess(ref DamageViewEvent damageView, ref CharacterView view)
+        private void DeathProcess(ref DamageInZoneEvent damageInZone, ref CharacterView view)
         {
-            if (damageView.IsHammeringDamage)
+            if (damageInZone.IsHammeringDamage)
             {
                 PlayHammeringDamage(ref view);
             }
             else
             {
                 SetDeath(ref view);
-                PlayThrowBody(ref view, ref damageView);
+                PlayThrowBody(ref view, ref damageInZone);
             }
         }
 
@@ -80,17 +80,17 @@ namespace BT
         private void SetDeath(ref CharacterView view) => view.Animator.SetBool(ConstPrm.Animation.DEATH, true);
 
 
-        private void DamageProcess(EcsWorld world, int entity, ref DamageViewEvent damageView, ref CharacterView view)
+        private void DamageProcess(EcsWorld world, int entity, ref DamageInZoneEvent damageInZone, ref CharacterView view)
         {
             var stunTime = ConstPrm.Character.STUN_TIME;
 
-            if (damageView.IsThrowingBody)
+            if (damageInZone.IsThrowingBody)
             {
-                stunTime = PlayThrowBody(ref view, ref damageView);
+                stunTime = PlayThrowBody(ref view, ref damageInZone);
             }
             else
             {
-                SetDamageTypeAnimation(ref damageView, ref view);                
+                SetDamageTypeAnimation(ref damageInZone, ref view);                
                 PlayDamage(ref view);
             }
 
@@ -115,9 +115,9 @@ namespace BT
         }
 
 
-        private void SetDamageTypeAnimation(ref DamageViewEvent damageView, ref CharacterView view)
+        private void SetDamageTypeAnimation(ref DamageInZoneEvent damageInZone, ref CharacterView view)
         {
-            var damageZone = (damageView.IsTopBodyDamage) ? 0 : 1;
+            var damageZone = (damageInZone.IsTopBodyDamage) ? 0 : 1;
             view.Animator.SetInteger(ConstPrm.Animation.DAMAGE_TYPE, damageZone);
         }
 
@@ -130,12 +130,12 @@ namespace BT
             view.Animator.SetTrigger(ConstPrm.Animation.DAMAGE);
         
         
-        private float PlayThrowBody(ref CharacterView view, ref DamageViewEvent damageView) 
+        private float PlayThrowBody(ref CharacterView view, ref DamageInZoneEvent damageInZone) 
         {
             view.ViewTransform.rotation = Quaternion.RotateTowards
             (
                 view.ViewTransform.rotation,
-                Util.Vector3Math.DirToQuaternion(damageView.HitDirection * -1f),
+                Util.Vector3Math.DirToQuaternion(damageInZone.HitDirection * -1f),
                 360f
             );
 

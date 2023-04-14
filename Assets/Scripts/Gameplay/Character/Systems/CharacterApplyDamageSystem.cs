@@ -20,6 +20,8 @@ namespace BT
             var damageEventPool = world.GetPool<TakeDamageEvent>();
             var viewPool = world.GetPool<CharacterView>();
             var hpPool = world.GetPool<Health>();
+            var damageInZonePool = world.GetPool<DamageInZoneEvent>();
+            var vfxViewPool = world.GetPool<VfxView>();
 
             foreach (var e in damageReceivers)
             {
@@ -27,16 +29,16 @@ namespace BT
                 ref var view = ref viewPool.Get(e);
                 ref var damageEvent = ref damageEventPool.Get(e);
 
-                ChangeHP(ref hp, ref damageEvent);                
-                CreateHitVfxEntity(world, data.VFXController, damageEvent.HitPoint);                
-                AddDamageViewComponent(world, e, ref damageEvent, ref view);                
+                ChangeHealth(ref hp, ref damageEvent);                
+                CreateHitVfxEntity(world, vfxViewPool, data.VFXController, ref damageEvent);                
+                AddDamageViewComponent(damageInZonePool, e, ref damageEvent, ref view);                
                 
                 damageEventPool.Del(e);                
             }
         }
 
 
-        private void ChangeHP(ref Health hpComp, ref TakeDamageEvent damageEvent)
+        private void ChangeHealth(ref Health hpComp, ref TakeDamageEvent damageEvent)
         {
             hpComp.PreviousHP = hpComp.HP;
             hpComp.HP = Mathf.Max(0, hpComp.HP - damageEvent.DamageAmount); 
@@ -44,38 +46,34 @@ namespace BT
         }
 
 
-        private void AddDamageViewComponent(EcsWorld world, int damageEntity, 
+        private void AddDamageViewComponent(EcsPool<DamageInZoneEvent> pool, int damageEntity, 
             ref TakeDamageEvent damageEvent, ref CharacterView view)
         {
-            var pool = world.GetPool<DamageViewEvent>();
-
             if (pool.Has(damageEntity)) return;
 
-            ref var damageViewEvent = ref pool.Add(damageEntity);
+            ref var damageInZoneEvent = ref pool.Add(damageEntity);
 
             var isTopBody = damageEvent.HitPoint.y >= view.ViewTransform.position.y + view.Height * 0.6f;
-            damageViewEvent.IsTopBodyDamage = isTopBody;
+            damageInZoneEvent.IsTopBodyDamage = isTopBody;
 
-            damageViewEvent.IsHammeringDamage = damageEvent.IsHammeringDamage;
-            damageViewEvent.IsThrowingBody = damageEvent.IsThrowingBody;
+            damageInZoneEvent.IsHammeringDamage = damageEvent.IsHammeringDamage;
+            damageInZoneEvent.IsThrowingBody = damageEvent.IsPowerDamage;
 
             var source = damageEvent.HitPoint;
             source.y = view.ViewTransform.position.y;
             var hitDir = Vector3.Normalize(view.ViewTransform.position - source);
-            damageViewEvent.HitDirection = hitDir;
+            damageInZoneEvent.HitDirection = hitDir;
         }
 
 
-        
-
-
-        private void CreateHitVfxEntity(EcsWorld world, VisualFXController vfxController, Vector3 hitPoint)
+        private void CreateHitVfxEntity(EcsWorld world, EcsPool<VfxView> pool, 
+            VisualFXController vfxController, ref TakeDamageEvent damageEvent)
         {
-            var view = vfxController.PlayHitVFX(VfxType.CHARACTER_HIT, hitPoint);
+            var view = vfxController.PlayHitVFX(VfxType.CHARACTER_HIT, damageEvent.HitPoint);
 
             var entity = world.NewEntity();
-            var vfxPool = world.GetPool<VfxView>();
-            ref var vfx = ref vfxPool.Add(entity);
+            
+            ref var vfx = ref pool.Add(entity);
             vfx.View = view;
             vfx.LifeTime = view.LifeTime;            
         }
