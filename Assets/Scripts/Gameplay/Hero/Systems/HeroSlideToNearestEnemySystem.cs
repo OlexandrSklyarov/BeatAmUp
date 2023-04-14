@@ -10,7 +10,7 @@ namespace BT
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var heroes = world.Filter<HeroTag>()
+            var heroes = world.Filter<Hero>()
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()

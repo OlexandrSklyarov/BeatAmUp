@@ -85,7 +85,10 @@ namespace BT
                 //character hit
                 .Add(new CharacterTryTakeDamageSystem())
                 .Add(new CharacterApplyDamageSystem())
+                .Add(new CharacterDamageAnimationSystem())
+                .Add(new CharacterActiveRagdollSystem())
                 .Add(new CharacterReleaseStunSystem())
+                .Add(new CharacterDeactivateRagdollSystem())
                 .Add(new ResetHitCountSystem())
 
                 //enemy
@@ -93,7 +96,6 @@ namespace BT
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemySetTargetDestinationSystem())
                 .Add(new EnemyBodyRotateSystem())
-                .Add(new EnemyDamageHandlerSystem())
                 .Add(new EnemyCharacterDieSystem())
                 .Add(new EnemyAnimationSystem())
 

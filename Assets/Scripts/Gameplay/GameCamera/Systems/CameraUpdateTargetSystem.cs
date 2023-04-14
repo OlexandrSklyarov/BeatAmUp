@@ -15,7 +15,7 @@ namespace BT
             var eventEntities = world.Filter<HeroCreatedEvent>().End();
 
             var heroes = world.
-                Filter<HeroTag>()
+                Filter<Hero>()
                 .Inc<CharacterControllerMovement>()
                 .End();
 

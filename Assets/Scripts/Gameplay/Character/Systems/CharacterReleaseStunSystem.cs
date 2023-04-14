@@ -15,16 +15,21 @@ namespace BT
                 .End();
 
             var stunPool = world.GetPool<Stun>();
+            var ragdollStatePool = world.GetPool<RagdollState>();
+            var resetRagdollPool = world.GetPool<DeactivateRagdollEvent>();
 
-            foreach (var e in entities)
+            foreach (var ent in entities)
             {
-                ref var stun = ref stunPool.Get(e);
+                ref var stun = ref stunPool.Get(ent);
                 stun.Timer -= Time.deltaTime;
                 var isStunEnd = stun.Timer <= 0f;
 
-                if (isStunEnd) 
+                if (isStunEnd)
                 {
-                    stunPool.Del(e); 
+                    var isNeedResetRagdoll = ragdollStatePool.Has(ent) && !resetRagdollPool.Has(ent);
+                    if (isNeedResetRagdoll) resetRagdollPool.Add(ent);
+                    
+                    stunPool.Del(ent); 
                 }               
             }
         }

@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Leopotam.EcsLite;
@@ -49,9 +48,9 @@ namespace BT
             var entity = world.NewEntity();
 
             //hero
-            var heroTagPool = world.GetPool<HeroTag>();
-            heroTagPool.Add(entity);
-
+            var heroTagPool = world.GetPool<Hero>();
+            ref var hero = ref heroTagPool.Add(entity);
+            hero.ViewProvider = heroGO.GetComponent<HeroViewProvider>();
 
             //input
             var inputDataPool =  world.GetPool<CharacterCommand>();

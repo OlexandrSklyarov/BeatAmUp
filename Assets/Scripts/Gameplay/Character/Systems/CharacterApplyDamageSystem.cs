@@ -57,7 +57,7 @@ namespace BT
             damageInZoneEvent.IsTopBodyDamage = isTopBody;
 
             damageInZoneEvent.IsHammeringDamage = damageEvent.IsHammeringDamage;
-            damageInZoneEvent.IsThrowingBody = damageEvent.IsPowerDamage;
+            damageInZoneEvent.IsPowerDamage = damageEvent.IsPowerDamage;
 
             var source = damageEvent.HitPoint;
             source.y = view.ViewTransform.position.y;

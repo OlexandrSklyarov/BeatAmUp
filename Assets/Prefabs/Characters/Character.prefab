@@ -92,7 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 973366a4a76cedb56bdeec78c1517caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _modelHips: {fileID: 1384063337290809334}
+  <BodyHips>k__BackingField: {fileID: 1384063337290809334}
 --- !u!1001 &6408558448290510985
 PrefabInstance:
   m_ObjectHideFlags: 0

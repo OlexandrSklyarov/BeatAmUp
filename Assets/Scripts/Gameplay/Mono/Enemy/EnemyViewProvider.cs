@@ -9,10 +9,8 @@ namespace BT
     [RequireComponent(typeof(NavMeshAgent), typeof(CapsuleCollider))]
     public class EnemyViewProvider : MonoBehaviour
     {
+        [field: SerializeField] public Transform BodyHips {get; private set;}
         public IEnumerable<Rigidbody> RagdollElements => _ragdollElements;
-        public Vector3 BodyHipsPosition => _modelHips.position;
-
-        [SerializeField] private Transform _modelHips;
 
         private IFactoryStorage<EnemyViewProvider> _storage;
         private Rigidbody[] _ragdollElements;

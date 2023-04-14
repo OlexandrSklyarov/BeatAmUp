@@ -7,6 +7,6 @@ namespace BT
         public Vector3 HitDirection;
         public bool IsTopBodyDamage;
         public bool IsHammeringDamage;
-        public bool IsThrowingBody;
+        public bool IsPowerDamage;
     }
 }

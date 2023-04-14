@@ -1,4 +1,3 @@
-
 using UnityEngine;
 
 namespace BT
@@ -7,6 +6,7 @@ namespace BT
     {
         public Animator Animator;
         public Transform ViewTransform;        
+        public Transform HipBone;
         public float Height;
         public float BodyRadius;
     }

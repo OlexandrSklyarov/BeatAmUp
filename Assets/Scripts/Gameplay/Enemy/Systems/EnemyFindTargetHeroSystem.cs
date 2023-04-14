@@ -14,7 +14,7 @@ namespace BT
                 .Exc<Stun>()
                 .End();
 
-            var heroes = world.Filter<HeroTag>()
+            var heroes = world.Filter<Hero>()
                 .Inc<CharacterView>()
                 .Exc<Death>()
                 .End();
