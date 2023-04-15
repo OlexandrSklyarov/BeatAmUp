@@ -31,7 +31,7 @@ namespace BT
 
                 ChangeHealth(ref hp, ref damageEvent);                
                 CreateHitVfxEntity(world, vfxViewPool, data.VFXController, ref damageEvent);                
-                AddDamageViewComponent(damageInZonePool, e, ref damageEvent, ref view);                
+                AddDamageInZoneComponent(damageInZonePool, e, ref damageEvent, ref view);                
                 
                 damageEventPool.Del(e);                
             }
@@ -40,13 +40,13 @@ namespace BT
 
         private void ChangeHealth(ref Health hpComp, ref TakeDamageEvent damageEvent)
         {
-            hpComp.PreviousHP = hpComp.HP;
-            hpComp.HP = Mathf.Max(0, hpComp.HP - damageEvent.DamageAmount); 
+            hpComp.PreviousHP = hpComp.CurrentHP;
+            hpComp.CurrentHP = Mathf.Max(0, hpComp.CurrentHP - damageEvent.DamageAmount); 
             hpComp.IsChangeValue = true;
         }
 
 
-        private void AddDamageViewComponent(EcsPool<DamageInZoneEvent> pool, int damageEntity, 
+        private void AddDamageInZoneComponent(EcsPool<DamageInZoneEvent> pool, int damageEntity,
             ref TakeDamageEvent damageEvent, ref CharacterView view)
         {
             if (pool.Has(damageEntity)) return;
@@ -59,10 +59,9 @@ namespace BT
             damageInZoneEvent.IsHammeringDamage = damageEvent.IsHammeringDamage;
             damageInZoneEvent.IsPowerDamage = damageEvent.IsPowerDamage;
 
-            var source = damageEvent.HitPoint;
-            source.y = view.ViewTransform.position.y;
-            var hitDir = Vector3.Normalize(view.ViewTransform.position - source);
-            damageInZoneEvent.HitDirection = hitDir;
+            damageInZoneEvent.HitPoint = damageEvent.HitPoint;
+            damageInZoneEvent.HitDirection = damageEvent.HitDirection;
+            damageInZoneEvent.PushForce = damageEvent.PushForce;
         }
 
 

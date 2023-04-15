@@ -4,7 +4,8 @@ namespace BT
 {
     public struct ActiveRagdollEvent
     {
+        public Vector3 HitPoint;
         public Vector3 PushDirection;
-        public Vector3 NearDamagePoint;
+        public float PushForce;
     }
 }

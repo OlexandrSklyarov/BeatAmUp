@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterTryTakeDamageSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class CharacterTryHitSystem : IEcsInitSystem, IEcsRunSystem
     {
         private Collider[] _result;
         
@@ -19,7 +19,7 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var attackingEntities = world
-                .Filter<TryDamageEvent>()
+                .Filter<TryHitEvent>()
                 .End();
 
             var liveCharacters = world
@@ -30,7 +30,7 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var hitEventPool = world.GetPool<TryDamageEvent>();
+            var hitEventPool = world.GetPool<TryHitEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
 
             foreach (var atk in attackingEntities)
@@ -55,7 +55,7 @@ namespace BT
         }
         
 
-        private int CheckHitCount(ref TryDamageEvent hitEvent, GameConfig config, Collider[] result)
+        private int CheckHitCount(ref TryHitEvent hitEvent, GameConfig config, Collider[] result)
         {
             return Physics.OverlapBoxNonAlloc
             (
@@ -69,12 +69,12 @@ namespace BT
 
 
         private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters, 
-            EcsPool<HitInteraction> hitInteractionPool, ref TryDamageEvent damage)
+            EcsPool<HitInteraction> hitInteractionPool, ref TryHitEvent hit)
         {
             if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
             //if this attacker?
-            foreach (var hitBox in damage.IgnoredAttackerHitBoxes)
+            foreach (var hitBox in hit.IgnoredAttackerHitBoxes)
             {
                 if (hitBox == receiveHitBox) return;
             }
@@ -88,43 +88,45 @@ namespace BT
                     if (hitBox != receiveHitBox) continue;
                     
                     IncreaseHitCounter(world, entity);
-                    CreateTakeDamageEvent(world, entity, ref damage); 
+                    CreateTakeDamageEvent(world, entity, ref hit); 
                     break;
                 }
             }
         }
 
 
-        private void IncreaseHitCounter(EcsWorld world, int entity)
+        private void IncreaseHitCounter(EcsWorld world, int damageEntity)
         {
             var counterPool = world.GetPool<HitCounter>();
 
-            if (counterPool.Has(entity))
+            if (counterPool.Has(damageEntity))
             {
-                ref var curCounter = ref counterPool.Get(entity);
+                ref var curCounter = ref counterPool.Get(damageEntity);
                 curCounter.HitCount++;
                 curCounter.HitResetTimer = ConstPrm.Character.HIT_COUNT_RESET_TIME; 
                 return;
             }
 
-            ref var newCounter = ref counterPool.Add(entity);
+            ref var newCounter = ref counterPool.Add(damageEntity);
             newCounter.HitCount++;
             newCounter.HitResetTimer = ConstPrm.Character.HIT_COUNT_RESET_TIME;
         }
 
 
-        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref TryDamageEvent damage)
+        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref TryHitEvent hit)
         {
             var damageEventPool = world.GetPool<TakeDamageEvent>();
 
-            ref var damageEventComp = ref damageEventPool.Add(damageEntity);
-            
-            damageEventComp.DamageAmount = damage.Damage;
-            damageEventComp.HitPoint = damage.AttackerHurtBox.Position;
-            damageEventComp.IsHammeringDamage = damage.Type == DamageType.HAMMERING;
-            damageEventComp.IsPowerDamage = damage.Type == DamageType.POWERFUL;
+            ref var damageEvent = ref damageEventPool.Add(damageEntity);
 
-            Util.Debug.PrintColor($"TakeDamage type {damage.Type}", Color.magenta);
+            damageEvent.PushForce = hit.PushForce;
+            damageEvent.DamageAmount = hit.Damage;
+            damageEvent.HitDirection = hit.AttackerHurtBox.transform.forward;
+            damageEvent.HitPoint = hit.AttackerHurtBox.Position;
+            damageEvent.IsHammeringDamage = hit.Type == DamageType.HAMMERING;
+            damageEvent.IsPowerDamage = hit.Type == DamageType.POWERFUL;
+
+            Util.Debug.PrintColor($"TakeDamage type {hit.Type}", Color.magenta);
         }
     }
 }

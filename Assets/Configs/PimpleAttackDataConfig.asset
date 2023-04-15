@@ -53,5 +53,6 @@ MonoBehaviour:
     <DamageTimeMultiplier>k__BackingField: 0.37
     _clip: {fileID: 7244992392561737592, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
     _animSpeed: 1
-  <DefaultDamage>k__BackingField: 10
-  <MaxDamage>k__BackingField: 20
+  <DefaultDamage>k__BackingField: 3
+  <MaxDamage>k__BackingField: 10
+  <PushTargetRagdollForce>k__BackingField: 500

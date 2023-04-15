@@ -89,14 +89,14 @@ namespace BT
             if (hpPool.Has(enemy))
             {
                 ref var enemyHP = ref hpPool.Get(enemy);
-                heroAttack.IsNeedFinishAttack = enemyHP.HP <= damageThreshold;
+                heroAttack.IsNeedFinishAttack = enemyHP.CurrentHP <= damageThreshold;
             }
 
             var hitCounterPool = world.GetPool<HitCounter>();
             if (hitCounterPool.Has(enemy))
             {
                 ref var counter = ref hitCounterPool.Get(enemy);
-                heroAttack.IsCanThrowBackOpponent = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
+                heroAttack.IsPowerfullDamage = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
             }            
         }
 

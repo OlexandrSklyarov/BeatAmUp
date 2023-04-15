@@ -39,28 +39,29 @@ namespace BT
         }
         
 
-        private void ActiveCharacterRagdoll(ref ActiveRagdollEvent ragdollEvent, 
+        private void ActiveCharacterRagdoll(ref ActiveRagdollEvent activateEvent, 
             ref CharacterPhysicsBody body, ref CharacterView view)
         {
-            view.Animator.enabled = false;
-            
-            Rigidbody nearestPart = body.BodyRagdoll.First();
-            var minDist = float.MaxValue;
+            Rigidbody targetRb = body.BodyRagdoll.First();
+            var minSqDist = float.MaxValue;
             
             foreach (var rb in body.BodyRagdoll)
             {
                 rb.isKinematic = false;
-                var curSqDist = (rb.transform.position - ragdollEvent.NearDamagePoint).sqrMagnitude;
+                var curSqDist = (rb.transform.position - activateEvent.HitPoint).sqrMagnitude;
 
-                if (curSqDist < minDist * minDist)
+                if (curSqDist < minSqDist)
                 {
-                    minDist = curSqDist;
-                    nearestPart = rb;
+                    minSqDist = curSqDist;
+                    targetRb = rb;
                 }
             }
+            
+            view.Animator.enabled = false;
+            body.Collider.enabled = false;
 
-            var force = ragdollEvent.PushDirection * 50f;
-            nearestPart.AddForce(force, ForceMode.Impulse);
+            var force = activateEvent.PushDirection * activateEvent.PushForce;
+            targetRb.AddForceAtPosition(force, targetRb.position, ForceMode.Impulse);
         }
     }
 }

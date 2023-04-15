@@ -83,7 +83,7 @@ namespace BT
                 .Add(new HeroAnimationSystem())
 
                 //character hit
-                .Add(new CharacterTryTakeDamageSystem())
+                .Add(new CharacterTryHitSystem())
                 .Add(new CharacterApplyDamageSystem())
                 .Add(new CharacterDamageAnimationSystem())
                 .Add(new CharacterActiveRagdollSystem())

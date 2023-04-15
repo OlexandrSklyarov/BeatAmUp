@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: EnemyConfig
   m_EditorClassIdentifier: 
   <Movement>k__BackingField:
-    <Speed>k__BackingField: 4
+    <Speed>k__BackingField: 2
     <Acceleration>k__BackingField: 8
     <AngularSpeed>k__BackingField: 800
   <Animation>k__BackingField:

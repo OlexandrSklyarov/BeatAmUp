@@ -17,6 +17,7 @@ namespace BT
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
                 .Exc<Death>()
+                .Exc<Stun>()
                 .End();
             
             var enemies = world
@@ -27,6 +28,7 @@ namespace BT
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
                 .Exc<Death>()
+                .Exc<Stun>()
                 .End();
 
             var heroPool = world.GetPool<Hero>();
@@ -76,15 +78,14 @@ namespace BT
         private void ResetEnemyRagdoll(ref CharacterPhysicsBody body, ref CharacterView view, 
             ref MovementAI movement, ref Enemy enemy)
         {
+            foreach (var rb in body.BodyRagdoll) 
+                rb.isKinematic = true;
+            
             var origin = enemy.ViewProvider.BodyHips.position;
             movement.NavAgent.Warp(origin);
-                
-            foreach (var rb in body.BodyRagdoll)
-            {
-                rb.isKinematic = true;
-            }
             
             view.Animator.enabled = true;
+            body.Collider.enabled = true;
         }
     }
 }

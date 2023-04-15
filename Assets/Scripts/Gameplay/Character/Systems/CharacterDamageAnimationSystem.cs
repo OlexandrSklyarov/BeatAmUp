@@ -1,5 +1,4 @@
 using Leopotam.EcsLite;
-using UnityEngine;
 
 namespace BT
 {
@@ -14,6 +13,7 @@ namespace BT
                 .Filter<DamageInZoneEvent>()
                 .Inc<CharacterView>()
                 .Inc<Health>()
+                .Exc<ActiveRagdollEvent>()
                 .End();
 
             var damageInZonePool = world.GetPool<DamageInZoneEvent>();
@@ -26,9 +26,9 @@ namespace BT
             {
                 ref var damage = ref damageInZonePool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
-                ref var hp = ref hpPool.Get(ent);
+                ref var health = ref hpPool.Get(ent);
 
-                if (hp.HP <= 0f)
+                if (health.CurrentHP <= 0f)
                 {
                     AddDeathComponent(world, ent);
                     AddShakeCameraEvent(world, data);
@@ -71,23 +71,18 @@ namespace BT
             else
             {
                 SetDeath(ref view);
-                AddRagdollEvent(entity, pool, ref view, ref damage);
+                AddRagdollEvent(entity, pool, ref damage);
             }
         }
 
         
-        private void AddRagdollEvent(int entity, EcsPool<ActiveRagdollEvent> pool, 
-            ref CharacterView view, ref DamageInZoneEvent damage)
+        private void AddRagdollEvent(int entity, EcsPool<ActiveRagdollEvent> pool, ref DamageInZoneEvent damage)
         {
             ref var ragdollEvent = ref pool.Add(entity);
             
+            ragdollEvent.HitPoint = damage.HitPoint;
             ragdollEvent.PushDirection = damage.HitDirection;
-
-            var centerBody = view.ViewTransform.position + Vector3.up * view.Height * 0.5f;
-            
-            ragdollEvent.NearDamagePoint = (damage.IsTopBodyDamage) ? 
-                centerBody + Vector3.up * view.Height * 0.25f :
-                centerBody - Vector3.up * view.Height * 0.25f;
+            ragdollEvent.PushForce = damage.PushForce;
         }
 
 
@@ -97,19 +92,24 @@ namespace BT
         private void DamageAnimation(int entity, EcsPool<ActiveRagdollEvent> eventPool, EcsPool<Stun> stunPool,
             ref DamageInZoneEvent damage, ref CharacterView view)
         {
-            var stunTime = ConstPrm.Character.STUN_TIME;
-
-            if (damage.IsPowerDamage)
+            if (damage.IsHammeringDamage)
             {
-                stunTime = ConstPrm.Character.POWER_STUN_TIME;
-                AddRagdollEvent(entity, eventPool, ref view, ref damage);
+                PlayHammeringDamage(ref view);
+            }
+            else if (damage.IsPowerDamage)
+            {
+                AddRagdollEvent(entity, eventPool, ref damage);
             }
             else
             {
                 var zoneIndex = (damage.IsTopBodyDamage) ? 0 : 1;              
                 PlaySimpleDamage(ref view, zoneIndex);
             }
-
+            
+            var stunTime = (damage.IsHammeringDamage || damage.IsPowerDamage) ? 
+                ConstPrm.Character.STUN_TIME : 
+                ConstPrm.Character.POWER_STUN_TIME;
+            
             AddStunComponent(stunPool, entity, stunTime);            
         }
 

@@ -48,7 +48,7 @@ namespace BT
                 ui.ChangeCharacterHP
                 (
                     (float)hp.PreviousHP / hp.MaxHP, 
-                    (float)hp.HP / hp.MaxHP,
+                    (float)hp.CurrentHP / hp.MaxHP,
                     type
                 );
             }
