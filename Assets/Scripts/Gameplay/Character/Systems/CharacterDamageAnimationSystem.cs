@@ -7,62 +7,37 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var entities = world
-                .Filter<DamageInZoneEvent>()
+                .Filter<TakeDamageEvent>()
                 .Inc<CharacterView>()
-                .Inc<Health>()
                 .Exc<ActiveRagdollEvent>()
                 .End();
 
-            var damageInZonePool = world.GetPool<DamageInZoneEvent>();
+            var damageEventPool = world.GetPool<TakeDamageEvent>();
             var ragdollEventPool = world.GetPool<ActiveRagdollEvent>();
             var viewPool = world.GetPool<CharacterView>();
-            var hpPool = world.GetPool<Health>();
-            var stunPool = world.GetPool<Stun>();
+            var deathPool = world.GetPool<Death>();
 
             foreach (var ent in entities)
             {
-                ref var damage = ref damageInZonePool.Get(ent);
+                ref var damage = ref damageEventPool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
-                ref var health = ref hpPool.Get(ent);
 
-                if (health.CurrentHP <= 0f)
+                if (deathPool.Has(ent))
                 {
-                    AddDeathComponent(world, ent);
-                    AddShakeCameraEvent(world, data);
                     DeathAnimation(ent, ragdollEventPool, ref damage, ref view);
                 }
                 else
                 {
-                    DamageAnimation(ent, ragdollEventPool, stunPool, ref damage, ref view);
+                    DamageAnimation(ent, ragdollEventPool, ref damage, ref view);
                 }
-
-                damageInZonePool.Del(ent);
             }
         }
-
         
-        private void AddDeathComponent(EcsWorld world, int damageEntity)
-        {
-            var pool = world.GetPool<Death>();
-            ref var deathComp = ref pool.Add(damageEntity);
-            deathComp.Timer = ConstPrm.Character.DEATH_TIME;            
-        }
-
-
-        private void AddShakeCameraEvent(EcsWorld world, SharedData data)
-        {
-            var eventEntity = world.NewEntity();
-            var shakeEventPool = world.GetPool<ShakeCameraEvent>();
-            ref var evt = ref shakeEventPool.Add(eventEntity);
-            evt.Timer = data.Config.CameraConfig.ShakeDuration;
-        }
-
 
         private void DeathAnimation(int entity, EcsPool<ActiveRagdollEvent> pool, 
-            ref DamageInZoneEvent damage, ref CharacterView view)
+            ref TakeDamageEvent damage, ref CharacterView view)
         {
             if (damage.IsHammeringDamage)
             {
@@ -76,7 +51,7 @@ namespace BT
         }
 
         
-        private void AddRagdollEvent(int entity, EcsPool<ActiveRagdollEvent> pool, ref DamageInZoneEvent damage)
+        private void AddRagdollEvent(int entity, EcsPool<ActiveRagdollEvent> pool, ref TakeDamageEvent damage)
         {
             ref var ragdollEvent = ref pool.Add(entity);
             
@@ -89,8 +64,8 @@ namespace BT
         private void SetDeath(ref CharacterView view) => view.Animator.SetBool(ConstPrm.Animation.DEATH, true);
 
 
-        private void DamageAnimation(int entity, EcsPool<ActiveRagdollEvent> eventPool, EcsPool<Stun> stunPool,
-            ref DamageInZoneEvent damage, ref CharacterView view)
+        private void DamageAnimation(int entity, EcsPool<ActiveRagdollEvent> eventPool,
+            ref TakeDamageEvent damage, ref CharacterView view)
         {
             if (damage.IsHammeringDamage)
             {
@@ -105,29 +80,8 @@ namespace BT
                 var zoneIndex = (damage.IsTopBodyDamage) ? 0 : 1;              
                 PlaySimpleDamage(ref view, zoneIndex);
             }
-            
-            var stunTime = (damage.IsHammeringDamage || damage.IsPowerDamage) ? 
-                ConstPrm.Character.STUN_TIME : 
-                ConstPrm.Character.POWER_STUN_TIME;
-            
-            AddStunComponent(stunPool, entity, stunTime);            
         }
-
-
-        private void AddStunComponent(EcsPool<Stun> pool, int damageEntity, float stunTime)
-        {
-            if (pool.Has(damageEntity))
-            {
-                ref var stunComp = ref pool.Get(damageEntity);
-                stunComp.Timer = stunTime;
-            }
-            else
-            {
-                ref var stunComp = ref pool.Add(damageEntity);
-                stunComp.Timer = stunTime;
-            }
-        }
-
+        
 
         private void PlayHammeringDamage(ref CharacterView view)
         {

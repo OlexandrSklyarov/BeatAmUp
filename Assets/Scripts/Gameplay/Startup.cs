@@ -29,7 +29,8 @@ namespace BT
                 Config = _gameConfig,
                 WorldData = _worldData,
                 VFXController = new VisualFXController(_gameConfig.VfxConfig),
-                EnemyFactory = new EnemyFactory(_gameConfig.EnemyConfig.EnemyPoolData)
+                EnemyFactory = new EnemyFactory(_gameConfig.EnemyConfig.EnemyPoolData),
+                CollisionService = new CheckCollisionServices()
             };
             
             _initSystems = new EcsSystems(_world, data);
@@ -85,11 +86,12 @@ namespace BT
                 //character hit
                 .Add(new CharacterTryHitSystem())
                 .Add(new CharacterApplyDamageSystem())
-                .Add(new CharacterDamageAnimationSystem())
+                .Add(new CharacterActiveStunSystem())
                 .Add(new CharacterActiveRagdollSystem())
                 .Add(new CharacterReleaseStunSystem())
                 .Add(new CharacterDeactivateRagdollSystem())
                 .Add(new ResetHitCountSystem())
+                .Add(new CharacterDamageAnimationSystem())
 
                 //enemy
                 .Add(new CreateEnemySystem())
@@ -104,9 +106,11 @@ namespace BT
 
                 //Camera
                 .Add(new CameraUpdateTargetSystem())
-                .Add(new ShakeCameraSystem())
+                .Add(new CreateShakeCameraEventSystem())
+                .Add(new ShakeCameraHandlerSystem())
 
                 //vfx
+                .Add(new CreateVfxItemSystem())
                 .Add(new DestroyVfxItemSystem())
                 .Init();
             

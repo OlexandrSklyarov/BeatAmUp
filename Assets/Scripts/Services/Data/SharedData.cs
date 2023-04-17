@@ -10,5 +10,6 @@ namespace BT
         public WorldData WorldData;
         public VisualFXController VFXController;
         public EnemyFactory EnemyFactory;
+        public CheckCollisionServices CollisionService;
     }
 }

@@ -11,7 +11,6 @@ namespace BT
             
             var heroes = world
                 .Filter<Hero>()
-                .Inc<DeactivateRagdollEvent>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<RagdollState>()
                 .Inc<CharacterView>()
@@ -22,7 +21,6 @@ namespace BT
             
             var enemies = world
                 .Filter<Enemy>()
-                .Inc<DeactivateRagdollEvent>()
                 .Inc<MovementAI>()
                 .Inc<RagdollState>()
                 .Inc<CharacterView>()
@@ -33,8 +31,7 @@ namespace BT
 
             var heroPool = world.GetPool<Hero>();
             var enemyPool = world.GetPool<Enemy>();
-            var ragdollEventPool = world.GetPool<DeactivateRagdollEvent>();
-            var ragdollStatePoll = world.GetPool<RagdollState>();
+            var ragdollStatePool = world.GetPool<RagdollState>();
             var physicsBodyPool = world.GetPool<CharacterPhysicsBody>();
             var viewPool = world.GetPool<CharacterView>();
             var aiPool = world.GetPool<MovementAI>();
@@ -49,8 +46,7 @@ namespace BT
 
                 ResetHeroRagdoll(ref body, ref view, ref movement, ref hero);
 
-                ragdollEventPool.Del(ent);
-                ragdollStatePoll.Del(ent);
+                ragdollStatePool.Del(ent);
             }
             
             foreach (var ent in enemies)
@@ -62,8 +58,7 @@ namespace BT
 
                 ResetEnemyRagdoll(ref body, ref view, ref movementAI, ref enemy);
 
-                ragdollEventPool.Del(ent);
-                ragdollStatePoll.Del(ent);
+                ragdollStatePool.Del(ent);
             }
         }
 

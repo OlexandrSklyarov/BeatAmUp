@@ -11,5 +11,6 @@ namespace BT
         public int DamageAmount;
         public bool IsHammeringDamage;
         public bool IsPowerDamage;
+        public bool IsTopBodyDamage;
     }
 }

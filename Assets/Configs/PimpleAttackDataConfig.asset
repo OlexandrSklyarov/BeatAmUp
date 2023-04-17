@@ -31,7 +31,7 @@ MonoBehaviour:
     _animSpeed: 1
   - <StateName>k__BackingField: PUNCH_FINISH_2
     <HitType>k__BackingField: 3
-    <DamageTimeMultiplier>k__BackingField: 0.47
+    <DamageTimeMultiplier>k__BackingField: 0.39
     _clip: {fileID: -6932546222299759752, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
       type: 3}
     _animSpeed: 1

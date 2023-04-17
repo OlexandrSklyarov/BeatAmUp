@@ -19,6 +19,7 @@ namespace BT
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sitingPool = world.GetPool<CharacterSitDown>();
+            var stunPool = world.GetPool<Stun>();
 
             foreach (var e in entities)
             {
@@ -35,8 +36,10 @@ namespace BT
                     continue;
                 }
 
+                var speed = (!stunPool.Has(e)) ? config.PlayerData.Speed : 0f;
+
                 ApplyAcceleration(ref movement, ref command, config);
-                ApplySpeed(ref movement, config.PlayerData.Speed, isGrounded);
+                ApplySpeed(ref movement, speed, isGrounded);
                 ChangeVelocity(ref movement, config, isGrounded);
             }
         }

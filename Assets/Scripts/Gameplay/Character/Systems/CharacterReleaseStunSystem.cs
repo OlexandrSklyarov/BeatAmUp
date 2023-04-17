@@ -11,13 +11,9 @@ namespace BT
 
             var entities = world
                 .Filter<Stun>()
-                .Exc<Death>()
-                .Exc<DeactivateRagdollEvent>()
                 .End();
 
             var stunPool = world.GetPool<Stun>();
-            var rdStatePool = world.GetPool<RagdollState>();
-            var deactivateRdPool = world.GetPool<DeactivateRagdollEvent>();
 
             foreach (var ent in entities)
             {
@@ -25,13 +21,9 @@ namespace BT
                 stun.Timer -= Time.deltaTime;
                 var isStunEnd = stun.Timer <= 0f;
 
-                if (isStunEnd)
-                {
-                    var isActiveRagdoll = rdStatePool.Has(ent);
-                    if (isActiveRagdoll) deactivateRdPool.Add(ent);
-                    
-                    stunPool.Del(ent); 
-                }               
+                if (!isStunEnd) continue;
+                
+                stunPool.Del(ent);
             }
         }
     }

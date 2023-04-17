@@ -10,6 +10,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var defaultSpeed = systems.GetShared<SharedData>().Config.EnemyConfig.Movement.Speed;
 
             var enemyEntities = world
                 .Filter<Enemy>()
@@ -33,16 +34,17 @@ namespace BT
                 if (stunPool.Has(e))
                 {
                     index--;
-                    movement.NavAgent.SetDestination(movement.MyTransform.position);
+                    movement.NavAgent.speed = 0f;
                     targetPool.Del(e);
                     continue;
                 }
-                
+
                 var bodyRadius = movement.NavAgent.radius;
                 var destination = GetaTargetAroundPosition(ref target, bodyRadius, count, index, 360f);
 
                 movement.NavAgent.SetDestination(destination);
                 movement.NavAgent.stoppingDistance = bodyRadius * 2f;
+                movement.NavAgent.speed = defaultSpeed;
                 
                 index--;
             }
