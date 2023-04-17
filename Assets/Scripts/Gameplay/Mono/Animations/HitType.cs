@@ -6,8 +6,8 @@ namespace BT
     {
         HAND = 0,
         FOOT,
-        HAND_POWERFULL,
-        TWO_HAND_POWERFULL,
-        FOOT_POWERFULL
+        HAND_POWERFUL,
+        TWO_HAND_POWERFUL,
+        FOOT_POWERFUL
     }
 }

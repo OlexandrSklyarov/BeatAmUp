@@ -91,10 +91,6 @@ namespace BT
             heroAttack.CurrentKick = null; 
             heroAttack.KickQueue = new Queue<HeroAttackAnimationData>();
             heroAttack.PunchQueue = new Queue<HeroAttackAnimationData>();
-            heroAttack.PunchData = data.Config.HeroAttackData.PunchAnimationData;
-            heroAttack.KickData = data.Config.HeroAttackData.KickAnimationData;
-            heroAttack.PunchFinishData = data.Config.HeroAttackData.PunchAnimationFinishData;
-            heroAttack.KickFinishData = data.Config.HeroAttackData.KickAnimationFinishData;
 
 
             //HP

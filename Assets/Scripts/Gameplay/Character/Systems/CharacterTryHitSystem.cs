@@ -18,7 +18,7 @@ namespace BT
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var attackingEntities = world
+            var attackers = world
                 .Filter<TryHitEvent>()
                 .End();
 
@@ -33,14 +33,14 @@ namespace BT
             var hitEventPool = world.GetPool<TryHitEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
 
-            foreach (var atk in attackingEntities)
+            foreach (var atk in attackers)
             {
                 ref var hitEvent = ref hitEventPool.Get(atk);
 
-                hitEvent.Timer -= Time.deltaTime;
+                hitEvent.ExecuteHitTimer -= Time.deltaTime;
 
                 //wait attack
-                if (hitEvent.Timer > 0f) continue;
+                if (hitEvent.ExecuteHitTimer > 0f) continue;
 
                 var count = CheckHitCount(ref hitEvent, config, _result);
 
@@ -73,25 +73,32 @@ namespace BT
         {
             if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
-            //if this attacker?
-            foreach (var hitBox in hit.IgnoredAttackerHitBoxes)
-            {
-                if (hitBox == receiveHitBox) return;
-            }
+            if (IsHitYourself(receiveHitBox, ref hit)) return;
 
-            foreach (var entity in liveCharacters)
+            foreach (var ent in liveCharacters)
             {
-                ref var interaction = ref hitInteractionPool.Get(entity);
+                ref var interaction = ref hitInteractionPool.Get(ent);
 
                 foreach (var hitBox in interaction.HitBoxes)
                 {
                     if (hitBox != receiveHitBox) continue;
                     
-                    IncreaseHitCounter(world, entity);
-                    CreateTakeDamageEvent(world, entity, ref hit); 
+                    IncreaseHitCounter(world, ent);
+                    CreateTakeDamageEvent(world, ent, ref hit); 
                     break;
                 }
             }
+        }
+
+
+        private bool IsHitYourself(HitBox receiveHitBox, ref TryHitEvent hit)
+        {
+            foreach (var hitBox in hit.IgnoredHitBoxes)
+            {
+                if (hitBox == receiveHitBox) return true;
+            }
+            
+            return false;
         }
 
 

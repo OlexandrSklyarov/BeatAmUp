@@ -4,10 +4,6 @@ namespace BT
 {
     public struct HeroAttack
     {
-        public HeroAttackAnimationData[] PunchData;
-        public HeroAttackAnimationData[] PunchFinishData;
-        public HeroAttackAnimationData[] KickData;
-        public HeroAttackAnimationData[] KickFinishData;
         public HeroAttackAnimationData CurrentPunch;
         public HeroAttackAnimationData CurrentKick;
         public Queue<HeroAttackAnimationData> PunchQueue;
@@ -18,7 +14,6 @@ namespace BT
         public float ResetNextActionTimer;
         public bool IsActiveAttack;
         public bool IsNeedFinishAttack;
-        public bool IsPowerfullDamage;
-
+        public bool IsPowerfulDamage;
     }
 }

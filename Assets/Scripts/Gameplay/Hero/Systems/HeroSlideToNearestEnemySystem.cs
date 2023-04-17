@@ -96,7 +96,7 @@ namespace BT
             if (hitCounterPool.Has(enemy))
             {
                 ref var counter = ref hitCounterPool.Get(enemy);
-                heroAttack.IsPowerfullDamage = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
+                heroAttack.IsPowerfulDamage = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
             }            
         }
 

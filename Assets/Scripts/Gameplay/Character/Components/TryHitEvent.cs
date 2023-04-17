@@ -5,9 +5,9 @@ namespace BT
     public struct TryHitEvent
     {
         public HurtBox AttackerHurtBox;
-        public IEnumerable<HitBox> IgnoredAttackerHitBoxes;
+        public IEnumerable<HitBox> IgnoredHitBoxes;
         public DamageType Type;
-        public float Timer;
+        public float ExecuteHitTimer;
         public int Damage;
         public float PushForce;
     }

@@ -32,7 +32,7 @@ namespace BT
 
                 ResetPreviousAttack(ref attack);
                 SetComboAttack(ref input, ref attack, ref hitInteraction, world, config);
-                AddActionQueue(ref input, ref attack);
+                AddActionQueue(ref input, ref attack, config);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
             }
@@ -52,20 +52,20 @@ namespace BT
             if (attack.IsActiveAttack) return;
 
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;
+            
+            if (!attack.IsActiveAttack) return;
 
-            var isPowerfullAttack = attack.IsNeedFinishAttack || attack.IsPowerfullDamage;
+            var isPowerfulAttack = attack.IsNeedFinishAttack || attack.IsPowerfulDamage;
             var pushForce = config.HeroAttackData.PushTargetRagdollForce;
 
-            var damage = (attack.IsActiveAttack && isPowerfullAttack) ?
-                config.HeroAttackData.MaxDamage :
-                config.HeroAttackData.DefaultDamage;             
-
-            if (input.IsPunch)
+            var damage = (isPowerfulAttack) ? config.HeroAttackData.MaxDamage : config.HeroAttackData.DefaultDamage;             
+           
+            if (input.IsPunch) // punch
             {                
                 attack.CurrentPunch = (attack.PunchQueue.Count > 0) ? 
-                    attack.PunchQueue.Dequeue() : attack.PunchData[0];
+                    attack.PunchQueue.Dequeue() : config.HeroAttackData.PunchAnimationData[0];
 
-                if (isPowerfullAttack) attack.CurrentPunch = attack.PunchFinishData.RandomElement();
+                if (isPowerfulAttack) attack.CurrentPunch = config.HeroAttackData.PunchAnimationFinishData.RandomElement();
                 
                 attack.CurrentKick = null;
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
@@ -73,12 +73,12 @@ namespace BT
 
                 CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentPunch, world, damage, pushForce);
             }            
-            else if (input.IsKick)
+            else if (input.IsKick) // kick
             {
                 attack.CurrentKick = (attack.KickQueue.Count > 0) ? 
-                    attack.KickQueue.Dequeue() : attack.KickData[0];
+                    attack.KickQueue.Dequeue() : config.HeroAttackData.KickAnimationData[0];
 
-                if (isPowerfullAttack) attack.CurrentKick = attack.KickFinishData.RandomElement();
+                if (isPowerfulAttack) attack.CurrentKick = config.HeroAttackData.KickAnimationFinishData.RandomElement();
                                 
                 attack.CurrentPunch = null;
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
@@ -87,37 +87,12 @@ namespace BT
                 CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentKick, world, damage, pushForce);
             }            
         }
-
-
-        private void AddActionQueue(ref CharacterCommand input, ref HeroAttack attack)
-        {
-            if (attack.IsNeedFinishAttack) return;
-
-            if (input.IsPunch && attack.PunchQueue.Count < attack.PunchData.Length - 1)
-            {
-                attack.NextKickState = 0;
-
-                attack.NextPunchState++;
-                attack.NextPunchState %= attack.PunchData.Length;
-                attack.PunchQueue.Enqueue(attack.PunchData[attack.NextPunchState]);
-            }
-
-            if (input.IsKick && attack.KickQueue.Count < attack.KickData.Length - 1)
-            {
-                attack.NextPunchState = 0;
-
-                attack.NextKickState++;
-                attack.NextKickState %= attack.KickData.Length;
-                attack.KickQueue.Enqueue(attack.KickData[attack.NextKickState]);
-            }           
-        }
         
-
+        
         private void CreateHitEvent(ref HitInteraction hitInteraction, ref HeroAttack attack,
             HeroAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce)
         {
-            var hurtBox = hitInteraction.HurtBoxes
-                .FirstOrDefault(h => h.Type == attackAnimData.HitType);
+            var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
 
             if (hurtBox == null) return;
 
@@ -126,17 +101,44 @@ namespace BT
             ref var damageEvent = ref eventPool.Add(entity);
 
             damageEvent.AttackerHurtBox = hurtBox;
-            damageEvent.IgnoredAttackerHitBoxes = hitInteraction.HitBoxes;
+            damageEvent.IgnoredHitBoxes = hitInteraction.HitBoxes;
             damageEvent.Damage = damage;
             damageEvent.PushForce = pushForce;
-            damageEvent.Timer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
-
-            damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFULL) ? DamageType.HAMMERING : 
-                (attack.IsNeedFinishAttack || attack.IsPowerfullDamage) ? DamageType.POWERFUL : 
-                    DamageType.SIMPLE;
+            damageEvent.ExecuteHitTimer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
+            
+            damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFUL) ? 
+                DamageType.HAMMERING : (attack.IsNeedFinishAttack || attack.IsPowerfulDamage) ? 
+                    DamageType.POWERFUL : DamageType.SIMPLE;
         }
 
 
+        private void AddActionQueue(ref CharacterCommand input, ref HeroAttack attack, GameConfig config)
+        {
+            if (attack.IsNeedFinishAttack) return;
+
+            var punchData = config.HeroAttackData.PunchAnimationData;
+            var kickData = config.HeroAttackData.KickAnimationData;
+
+            if (input.IsPunch && attack.PunchQueue.Count < punchData.Length - 1)
+            {
+                attack.NextKickState = 0;
+
+                attack.NextPunchState++;
+                attack.NextPunchState %= punchData.Length;
+                attack.PunchQueue.Enqueue(punchData[attack.NextPunchState]);
+            }
+
+            if (input.IsKick && attack.KickQueue.Count < kickData.Length - 1)
+            {
+                attack.NextPunchState = 0;
+
+                attack.NextKickState++;
+                attack.NextKickState %= kickData.Length;
+                attack.KickQueue.Enqueue(kickData[attack.NextKickState]);
+            }           
+        }
+        
+        
         private void ResetComboState(ref HeroAttack attack)
         {     
             if (attack.IsActiveAttack && attack.AttackTimer <= 0f)
@@ -146,7 +148,7 @@ namespace BT
                 attack.CurrentPunch = null;
                 attack.IsActiveAttack = false;
                 attack.IsNeedFinishAttack = false;
-                attack.IsPowerfullDamage = false;
+                attack.IsPowerfulDamage = false;
             }
             else
             {

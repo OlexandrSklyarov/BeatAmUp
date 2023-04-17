@@ -114,7 +114,7 @@ GameObject:
   - component: {fileID: 3895902799878625162}
   - component: {fileID: 3529182663179757117}
   m_Layer: 0
-  m_Name: Hurtbox_FootPowerfull
+  m_Name: Hurtbox_FootPowerful
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -128,7 +128,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 243322784082251065}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.643, z: 0.668}
+  m_LocalPosition: {x: 0, y: 1.643, z: 0.873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 5817664330030764914}
   - component: {fileID: 7798520986795040050}
   m_Layer: 0
-  m_Name: Hurtbox_HandPowerfull
+  m_Name: Hurtbox_HandPowerful
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -423,7 +423,7 @@ GameObject:
   - component: {fileID: 3873246099351796594}
   - component: {fileID: 4664558956307277990}
   m_Layer: 0
-  m_Name: Hurtbox_TwoHandPowerfull
+  m_Name: Hurtbox_TwoHandPowerful
   m_TagString: Untagged
   m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
