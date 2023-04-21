@@ -38,7 +38,7 @@ namespace BT
 
         private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest request)
         {
-            var heroGO = UnityEngine.Object.Instantiate
+            var heroView = UnityEngine.Object.Instantiate
             (
                 data.Config.PlayerData.Prefab, 
                 data.WorldData.HeroSpawnPoints[request.HeroID].position, 
@@ -48,37 +48,36 @@ namespace BT
             var entity = world.NewEntity();
 
             //hero
-            var heroTagPool = world.GetPool<Hero>();
-            ref var hero = ref heroTagPool.Add(entity);
-            hero.ViewProvider = heroGO.GetComponent<HeroViewProvider>();
+            world.GetPool<HeroTag>().Add(entity);
+            
 
             //input
-            var inputDataPool =  world.GetPool<CharacterCommand>();
-            inputDataPool.Add(entity);
-
+            world.GetPool<CharacterCommand>().Add(entity);
+            
 
             //movement
             var movementPool =  world.GetPool<CharacterControllerMovement>();
             ref var movement = ref movementPool.Add(entity);
-            var characterController = heroGO.GetComponent<CharacterController>();
+            var characterController = heroView.GetComponent<CharacterController>();
             movement.CharacterController = characterController;
-            movement.Transform = heroGO.transform;   
+            movement.Transform = heroView.transform;   
 
 
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(entity);
-            view.Animator = heroGO.GetComponentInChildren<Animator>();
-            view.ViewTransform = heroGO.transform.GetChild(0).transform; 
+            view.Animator = heroView.GetComponentInChildren<Animator>();
+            view.ViewTransform = heroView.transform.GetChild(0).transform; 
             view.Height = characterController.height;
             view.BodyRadius = characterController.radius;
+            view.HipBone = heroView.BodyHips;
           
 
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
-            hit.HitBoxes = heroGO.GetComponentsInChildren<HitBox>();
-            hit.HurtBoxes = heroGO.GetComponentsInChildren<HurtBox>();
+            hit.HitBoxes = heroView.GetComponentsInChildren<HitBox>();
+            hit.HurtBoxes = heroView.GetComponentsInChildren<HurtBox>();
             foreach(var h in hit.HurtBoxes) h.Init();
             
 

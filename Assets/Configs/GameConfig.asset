@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <MaxPlayerCount>k__BackingField: 2
   <PlayerData>k__BackingField:
-    <Prefab>k__BackingField: {fileID: 1153458557421773201, guid: 8c9e65a1a4e3009969067d48003c4c92,
+    <Prefab>k__BackingField: {fileID: 2570892583415431742, guid: 8c9e65a1a4e3009969067d48003c4c92,
       type: 3}
     <Speed>k__BackingField: 5.5
     <ChangeVelocityTime>k__BackingField: 8
@@ -36,7 +36,6 @@ MonoBehaviour:
     <HitLayerMask>k__BackingField:
       serializedVersion: 2
       m_Bits: 128
-    <HitRadius>k__BackingField: 0.1
   <HeroAttackData>k__BackingField: {fileID: 11400000, guid: 51785c64be06d7ac7b2b10f52de49737,
     type: 2}
   <CameraConfig>k__BackingField:

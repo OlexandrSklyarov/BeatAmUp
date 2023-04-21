@@ -89,12 +89,12 @@ namespace BT
                 .Add(new CharacterActiveStunSystem())
                 .Add(new CharacterActiveRagdollSystem())
                 .Add(new CharacterReleaseStunSystem())
-                .Add(new CharacterDeactivateRagdollSystem())
+                .Add(new EnemyCharacterDeactivateRagdollSystem())
                 .Add(new ResetHitCountSystem())
                 .Add(new CharacterDamageAnimationSystem())
 
                 //enemy
-                .Add(new CreateEnemySystem())
+                .Add(new SpawnEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemySetTargetDestinationSystem())
                 .Add(new EnemyBodyRotateSystem())
@@ -110,8 +110,9 @@ namespace BT
                 .Add(new ShakeCameraHandlerSystem())
 
                 //vfx
-                .Add(new CreateVfxItemSystem())
-                .Add(new DestroyVfxItemSystem())
+                .Add(new CreateDamageVfxItemSystem())
+                .Add(new CreateDeathVfxItemSystem())
+                .Add(new DestroyCompletedVfxItemSystem())
                 .Init();
             
             _fixedUpdateSystems

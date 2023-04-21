@@ -7,7 +7,7 @@ namespace BT
 {
     [SelectionBase]
     [RequireComponent(typeof(NavMeshAgent), typeof(CapsuleCollider))]
-    public class EnemyViewProvider : MonoBehaviour
+    public class EnemyViewProvider : MonoBehaviour, IPoolable
     {
         [field: SerializeField] public Transform BodyHips {get; private set;}
         public IEnumerable<Rigidbody> RagdollElements => _ragdollElements;
@@ -24,7 +24,7 @@ namespace BT
         }
         
         
-        public void ReturnToStorage() => _storage?.ReturnToStorage(this);
+        void IPoolable.ReturnToStorage() => _storage?.ReturnToStorage(this);
 
 
         private Rigidbody[] GetRagdollElements()

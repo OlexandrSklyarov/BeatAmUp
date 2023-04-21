@@ -10,7 +10,7 @@ namespace BT
             var world = systems.GetWorld();
             var config = systems.GetShared<SharedData>().Config;
 
-            var heroes = world.Filter<Hero>()
+            var heroes = world.Filter<HeroTag>()
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
@@ -23,7 +23,7 @@ namespace BT
                 .End();
 
             var enemies = world.Filter<Enemy>()
-                .Inc<MovementAI>()
+                .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Exc<Death>()
                 .End();
@@ -32,7 +32,7 @@ namespace BT
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var viewPool = world.GetPool<CharacterView>();
-            var movementAIPool = world.GetPool<MovementAI>();            
+            var translationPool = world.GetPool<Translation>();            
 
             foreach (var hero in heroes)
             {
@@ -46,10 +46,10 @@ namespace BT
 
                     foreach (var enemy in enemies)
                     {
-                        ref var enemyMovement = ref movementAIPool.Get(enemy);
+                        ref var translation = ref translationPool.Get(enemy);
                         ref var enemyView = ref viewPool.Get(enemy);
 
-                        if (TrySlideToNearestTarget(world, enemyMovement.MyTransform.position, 
+                        if (TrySlideToNearestTarget(world, translation.Value.position, 
                             enemyView.BodyRadius, hero, ref heroView, ref heroMovement))
                         {
                             TryAddFinishAttack(world, enemy, config.HeroAttackData.MaxDamage, ref heroAttack);

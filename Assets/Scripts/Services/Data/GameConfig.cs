@@ -20,7 +20,7 @@ namespace BT
     [Serializable]
     public sealed class PlayerConfig
     {
-        [field: SerializeField] public GameObject Prefab { get; private set; }
+        [field: SerializeField] public HeroViewProvider Prefab { get; private set; }
         [field: SerializeField, Min(1f)] public float Speed { get; private set; } = 15f;
         [field: SerializeField, Min(1f)] public float ChangeVelocityTime { get; private set; } = 15f;
         [field: SerializeField, Range(0.1f, 1f)] public float ChangeVelocityTimeMultiplier { get; private set; } = 0.65f;

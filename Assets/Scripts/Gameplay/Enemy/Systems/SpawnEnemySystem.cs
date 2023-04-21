@@ -1,4 +1,3 @@
-using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 using UnityEngine.AI;
@@ -6,7 +5,7 @@ using Random = UnityEngine.Random;
 
 namespace BT
 {
-    public sealed class CreateEnemySystem : IEcsRunSystem
+    public sealed class SpawnEnemySystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -37,7 +36,7 @@ namespace BT
             //enemy
             var enemyPool = world.GetPool<Enemy>();
             ref var enemyComp = ref enemyPool.Add(entity);
-            enemyComp.ViewProvider = enemyViewProvider;
+            enemyComp.PoolItem = enemyViewProvider;
 
             //Physics body
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
@@ -57,6 +56,7 @@ namespace BT
             view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
             view.Height = collider.height;
             view.BodyRadius = collider.radius;
+            view.HipBone = enemyViewProvider.BodyHips;
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
@@ -81,8 +81,13 @@ namespace BT
             ai.NavAgent.acceleration = data.Config.EnemyConfig.Movement.Acceleration;   
             ai.NavAgent.angularSpeed = data.Config.EnemyConfig.Movement.AngularSpeed;   
             ai.NavAgent.updateRotation = false;
-            ai.MyTransform = enemyViewProvider.transform;
-            ai.MyTransform.SetPositionAndRotation(createPosition, createRotation);   
+            
+            
+            //Translation
+            var translationPool = world.GetPool<Translation>();
+            ref var translation = ref translationPool.Add(entity);
+            translation.Value = enemyViewProvider.transform;
+            translation.Value.SetPositionAndRotation(createPosition, createRotation);   
         }
     }
 }

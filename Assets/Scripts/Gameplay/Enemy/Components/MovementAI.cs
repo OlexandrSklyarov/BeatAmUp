@@ -6,6 +6,5 @@ namespace BT
     public struct MovementAI
     {
         public NavMeshAgent NavAgent;
-        public Transform MyTransform;
     }
 }

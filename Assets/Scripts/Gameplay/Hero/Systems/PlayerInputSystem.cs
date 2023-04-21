@@ -13,7 +13,7 @@ namespace BT
                 .Filter<HeroInputUser>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
-                .Inc<Hero>()
+                .Inc<HeroTag>()
                 .End();
 
             var inputPool = world.GetPool<HeroInputUser>();

@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class CreateShakeCameraEventSystem : IEcsRunSystem
+    public sealed class CreateShakeCameraEventSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

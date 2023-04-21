@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public class ShakeCameraHandlerSystem : IEcsRunSystem
+    public sealed class ShakeCameraHandlerSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

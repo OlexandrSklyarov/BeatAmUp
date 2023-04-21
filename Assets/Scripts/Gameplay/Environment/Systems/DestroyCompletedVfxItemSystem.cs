@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class DestroyVfxItemSystem : IEcsRunSystem
+    public sealed class DestroyCompletedVfxItemSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

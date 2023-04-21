@@ -13,18 +13,21 @@ namespace BT
 
             var entities = world
                 .Filter<Enemy>()
+                .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Inc<MovementAI>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();
 
+            var translationPool = world.GetPool<Translation>();
             var viewPool = world.GetPool<CharacterView>();
             var movementAIPool = world.GetPool<MovementAI>();
             var targetPool = world.GetPool<EnemyTarget>();
 
             foreach (var e in entities)
             {
+                ref var translation = ref translationPool.Get(e);
                 ref var view = ref viewPool.Get(e);
                 ref var movement = ref movementAIPool.Get(e);                
 
@@ -35,7 +38,7 @@ namespace BT
                 else if (targetPool.Has(e))
                 {
                     ref var target = ref targetPool.Get(e);
-                    var dir = (target.MyTarget.position - movement.MyTransform.position).normalized;
+                    var dir = (target.MyTarget.position - translation.Value.position).normalized;
                     RotateBody(ref view, dir, data);
                 }
             }

@@ -10,7 +10,7 @@ namespace BT
 
             var world = systems.GetWorld();
 
-            var entities = world.Filter<Hero>()
+            var entities = world.Filter<HeroTag>()
                 .Inc<CharacterView>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()                

@@ -11,6 +11,7 @@ namespace BT
 
             var entities = world
                 .Filter<Stun>()
+                .Exc<Death>()
                 .End();
 
             var stunPool = world.GetPool<Stun>();

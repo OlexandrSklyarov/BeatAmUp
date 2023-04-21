@@ -16,7 +16,7 @@ namespace BT
             var ui = systems.GetShared<SharedData>().WorldData.GamaUI;
 
             var heroEntities = world
-                .Filter<Hero>()
+                .Filter<HeroTag>()
                 .Inc<Health>()
                 .End();
 
