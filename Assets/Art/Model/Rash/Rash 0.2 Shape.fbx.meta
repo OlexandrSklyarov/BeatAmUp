@@ -1,0 +1,338 @@
+fileFormatVersion: 2
+guid: 9ae4fc07418907f23a73f36ef8999679
+ModelImporter:
+  serializedVersion: 22200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Emblem
+    second: {fileID: 2100000, guid: 9b2414de73fa2770da7baa354d72c93e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glass
+    second: {fileID: 2100000, guid: e7d15f746c110d61cb427eaea81b9edc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Glasses
+    second: {fileID: 2100000, guid: ee14a312b20620a4d92826ecb3ca5b59, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Hrom
+    second: {fileID: 2100000, guid: 4f4247f4411aad636b70859a34f3ed31, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: f3ccd5cc2c6b6fa9cbea5e4721509cea, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 6def858085995593194afd35914fda5d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ship
+    second: {fileID: 2100000, guid: ecc75ccef80f3926daf64fa30602d2b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: bandag
+    second: {fileID: 2100000, guid: dffbde75005a3b5f090a96c70c5fe7eb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: knee pads
+    second: {fileID: 2100000, guid: dae1b89284e0bf67ead79440b719ef8d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: napulsnik
+    second: {fileID: 2100000, guid: af977291f425f58629f0591e390a8892, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: skin
+    second: {fileID: 2100000, guid: 38d36018e9155235ebd21f9735a45f08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: teen
+    second: {fileID: 2100000, guid: 064ae82a0afa420a19511fc8f0b18b79, type: 2}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblem.002_BaseColor
+    second: {fileID: 2800000, guid: bd8fbeeaf8c4561cdb4d416cb548596a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblem.002_Normal
+    second: {fileID: 2800000, guid: 27d99475022a3acb5bc367cdc3ccbc6d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblem.002_Roughness
+    second: {fileID: 2800000, guid: a99727dc6b0716c6b9a7f91083cfdb98, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblema front_BaseColor
+    second: {fileID: 2800000, guid: c3afd57d1a4ced0b38f3b6a4a46515c2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblema front_Metallic
+    second: {fileID: 2800000, guid: 6e5c5e41710f85258be48d14f03ad97e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblema front_Normal
+    second: {fileID: 2800000, guid: fe08d6ddd1b00284fa7280bca506781c, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Emblema front_Roughness
+    second: {fileID: 2800000, guid: d7aec50788f7c6835b011d2b5833ea84, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Glass_BaseColor
+    second: {fileID: 2800000, guid: fe7363fdeb38df48cab779eb0e54c978, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Glass_Normal
+    second: {fileID: 2800000, guid: 3b39b79e15d13f1889c5cb48aeaba61e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Glass_Roughness
+    second: {fileID: 2800000, guid: f7b49b4dc2dd9bdcf92058bafa04c8f1, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Teen_BaseColor
+    second: {fileID: 2800000, guid: b7728adaa4793d4b28c148eafc41cb4b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Teen_Normal
+    second: {fileID: 2800000, guid: cde63c8594bc280779bae6ef9f2c02aa, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: Teen_Roughness
+    second: {fileID: 2800000, guid: fece6d9ef1aa86f86ba91d40f17aa48a, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bandag hads_BaseColor
+    second: {fileID: 2800000, guid: fac67741125fc47c38007407c0d03383, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bandag hads_Normal
+    second: {fileID: 2800000, guid: 1bc0e879c960bc73ebb50cf77626b3fd, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: bandag hads_Roughness
+    second: {fileID: 2800000, guid: 5b6173839c807a758a6b5ca2d01c9ee2, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: knee pads.002_BaseColor
+    second: {fileID: 2800000, guid: 29210710d2ff3220c8693318df737ccf, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: knee pads.002_Normal
+    second: {fileID: 2800000, guid: 57e42ad7b7c05606d8779fd705fd448b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: knee pads.002_Roughness
+    second: {fileID: 2800000, guid: bcffaf7db9734bf9fbc754928989567b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: nakoleniki_BaseColor
+    second: {fileID: 2800000, guid: 81d2167b08cd7598199e5fb8f210fc01, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: nakoleniki_Metallic
+    second: {fileID: 2800000, guid: 3c7e87ea05d9cf99f96516db56effc5d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: nakoleniki_Normal
+    second: {fileID: 2800000, guid: 0ed50ecb1314b81c1b229e67f56cf7cd, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: nakoleniki_Roughness
+    second: {fileID: 2800000, guid: d6f8ec26cc8c7d9fda58016ceceef74e, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ship_BaseColor
+    second: {fileID: 2800000, guid: bc0acd2f4f78a05b5974377fb6ec16ce, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ship_Metallic
+    second: {fileID: 2800000, guid: 4d1fcabf27cf87a178d58577117d8a59, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ship_Normal
+    second: {fileID: 2800000, guid: 126b6190d104054d5bf8551619cc692b, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ship_Roughness
+    second: {fileID: 2800000, guid: c53cd8e083a3b885bbc3c6593889a919, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: skin_BaseColor
+    second: {fileID: 2800000, guid: fce3d61f0208630f9b1f94403bf22514, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: skin_Normal
+    second: {fileID: 2800000, guid: 01af159da96522d9ebcb9a6dfee36560, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: skin_Roughness
+    second: {fileID: 2800000, guid: f45c180534fd89fd280cb4442ef2d53f, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "\u0420\u0435\u043C\u0435\u043D\u044C.002_BaseColor"
+    second: {fileID: 2800000, guid: d6795a6f4f3e75c32accdd4b9f7f2594, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "\u0420\u0435\u043C\u0435\u043D\u044C.002_Metallic"
+    second: {fileID: 2800000, guid: 14f169394860d5011b46bba40efb8849, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "\u0420\u0435\u043C\u0435\u043D\u044C.002_Normal"
+    second: {fileID: 2800000, guid: 726d7c7bd7f865f4a82ff5ede9129ff0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: "\u0420\u0435\u043C\u0435\u043D\u044C.002_Roughness"
+    second: {fileID: 2800000, guid: 8a8b6068272e0dd70a08e3c58afad0a9, type: 3}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    removeConstantScaleCurves: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    nodeNameCollisionStrategy: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    optimizeBones: 1
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    strictVertexDataChecks: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  importBlendShapeDeformPercent: 1
+  remapMaterialsIfMaterialImportModeIsNone: 0
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
