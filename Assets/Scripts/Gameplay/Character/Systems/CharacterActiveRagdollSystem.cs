@@ -11,35 +11,41 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<ActiveRagdollEvent>()
+                .Filter<TakeDamageEvent>()
                 .Inc<CharacterPhysicsBody>()
                 .Inc<CharacterView>()
                 .Exc<RagdollState>()
                 .End();
 
-            var ragdollEventPool = world.GetPool<ActiveRagdollEvent>();
+            var damageEventPool = world.GetPool<TakeDamageEvent>();
             var ragdollStatePoll = world.GetPool<RagdollState>();
             var physicsBodyPool = world.GetPool<CharacterPhysicsBody>();
             var viewPool = world.GetPool<CharacterView>();
 
             foreach (var ent in entities)
             {
-                ref var ragdollEvent = ref ragdollEventPool.Get(ent);
+                ref var damageEvt = ref damageEventPool.Get(ent);
                 ref var body = ref physicsBodyPool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
 
+                if (!IsCanActiveRagdoll(ref damageEvt)) continue;
+                
                 if (!ragdollStatePoll.Has(ent))
                 {
-                    ActiveCharacterRagdoll(ref ragdollEvent, ref body, ref view);
+                    ActiveCharacterRagdoll(ref damageEvt, ref body, ref view);
                     ragdollStatePoll.Add(ent);
                 }
-
-                ragdollEventPool.Del(ent);
             }
         }
         
 
-        private void ActiveCharacterRagdoll(ref ActiveRagdollEvent activateEvent, 
+        private bool IsCanActiveRagdoll(ref TakeDamageEvent damageEvt)
+        {
+            return damageEvt.IsPowerDamage && !damageEvt.IsHammeringDamage;
+        }
+
+
+        private void ActiveCharacterRagdoll(ref TakeDamageEvent damageEvt, 
             ref CharacterPhysicsBody body, ref CharacterView view)
         {
             Rigidbody targetRb = body.BodyRagdoll.First();
@@ -48,7 +54,7 @@ namespace BT
             foreach (var rb in body.BodyRagdoll)
             {
                 rb.isKinematic = false;
-                var curSqDist = (rb.transform.position - activateEvent.HitPoint).sqrMagnitude;
+                var curSqDist = (rb.transform.position - damageEvt.HitPoint).sqrMagnitude;
 
                 if (curSqDist < minSqDist)
                 {
@@ -60,7 +66,7 @@ namespace BT
             view.Animator.enabled = false;
             body.Collider.enabled = false;
 
-            var force = activateEvent.PushDirection * activateEvent.PushForce;
+            var force = damageEvt.HitDirection * damageEvt.PushForce;
             targetRb.AddForceAtPosition(force, targetRb.position, ForceMode.Impulse);
         }
     }

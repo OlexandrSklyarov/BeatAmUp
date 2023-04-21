@@ -15,7 +15,6 @@ namespace BT
                 .Inc<RagdollState>()
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
-                .Exc<Death>()
                 .Exc<Stun>()
                 .End();
             
@@ -25,7 +24,6 @@ namespace BT
                 .Inc<RagdollState>()
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
-                .Exc<Death>()
                 .Exc<Stun>()
                 .End();
 

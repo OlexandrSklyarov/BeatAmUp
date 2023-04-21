@@ -11,11 +11,9 @@ namespace BT
             var entities = world
                 .Filter<TakeDamageEvent>()
                 .Inc<CharacterView>()
-                .Exc<ActiveRagdollEvent>()
                 .End();
 
             var damageEventPool = world.GetPool<TakeDamageEvent>();
-            var ragdollEventPool = world.GetPool<ActiveRagdollEvent>();
             var viewPool = world.GetPool<CharacterView>();
             var deathPool = world.GetPool<Death>();
 
@@ -26,18 +24,17 @@ namespace BT
 
                 if (deathPool.Has(ent))
                 {
-                    DeathAnimation(ent, ragdollEventPool, ref damage, ref view);
+                    DeathAnimation(ref damage, ref view);
                 }
                 else
                 {
-                    DamageAnimation(ent, ragdollEventPool, ref damage, ref view);
+                    DamageAnimation(ref damage, ref view);
                 }
             }
         }
         
 
-        private void DeathAnimation(int entity, EcsPool<ActiveRagdollEvent> pool, 
-            ref TakeDamageEvent damage, ref CharacterView view)
+        private void DeathAnimation(ref TakeDamageEvent damage, ref CharacterView view)
         {
             if (damage.IsHammeringDamage)
             {
@@ -46,34 +43,17 @@ namespace BT
             else
             {
                 SetDeath(ref view);
-                AddRagdollEvent(entity, pool, ref damage);
             }
         }
-
-        
-        private void AddRagdollEvent(int entity, EcsPool<ActiveRagdollEvent> pool, ref TakeDamageEvent damage)
-        {
-            ref var ragdollEvent = ref pool.Add(entity);
-            
-            ragdollEvent.HitPoint = damage.HitPoint;
-            ragdollEvent.PushDirection = damage.HitDirection;
-            ragdollEvent.PushForce = damage.PushForce;
-        }
-
 
         private void SetDeath(ref CharacterView view) => view.Animator.SetBool(ConstPrm.Animation.DEATH, true);
 
 
-        private void DamageAnimation(int entity, EcsPool<ActiveRagdollEvent> eventPool,
-            ref TakeDamageEvent damage, ref CharacterView view)
+        private void DamageAnimation(ref TakeDamageEvent damage, ref CharacterView view)
         {
             if (damage.IsHammeringDamage)
             {
                 PlayHammeringDamage(ref view);
-            }
-            else if (damage.IsPowerDamage)
-            {
-                AddRagdollEvent(entity, eventPool, ref damage);
             }
             else
             {
