@@ -21,6 +21,7 @@ namespace BT
             var viewPool = world.GetPool<CharacterView>();
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             var movementAiPool = world.GetPool<MovementAI>();
+            var deathPool = world.GetPool<Death>();
 
             foreach (var ent in enemies)
             {
@@ -28,14 +29,16 @@ namespace BT
                 ref var body = ref bodyPool.Get(ent);
                 ref var movementAI = ref movementAiPool.Get(ent);
                  
-                ResetRagdoll(ref body, ref view, ref movementAI);
+                var isGrounded = TryResetRagdoll(ref body, ref view, ref movementAI);
+
+                if (!isGrounded) deathPool.Add(ent); //death
 
                 ragdollStatePool.Del(ent);
             }
         }
         
 
-        private void ResetRagdoll(ref CharacterPhysicsBody body, ref CharacterView view, ref MovementAI ai)
+        private bool TryResetRagdoll(ref CharacterPhysicsBody body, ref CharacterView view, ref MovementAI ai)
         {
             foreach (var rb in body.BodyRagdoll)
             {
@@ -46,7 +49,9 @@ namespace BT
             body.Collider.enabled = true;
             
             var origin = view.HipBone.position;
-            ai.NavAgent.Warp(origin);
+            var isStandSuccess = ai.NavAgent.Warp(origin);
+
+            return isStandSuccess;
         }
     }
 }
