@@ -13,7 +13,7 @@ namespace BT
             var heroes = world.Filter<HeroTag>()
                 .Inc<HeroAttack>()
                 .Inc<CharacterCommand>()
-                .Inc<CharacterControllerMovement>()
+                .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
                 .Exc<HeroSlideTag>()
@@ -30,9 +30,8 @@ namespace BT
 
             var attackPool = world.GetPool<HeroAttack>();
             var commandPool = world.GetPool<CharacterCommand>();
-            var movementPool = world.GetPool<CharacterControllerMovement>();
-            var viewPool = world.GetPool<CharacterView>();
-            var translationPool = world.GetPool<Translation>();            
+            var translationPool = world.GetPool<Translation>();
+            var viewPool = world.GetPool<CharacterView>();            
 
             foreach (var hero in heroes)
             {
@@ -41,7 +40,7 @@ namespace BT
                 if (command.IsPunch || command.IsKick)
                 {
                     ref var heroAttack = ref attackPool.Get(hero);
-                    ref var heroMovement = ref movementPool.Get(hero);
+                    ref var heroTranslation = ref translationPool.Get(hero);
                     ref var heroView = ref viewPool.Get(hero);
 
                     foreach (var enemy in enemies)
@@ -50,7 +49,7 @@ namespace BT
                         ref var enemyView = ref viewPool.Get(enemy);
 
                         if (TrySlideToNearestTarget(world, translation.Value.position, 
-                            enemyView.BodyRadius, hero, ref heroView, ref heroMovement))
+                            enemyView.BodyRadius, hero, ref heroView, ref heroTranslation))
                         {
                             TryAddFinishAttack(world, enemy, config.HeroAttackData.MaxDamage, ref heroAttack);
 
@@ -63,9 +62,9 @@ namespace BT
 
         
         private bool TrySlideToNearestTarget(EcsWorld world, Vector3 targetPos, float targetBodyRadius, int heroEntity, 
-            ref CharacterView heroView, ref CharacterControllerMovement heroMovement)
+            ref CharacterView heroView, ref Translation heroTranslation)
         {
-            var heroPos = heroMovement.Transform.position;
+            var heroPos = heroTranslation.Value.position;
             targetPos.y = heroPos.y;
 
             if (Mathf.Abs(heroPos.y - targetPos.y) > heroView.Height) return false;
@@ -77,7 +76,7 @@ namespace BT
             if (sqDist > maxDist * maxDist) return false;
             if (Vector3.Angle(targetDir, heroView.ViewTransform.forward) > ConstPrm.Hero.VIEW_ENEMY_ANGLE) return false;
 
-            SlideToTarget(targetPos, targetDir, world, heroEntity, targetBodyRadius, sqDist, ref heroView, ref heroMovement);
+            SlideToTarget(targetPos, targetDir, world, heroEntity, targetBodyRadius, sqDist, ref heroView, ref heroTranslation);
 
             return true;
         }
@@ -103,14 +102,14 @@ namespace BT
 
         private void SlideToTarget(Vector3 targetPos, Vector3 targetDir, 
             EcsWorld world, int heroEntity, float targetRadius, float sqDist,
-            ref CharacterView heroView, ref CharacterControllerMovement heroMovement)
+            ref CharacterView heroView, ref Translation heroTranslation)
         {
             var minDistToTarget = targetRadius + heroView.BodyRadius;
 
             if (sqDist > minDistToTarget * minDistToTarget)
             {
                 var end = targetPos - targetDir.normalized * minDistToTarget;
-                heroMovement.Transform.LeanMove(end, ConstPrm.Hero.SLIDE_TO_TARGET_TIME);                    
+                heroTranslation.Value.LeanMove(end, ConstPrm.Hero.SLIDE_TO_TARGET_TIME);                    
             };
 
             var slidePool = world.GetPool<HeroSlideTag>();

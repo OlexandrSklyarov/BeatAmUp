@@ -33,7 +33,7 @@ namespace BT
 
                 var isAttack = (command.IsKick || command.IsPunch);
 
-                movement.Direction = GetDirection(ref movement, provider, isAttack);
+                command.Direction = GetDirection(provider, isAttack);
 
                 command.IsMoved = !isAttack && provider.IsMoved;
                 command.IsJump = provider.IsJump;
@@ -45,10 +45,9 @@ namespace BT
         }
         
 
-        private Vector3 GetDirection(ref CharacterControllerMovement movement, InputHandleProvider provider, bool isAttack)
+        private Vector3 GetDirection(InputHandleProvider provider, bool isAttack)
         {
-            return (isAttack) ? Vector3.zero : movement.Transform
-                .TransformDirection(new Vector3(provider.Direction.x, 0f, provider.Direction.y));
+            return (isAttack) ? Vector3.zero : new Vector3(provider.Direction.x, 0f, provider.Direction.y);
         }
         
         

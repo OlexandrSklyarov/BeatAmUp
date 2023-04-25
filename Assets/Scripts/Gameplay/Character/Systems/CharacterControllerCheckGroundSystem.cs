@@ -12,18 +12,21 @@ namespace BT
 
             var entities = world
                 .Filter<CharacterControllerMovement>()
+                .Inc<Translation>()
                 .End();
 
             var movementPool = world.GetPool<CharacterControllerMovement>();
+            var translationPool = world.GetPool<Translation>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)
             {
                 ref var movement = ref movementPool.Get(e);
+                ref var translation = ref translationPool.Get(e);
 
                 var isGroundCollision = Physics.CheckSphere
                 (
-                    movement.Transform.position + Vector3.up * config.CharacterData.CheckGroundRadius * 0.5f,
+                    translation.Value.position + Vector3.up * config.CharacterData.CheckGroundRadius * 0.5f,
                     config.CharacterData.CheckGroundRadius,
                     config.CharacterData.GroundLayer
                 );

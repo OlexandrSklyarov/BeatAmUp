@@ -16,10 +16,10 @@ namespace BT
 
             var heroes = world.
                 Filter<HeroTag>()
-                .Inc<CharacterControllerMovement>()
+                .Inc<Translation>()
                 .End();
 
-            var movementPool = world.GetPool<CharacterControllerMovement>();
+            var translationPool = world.GetPool<Translation>();
             var eventPool = world.GetPool<HeroCreatedEvent>();
 
             var cam = data.WorldData.GameVirtualCamera;
@@ -33,7 +33,7 @@ namespace BT
                 foreach(var h in heroes)
                 {
                     var cur = new CinemachineTargetGroup.Target();
-                    cur.target = movementPool.Get(h).Transform;
+                    cur.target = translationPool.Get(h).Value;
                     cur.weight = 1f / heroes.GetEntitiesCount();
                     allTargets.Add(cur);
                 }

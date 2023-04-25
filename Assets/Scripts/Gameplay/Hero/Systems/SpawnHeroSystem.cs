@@ -60,7 +60,11 @@ namespace BT
             ref var movement = ref movementPool.Add(entity);
             var characterController = heroView.GetComponent<CharacterController>();
             movement.CharacterController = characterController;
-            movement.Transform = heroView.transform;   
+
+            //translation
+            var translationPool =  world.GetPool<Translation>();
+            ref var translation = ref translationPool.Add(entity);
+            translation.Value = heroView.transform;   
 
 
             //view

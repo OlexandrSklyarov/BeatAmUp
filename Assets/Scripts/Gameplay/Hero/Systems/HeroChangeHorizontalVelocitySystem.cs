@@ -13,10 +13,12 @@ namespace BT
             var entities = world
                 .Filter<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
+                .Inc<Translation>()
                 .End();
 
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
+            var translationPool = world.GetPool<Translation>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sitingPool = world.GetPool<CharacterSitDown>();
             var stunPool = world.GetPool<Stun>();
@@ -25,6 +27,7 @@ namespace BT
             {
                 ref var command = ref commandPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
+                ref var translation = ref translationPool.Get(e);
 
                 var isGrounded = groundedPool.Has(e);
                 var isSitting = sitingPool.Has(e);
@@ -40,17 +43,18 @@ namespace BT
 
                 ApplyAcceleration(ref movement, ref command, config);
                 ApplySpeed(ref movement, speed, isGrounded);
-                ChangeVelocity(ref movement, config, isGrounded);
+                ChangeVelocity(ref movement, ref translation, ref command, config, isGrounded);
             }
         }
 
 
-        private void ChangeVelocity(ref CharacterControllerMovement movement, GameConfig config, bool isGrounded)
+        private void ChangeVelocity(ref CharacterControllerMovement movement, ref Translation translation, 
+            ref CharacterCommand command, GameConfig config, bool isGrounded)
         {
             var newVelocity = GetMovementVelocity
             (
                 movement.CharacterController.velocity,
-                movement.Direction,
+                translation.Value.TransformDirection(command.Direction),
                 movement.CurrentSpeed
             );
 
