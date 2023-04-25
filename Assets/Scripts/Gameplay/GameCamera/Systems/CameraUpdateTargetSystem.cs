@@ -32,9 +32,12 @@ namespace BT
 
                 foreach(var h in heroes)
                 {
-                    var cur = new CinemachineTargetGroup.Target();
-                    cur.target = translationPool.Get(h).Value;
-                    cur.weight = 1f / heroes.GetEntitiesCount();
+                    var cur = new CinemachineTargetGroup.Target()
+                    {
+                        target = translationPool.Get(h).Value,
+                        weight = 1f / heroes.GetEntitiesCount()
+                    };
+                    
                     allTargets.Add(cur);
                 }
 
