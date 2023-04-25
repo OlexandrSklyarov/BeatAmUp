@@ -19,24 +19,23 @@ namespace BT
 
             foreach (var ent in entities)
             {
-                ref var damage = ref damageEventPool.Get(ent);
+                ref var damageEvt = ref damageEventPool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
 
                 if (deathPool.Has(ent))
                 {
-                    DeathAnimation(ref damage, ref view);
+                    DeathAnimation(ref damageEvt, ref view);
+                    continue;
                 }
-                else
-                {
-                    DamageAnimation(ref damage, ref view);
-                }
+
+                DamageAnimation(ref damageEvt, ref view);                
             }
         }
         
 
-        private void DeathAnimation(ref TakeDamageEvent damage, ref CharacterView view)
+        private void DeathAnimation(ref TakeDamageEvent damageEvt, ref CharacterView view)
         {
-            if (damage.IsHammeringDamage)
+            if (damageEvt.IsHammeringDamage)
             {
                 PlayHammeringDamage(ref view);
             }
@@ -49,15 +48,17 @@ namespace BT
         private void SetDeath(ref CharacterView view) => view.Animator.SetBool(ConstPrm.Animation.DEATH, true);
 
 
-        private void DamageAnimation(ref TakeDamageEvent damage, ref CharacterView view)
+        private void DamageAnimation(ref TakeDamageEvent damageEvt, ref CharacterView view)
         {
-            if (damage.IsHammeringDamage)
+            if (view.Animator.IsCurrentAnimationState(ConstPrm.Animation.HAMMERING_DAMAGE)) return;
+            
+            if (damageEvt.IsHammeringDamage)
             {
                 PlayHammeringDamage(ref view);
             }
             else
             {
-                var zoneIndex = (damage.IsTopBodyDamage) ? 0 : 1;              
+                var zoneIndex = (damageEvt.IsTopBodyDamage) ? 0 : 1;              
                 PlaySimpleDamage(ref view, zoneIndex);
             }
         }

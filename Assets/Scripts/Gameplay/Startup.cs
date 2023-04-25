@@ -13,8 +13,6 @@ namespace BT
         private EcsWorld _world;
         private IEcsSystems _initSystems;
         private IEcsSystems _updateSystems;
-        private IEcsSystems _fixedUpdateSystems;
-        private IEcsSystems _lateUpdateSystems;
 
 
         private void Start()
@@ -35,8 +33,6 @@ namespace BT
             
             _initSystems = new EcsSystems(_world, data);
             _updateSystems = new EcsSystems(_world, data);
-            _fixedUpdateSystems = new EcsSystems(_world, data);
-            _lateUpdateSystems = new EcsSystems(_world, data);
 
             AddInitSystems();
             AddSystems();      
@@ -113,23 +109,11 @@ namespace BT
                 .Add(new CreateDamageVfxItemSystem())
                 .Add(new CreateDeathVfxItemSystem())
                 .Add(new DestroyCompletedVfxItemSystem())
-                .Init();
-            
-            _fixedUpdateSystems
-                .Init();
-
-            _lateUpdateSystems
-                .Init();
+                .Init();   
         }
 
 
-        private void Update() => _updateSystems?.Run();
-        
-        
-        private void FixedUpdate() => _fixedUpdateSystems?.Run();
-
-
-        private void LateUpdate() => _lateUpdateSystems?.Run();
+        private void Update() => _updateSystems?.Run();          
 
 
         private void OnDestroy()
@@ -138,13 +122,7 @@ namespace BT
             _initSystems = null;
 
             _updateSystems?.Destroy();
-            _updateSystems = null;
-
-            _lateUpdateSystems?.Destroy();
-            _lateUpdateSystems = null;
-
-            _fixedUpdateSystems?.Destroy();
-            _fixedUpdateSystems = null;
+            _updateSystems = null;            
 
             _world?.Destroy();
             _world = null;

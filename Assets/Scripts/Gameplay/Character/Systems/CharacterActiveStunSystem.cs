@@ -41,6 +41,6 @@ namespace BT
                 ref var stunComp = ref pool.Add(damageEntity);
                 stunComp.Timer = stunTime;
             }
-        }
+        }  
     }
 }

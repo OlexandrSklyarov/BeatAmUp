@@ -15,5 +15,11 @@ namespace BT
             vfx.View = view;
             vfx.LifeTime = view.LifeTime;   
         }
+
+
+        public static bool IsCurrentAnimationState(this Animator animator, string animationState, int layer = 0)
+        {
+            return animator.GetCurrentAnimatorStateInfo(layer).IsName(animationState);
+        }
     }
 }
