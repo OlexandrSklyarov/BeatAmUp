@@ -269,8 +269,8 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""42ab1c85-85d2-45b1-bca4-aee6177d7323"",
-                    ""path"": ""<Keyboard>/n"",
-                    ""interactions"": ""Press"",
+                    ""path"": ""<Keyboard>/m"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Kick"",
@@ -291,8 +291,8 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""37a1c836-f4ab-4d95-93a3-97a0e8862ad3"",
-                    ""path"": ""<Keyboard>/m"",
-                    ""interactions"": ""Press"",
+                    ""path"": ""<Keyboard>/n"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
                     ""action"": ""Punch"",
@@ -364,6 +364,11 @@ public partial class @InputServices : IInputActionCollection2, IDisposable
             ""devices"": [
                 {
                     ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<VirtualMouse>"",
                     ""isOptional"": false,
                     ""isOR"": false
                 }

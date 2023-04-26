@@ -25,6 +25,8 @@ MonoBehaviour:
     <AccelerationWalk>k__BackingField: 0.6
     <AccelerationTime>k__BackingField: 10
     <AccelerationReleaseTime>k__BackingField: 1.5
+    <SlideSpeed>k__BackingField: 10
+    <SlideRotationSpeed>k__BackingField: 60
     <StartHP>k__BackingField: 100
   <CharacterData>k__BackingField:
     <GroundLayer>k__BackingField:

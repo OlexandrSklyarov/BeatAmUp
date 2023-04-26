@@ -11,8 +11,6 @@ namespace BT
 
         public static class Animation
         {
-            public const string IDLE = "IDLE";
-            public const string MOVE = "MOVE";
             public const string MOVE_SPEED = "SPEED";
             public const string DEATH = "DEATH";
             public const string DAMAGE = "DAMAGE";
@@ -42,8 +40,8 @@ namespace BT
         {
             public const float ACTION_TIME_MULTIPLIER = 2f;
             public const float VIEW_ENEMY_ANGLE = 85f;
-            public const float SLIDE_TO_TARGET_TIME = 0.15f;
-            public const float ATTACK_RADIUS_MULTIPLIER = 2f;
+            public const float ATTACK_RADIUS_MULTIPLIER = 6f;
+            public const float TARGET_RADIUS_OFFSET = 0.5f;
             public const float MIN_VELOCITY_MULTIPLIER = 0.01f;
         }
 
@@ -63,7 +61,6 @@ namespace BT
             public const float DEATH_TIME = 5f;
             public const float HIT_COUNT_RESET_TIME = 1f;
             public const int MAX_HIT_COUNT = 3;
-            public const string HIT_LAYER_NAME = "HIT";
         }
 
 
