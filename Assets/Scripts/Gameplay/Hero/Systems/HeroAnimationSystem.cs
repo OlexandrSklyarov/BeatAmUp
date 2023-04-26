@@ -32,17 +32,11 @@ namespace BT
 
                 var isGrounded = groundedPool.Has(e);
                 var isSitting = sittingPool.Has(e);
-
-                var sqVelocity = movement.HorizontalVelocity.sqrMagnitude;
-                var isWalk = isGrounded && sqVelocity > 0f;
+                var velMagnitude = movement.HorizontalVelocity.magnitude;
                 var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
-                var isJumping = isGrounded && movement.VerticalVelocity > 0f;           
-
-                var vel = movement.HorizontalVelocity;
-                vel.y = 0f;
-                var speedProgress = vel.magnitude / config.PlayerData.Speed;
+                var isJumping = !isGrounded && movement.VerticalVelocity > 0f;  
+                var speedProgress = velMagnitude / config.PlayerData.Speed;
                 
-                view.Animator.SetBool(ConstPrm.Animation.MOVE, isWalk);
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
                 view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);
                 view.Animator.SetBool(ConstPrm.Animation.SITTING, isSitting);

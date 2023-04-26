@@ -10,20 +10,17 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<HeroInputUser>()
+                .Filter<HeroTag>()
+                .Inc<HeroInputUser>()
                 .Inc<CharacterCommand>()
-                .Inc<CharacterControllerMovement>()
-                .Inc<HeroTag>()
                 .End();
 
             var inputPool = world.GetPool<HeroInputUser>();
             var commandPool = world.GetPool<CharacterCommand>();
-            var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)
             {
                 ref var command = ref commandPool.Get(e); 
-                ref var movement = ref movementPool.Get(e); 
 
                 ref var input = ref inputPool.Get(e); 
                 var provider = input.InputProvider;
