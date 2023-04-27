@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace BT
@@ -10,9 +11,10 @@ namespace BT
         [field: Space(20f), SerializeField] public PlayerConfig PlayerData { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
-        [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }
         [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
         [field: Space(20f), SerializeField] public EnemyData EnemyConfig { get; private set; }
+        [field: Space(20f), SerializeField] public UIData UI { get; private set; }
+        [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }
         [field: Space(20f), SerializeField] public GameDebug GameDebugConfig { get; private set; }
     }
 

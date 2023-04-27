@@ -16,6 +16,7 @@ namespace BT
             
             var damageEventPool = world.GetPool<TakeDamageEvent>();
             var hpPool = world.GetPool<Health>();
+            var healthFlagPool = world.GetPool<ChangeHealthflag>();
 
             foreach (var ent in damageReceivers)
             {
@@ -23,19 +24,19 @@ namespace BT
                 ref var damageEvent = ref damageEventPool.Get(ent);
 
                 ChangeHealth(ref hp, ref damageEvent);
+                if (!healthFlagPool.Has(ent)) healthFlagPool.Add(ent);
 
                 if (hp.CurrentHP > 0) continue;
                 
                 AddDeathComponent(world, ent);
             }
         }
-
         
+
         private void ChangeHealth(ref Health hpComp, ref TakeDamageEvent damageEvent)
         {
             hpComp.PreviousHP = hpComp.CurrentHP;
-            hpComp.CurrentHP = Mathf.Max(0, hpComp.CurrentHP - damageEvent.DamageAmount); 
-            hpComp.IsChangeValue = true;
+            hpComp.CurrentHP = Mathf.Max(0, hpComp.CurrentHP - damageEvent.DamageAmount);
         }
         
 

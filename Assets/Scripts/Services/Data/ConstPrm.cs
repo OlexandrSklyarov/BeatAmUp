@@ -67,6 +67,7 @@ namespace BT
         public static class UI
         {
             public const float CHANGE_HP_BAR_DURATION = 0.5f;
+            public const int ENEMY_UI_ID = -1;
         }
     }
 }

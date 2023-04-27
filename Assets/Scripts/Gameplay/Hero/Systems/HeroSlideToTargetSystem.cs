@@ -11,7 +11,7 @@ namespace BT
             var data = systems.GetShared<SharedData>();
 
             var entities = world
-                .Filter<HeroTag>()
+                .Filter<Hero>()
                 .Inc<HeroSlideToTarget>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<Translation>()

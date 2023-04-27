@@ -6,6 +6,5 @@ namespace BT
         public int PreviousHP;
         public int CurrentHP;
         public int MaxHP;
-        public bool IsChangeValue;
     }
 }

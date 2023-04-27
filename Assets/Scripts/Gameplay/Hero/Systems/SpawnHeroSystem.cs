@@ -13,6 +13,8 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
+            ClearCreateNewHeroEvents(world);
+
             var entities = world.Filter<CreateHeroRequest>().End();
             var requestPool = world.GetPool<CreateHeroRequest>();
 
@@ -21,35 +23,48 @@ namespace BT
                 ref var request = ref requestPool.Get(e);
 
                 Spawn(world, data, ref request);
-                SpawnHeroEvent(world);
+                SpawnHeroEvent(world, ref request);
                 
                 requestPool.Del(e);
             }
         }
 
-
-        private void SpawnHeroEvent(EcsWorld world)
+        
+        private void ClearCreateNewHeroEvents(EcsWorld world)
         {
-            var entity = world.NewEntity();
-            var eventPool = world.GetPool<HeroCreatedEvent>();
-            eventPool.Add(entity);
+            var filter = world.Filter<CreateNewHeroEvent>().End();
+            var eventPool = world.GetPool<CreateNewHeroEvent>();
+
+            foreach (var ent in filter)
+            {
+                eventPool.Del(ent);
+            }
         }
 
 
-        private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest request)
+        private void SpawnHeroEvent(EcsWorld world, ref CreateHeroRequest spawnRequest)
+        {
+            var entity = world.NewEntity();
+            var eventPool = world.GetPool<CreateNewHeroEvent>();
+            ref var evt = ref eventPool.Add(entity);
+            evt.NewHeroID = spawnRequest.HeroID;
+        }
+
+
+        private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest spawnRequest)
         {
             var heroView = UnityEngine.Object.Instantiate
             (
                 data.Config.PlayerData.Prefab, 
-                data.WorldData.HeroSpawnPoints[request.HeroID].position, 
+                data.WorldData.HeroSpawnPoints[spawnRequest.HeroID].position, 
                 Quaternion.identity
             );
 
             var entity = world.NewEntity();
 
             //hero
-            world.GetPool<HeroTag>().Add(entity);
-            
+            ref var hero = ref world.GetPool<Hero>().Add(entity);
+            hero.ID = spawnRequest.HeroID;
 
             //input
             world.GetPool<CharacterCommand>().Add(entity);
@@ -99,8 +114,7 @@ namespace BT
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(entity); 
-            heroHealth.CurrentHP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;          
-            heroHealth.IsChangeValue = true;
+            heroHealth.CurrentHP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;
 
 
             //input
@@ -109,8 +123,8 @@ namespace BT
             var action = new InputServices();   
             input.InputProvider = new InputHandleProvider(action);
             input.InputProvider.Enable();
-            input.Device = request.Device;
-            input.User = InputUser.PerformPairingWithDevice(request.Device);
+            input.Device = spawnRequest.Device;
+            input.User = InputUser.PerformPairingWithDevice(spawnRequest.Device);
 
             BindDeviceToUser(action, ref input);
 

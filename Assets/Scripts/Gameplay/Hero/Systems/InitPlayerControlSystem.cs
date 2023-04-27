@@ -57,7 +57,7 @@ namespace BT
         private void CreateHeroRequest(EcsWorld world, InputDevice device, SharedData data, int heroID)
         {
             var heroes = world
-                .Filter<HeroTag>()
+                .Filter<Hero>()
                 .Inc<HeroInputUser>()
                 .End();
 

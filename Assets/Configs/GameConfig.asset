@@ -49,5 +49,7 @@ MonoBehaviour:
     type: 2}
   <EnemyConfig>k__BackingField: {fileID: 11400000, guid: fcd1b7cc5598c4dc7b230a9691f86177,
     type: 2}
+  <UI>k__BackingField: {fileID: 11400000, guid: 3a031d0737ffc2c2f89e7b678cd99631,
+    type: 2}
   <GameDebugConfig>k__BackingField:
     <ShowDeviceInfo>k__BackingField: 1

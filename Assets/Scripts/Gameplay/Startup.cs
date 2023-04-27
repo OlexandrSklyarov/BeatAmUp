@@ -99,7 +99,8 @@ namespace BT
                 .Add(new EnemyAnimationSystem())
 
                 //UI
-                .Add(new DrawCharacterUISystem())
+                .Add(new DrawCharacterHealthUISystem())
+                .Add(new AddNewCharacterHudSystem())
 
                 //Camera
                 .Add(new CameraUpdateTargetSystem())

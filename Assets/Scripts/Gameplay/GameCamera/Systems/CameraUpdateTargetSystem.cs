@@ -12,22 +12,21 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var eventEntities = world.Filter<HeroCreatedEvent>().End();
+            var eventEntities = world.Filter<CreateNewHeroEvent>().End();
 
             var heroes = world.
-                Filter<HeroTag>()
+                Filter<Hero>()
                 .Inc<Translation>()
                 .End();
 
             var translationPool = world.GetPool<Translation>();
-            var eventPool = world.GetPool<HeroCreatedEvent>();
+            var eventPool = world.GetPool<CreateNewHeroEvent>();
 
             var cam = data.WorldData.GameVirtualCamera;
             var targetGroup = data.WorldData.TargetGroup;
 
             foreach(var e in eventEntities)
             {
-                ref var evt = ref eventPool.Get(e);
                 var allTargets = new List<CinemachineTargetGroup.Target>();
 
                 foreach(var h in heroes)
@@ -48,8 +47,6 @@ namespace BT
 
                 var t = cam.GetCinemachineComponent<CinemachineTransposer>();
                 t.m_FollowOffset = data.Config.CameraConfig.Offset;
-
-                eventPool.Del(e);
             }
 
         }

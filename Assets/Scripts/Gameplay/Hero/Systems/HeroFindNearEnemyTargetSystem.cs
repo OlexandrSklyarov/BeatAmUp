@@ -11,7 +11,7 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var heroes = world
-                .Filter<HeroTag>()
+                .Filter<Hero>()
                 .Inc<CharacterCommand>()
                 .Inc<Translation>()
                 .Inc<CharacterView>()
