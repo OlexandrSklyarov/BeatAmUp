@@ -8,7 +8,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world.Filter<Hero>()
                 .Inc<CharacterCommand>()
@@ -17,12 +16,14 @@ namespace BT
                 .Exc<CharacterSitDown>()
                 .End();
                 
+            var heroPool = world.GetPool<Hero>();
             var inputPool = world.GetPool<CharacterCommand>();
             var viewPool = world.GetPool<CharacterView>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach (var e in entities)
             {
+                ref var hero = ref heroPool.Get(e);
                 ref var input = ref inputPool.Get(e);
                 ref var view = ref viewPool.Get(e);
                 ref var move = ref movementPool.Get(e);
@@ -33,7 +34,7 @@ namespace BT
                 (
                     view.ViewTransform.rotation,
                     Util.Vector3Math.DirToQuaternion(move.HorizontalVelocity),
-                    Time.deltaTime * config.PlayerData.RotateSpeed
+                    Time.deltaTime * hero.Data.RotateSpeed
                 );
             }
         }

@@ -8,7 +8,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var entities = world.Filter<Hero>()
                 .Inc<CharacterCommand>()
@@ -16,11 +15,14 @@ namespace BT
                 .Inc<CharacterGrounded>()
                 .End();
                 
+            var heroPool = world.GetPool<Hero>();
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach (var e in entities)
             {
+                
+                ref var hero = ref heroPool.Get(e);
                 ref var command = ref commandPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
                 
@@ -31,7 +33,7 @@ namespace BT
 
                 if (!movement.IsJumpProcess && command.IsJump)
                 {
-                    var jumpForce = data.Config.PlayerData.JumpForce;
+                    var jumpForce = hero.Data.JumpForce;
                     movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
                     movement.IsJumpProcess = true;
                 }

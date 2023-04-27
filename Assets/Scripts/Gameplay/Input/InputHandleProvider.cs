@@ -79,7 +79,7 @@ namespace BT
 
 
         private void ActiveRunning(InputAction.CallbackContext ctx) => IsRunning = ctx.ReadValueAsButton();
-        
+
 
         private void SetDirection(InputAction.CallbackContext ctx) 
         {

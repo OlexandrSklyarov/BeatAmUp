@@ -53,9 +53,12 @@ namespace BT
 
         private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest spawnRequest)
         {
+            var id = spawnRequest.HeroID;
+            var unitData = data.Config.Heroes.First(u => u.ID == id);
+            
             var heroView = UnityEngine.Object.Instantiate
             (
-                data.Config.PlayerData.Prefab, 
+                unitData.Prefab, 
                 data.WorldData.HeroSpawnPoints[spawnRequest.HeroID].position, 
                 Quaternion.identity
             );
@@ -65,6 +68,7 @@ namespace BT
             //hero
             ref var hero = ref world.GetPool<Hero>().Add(entity);
             hero.ID = spawnRequest.HeroID;
+            hero.Data = unitData.Data;
 
             //input
             world.GetPool<CharacterCommand>().Add(entity);
@@ -114,7 +118,7 @@ namespace BT
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(entity); 
-            heroHealth.CurrentHP = heroHealth.MaxHP = data.Config.PlayerData.StartHP;
+            heroHealth.CurrentHP = heroHealth.MaxHP = unitData.Data.StartHP;
 
 
             //input

@@ -8,14 +8,16 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var config = systems.GetShared<SharedData>().Config;
+            var data = systems.GetShared<SharedData>();
 
             var entities = world
-                .Filter<CharacterCommand>()
+                .Filter<Hero>()
+                .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<Translation>()
                 .End();
 
+            var heroPool = world.GetPool<Hero>();
             var commandPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var translationPool = world.GetPool<Translation>();
@@ -23,14 +25,15 @@ namespace BT
             var sitingPool = world.GetPool<CharacterSitDown>();
             var stunPool = world.GetPool<Stun>();
 
-            foreach (var e in entities)
+            foreach (var ent in entities)
             {
-                ref var command = ref commandPool.Get(e);
-                ref var movement = ref movementPool.Get(e);
-                ref var translation = ref translationPool.Get(e);
+                ref var hero = ref heroPool.Get(ent);
+                ref var command = ref commandPool.Get(ent);
+                ref var movement = ref movementPool.Get(ent);
+                ref var translation = ref translationPool.Get(ent);
 
-                var isGrounded = groundedPool.Has(e);
-                var isSitting = sitingPool.Has(e);
+                var isGrounded = groundedPool.Has(ent);
+                var isSitting = sitingPool.Has(ent);
 
                 if (isGrounded && isSitting)
                 {
@@ -39,17 +42,17 @@ namespace BT
                     continue;
                 }
 
-                var speed = (!stunPool.Has(e)) ? config.PlayerData.Speed : 0f;
+                var speed = (!stunPool.Has(ent)) ? hero.Data.Speed : 0f;
 
-                ApplyAcceleration(ref movement, ref command, config);
+                ApplyAcceleration(ref movement, ref command, ref hero);
                 ApplySpeed(ref movement, speed, isGrounded);
-                ChangeVelocity(ref movement, ref translation, ref command, config, isGrounded);
+                ChangeVelocity(ref movement, ref translation, ref command, ref hero, isGrounded);
             }
         }
 
 
         private void ChangeVelocity(ref CharacterControllerMovement movement, ref Translation translation, 
-            ref CharacterCommand command, GameConfig config, bool isGrounded)
+            ref CharacterCommand command, ref Hero hero, bool isGrounded)
         {
             var newVelocity = GetMovementVelocity
             (
@@ -59,8 +62,8 @@ namespace BT
             );
 
             var changeTime = (isGrounded) ?
-                config.PlayerData.ChangeVelocityTime :
-                config.PlayerData.ChangeVelocityTime * config.PlayerData.ChangeVelocityTimeMultiplier;
+                hero.Data.ChangeVelocityTime :
+                hero.Data.ChangeVelocityTime * hero.Data.ChangeVelocityTimeMultiplier;
 
             movement.HorizontalVelocity = Vector3.Lerp
             (
@@ -71,19 +74,19 @@ namespace BT
         }
 
 
-        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref CharacterCommand command, GameConfig config)
+        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref CharacterCommand command, ref Hero hero)
         {
             if (command.IsMoved)
             {
                 var accelerationValue = (command.IsRunning) ?
-                    config.PlayerData.AccelerationRun :
-                    config.PlayerData.AccelerationWalk;
+                    hero.Data.AccelerationRun :
+                    hero.Data.AccelerationWalk;
 
-                ChangeAcceleration(ref movement, accelerationValue, config.PlayerData.AccelerationTime);
+                ChangeAcceleration(ref movement, accelerationValue, hero.Data.AccelerationTime);
             }
             else
             {
-                ChangeAcceleration(ref movement, 0f, config.PlayerData.AccelerationReleaseTime);
+                ChangeAcceleration(ref movement, 0f, hero.Data.AccelerationReleaseTime);
             }
         }
 

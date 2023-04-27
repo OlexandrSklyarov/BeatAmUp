@@ -6,16 +6,16 @@ namespace BT
     {
         public void Run(IEcsSystems systems)
         {
-            var config = systems.GetShared<SharedData>().Config;
-
             var world = systems.GetWorld();
 
-            var entities = world.Filter<Hero>()
+            var entities = world
+                .Filter<Hero>()
                 .Inc<CharacterView>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterControllerMovement>()                
                 .End();
 
+            var heroPool = world.GetPool<Hero>();
             var viewPool = world.GetPool<CharacterView>();
             var inputPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
@@ -25,6 +25,7 @@ namespace BT
 
             foreach(var e in entities)
             {
+                ref var hero = ref heroPool.Get(e);
                 ref var view = ref viewPool.Get(e);
                 ref var input = ref inputPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
@@ -35,7 +36,7 @@ namespace BT
                 var velMagnitude = movement.HorizontalVelocity.magnitude;
                 var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
                 var isJumping = !isGrounded && movement.VerticalVelocity > 0f;  
-                var speedProgress = velMagnitude / config.PlayerData.Speed;
+                var speedProgress = velMagnitude / hero.Data.Speed;
                 
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
                 view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);

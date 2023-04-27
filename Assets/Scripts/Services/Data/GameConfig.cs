@@ -8,7 +8,7 @@ namespace BT
     public class GameConfig : ScriptableObject
     {
         [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
-        [field: Space(20f), SerializeField] public PlayerConfig PlayerData { get; private set; }
+        [field: Space(20f), SerializeField] public HeroUnit[] Heroes { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
         [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
@@ -18,6 +18,15 @@ namespace BT
         [field: Space(20f), SerializeField] public GameDebug GameDebugConfig { get; private set; }
     }
 
+
+    [Serializable]
+    public sealed class HeroUnit
+    {
+        [field: SerializeField, Range(1, 4)] public int ID { get; private set; }
+        [field: SerializeField] public HeroViewProvider Prefab { get; private set; }
+        [field: SerializeField] public HeroData Data { get; private set; }
+    }
+    
 
     [Serializable]
     public sealed class PlayerConfig
