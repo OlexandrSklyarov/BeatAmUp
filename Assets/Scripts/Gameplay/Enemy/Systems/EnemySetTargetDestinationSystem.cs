@@ -34,6 +34,7 @@ namespace BT
                 {
                     index--;
                     movement.NavAgent.speed = 0f;
+                    movement.NavAgent.velocity = Vector3.zero;
                     targetPool.Del(e);
                     continue;
                 }
@@ -43,13 +44,22 @@ namespace BT
 
                 movement.NavAgent.SetDestination(destination);
                 movement.NavAgent.stoppingDistance = bodyRadius * 2f;
-                movement.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;
+                movement.NavAgent.speed = GetRandomSpeed(data);
                 
                 index--;
             }
         }
-
         
+
+        private float GetRandomSpeed(SharedData data)
+        {
+            var max = data.Config.EnemyConfig.Movement.Speed;
+            var min = max * 0.7f;
+
+            return UnityEngine.Random.Range(min, max);
+        }
+
+
         private Vector3 GetaTargetAroundPosition(ref EnemyTarget target, float bodyRadius, 
             int count, int index, float maxAngle)
         {

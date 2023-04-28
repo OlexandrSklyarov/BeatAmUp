@@ -9,7 +9,8 @@ namespace BT
             var world = systems.GetWorld();
                 
             var enemies = world
-                .Filter<RagdollState>()
+                .Filter<Enemy>()
+                .Inc<RagdollState>()
                 .Inc<MovementAI>()
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
@@ -22,6 +23,7 @@ namespace BT
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             var movementAiPool = world.GetPool<MovementAI>();
             var deathPool = world.GetPool<Death>();
+            var standUpAnimationPool = world.GetPool<StandUpAnimationEvent>();
 
             foreach (var ent in enemies)
             {
@@ -31,7 +33,10 @@ namespace BT
                  
                 var isGrounded = TryResetRagdoll(ref body, ref view, ref movementAI);
 
-                if (!isGrounded) deathPool.Add(ent); //death
+                if (!isGrounded) 
+                    deathPool.Add(ent); //death
+                else
+                    standUpAnimationPool.Add(ent); //stand up event
 
                 ragdollStatePool.Del(ent);
             }
