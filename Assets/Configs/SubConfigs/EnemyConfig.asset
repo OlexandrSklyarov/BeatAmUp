@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Movement>k__BackingField:
     <Speed>k__BackingField: 2
-    <Acceleration>k__BackingField: 8
-    <AngularSpeed>k__BackingField: 800
+    <Acceleration>k__BackingField: 12
+    <AngularSpeed>k__BackingField: 200
   <Animation>k__BackingField:
     <ChangeSpeedCurve>k__BackingField:
       serializedVersion: 2
@@ -32,12 +32,12 @@ MonoBehaviour:
       - serializedVersion: 3
         time: 0.49894086
         value: 0.499472
-        inSlope: 3.4627686
-        outSlope: 3.4627686
+        inSlope: 1.445768
+        outSlope: 1.445768
         tangentMode: 0
         weightedMode: 0
         inWeight: 0.043353483
-        outWeight: 0.33333334
+        outWeight: 0.07850331
       - serializedVersion: 3
         time: 1
         value: 1

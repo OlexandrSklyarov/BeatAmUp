@@ -29,19 +29,35 @@ namespace BT
             {
                 ref var translation = ref translationPool.Get(e);
                 ref var view = ref viewPool.Get(e);
-                ref var movement = ref movementAIPool.Get(e);                
-
-                if (movement.NavAgent.velocity.magnitude > ConstPrm.Enemy.MIN_VELOCITY_OFFSET)
-                {
-                    RotateBody(ref view, movement.NavAgent.velocity.normalized, data);
-                }
-                else if (targetPool.Has(e))
+                ref var movement = ref movementAIPool.Get(e);  
+                
+                if (targetPool.Has(e))
                 {
                     ref var target = ref targetPool.Get(e);
-                    var dir = (target.MyTarget.position - translation.Value.position).normalized;
-                    RotateBody(ref view, dir, data);
+                    var dirToTarget = target.MyTarget.position - translation.Value.position;
+
+                    if (dirToTarget.sqrMagnitude < ConstPrm.Enemy.TARGET_FOCUS_DIST)
+                    {
+                        RotateBody(ref view, dirToTarget, data);
+                    }
+                    else
+                    {
+                        RotateViewToAgentVelocity(ref movement, ref view, data);
+                    }
+                }
+                else
+                {
+                    RotateViewToAgentVelocity(ref movement, ref view, data);
                 }
             }
+        }
+        
+
+        private void RotateViewToAgentVelocity(ref MovementAI movement, ref CharacterView view, SharedData data)
+        {
+            if (movement.NavAgent.velocity.magnitude <= ConstPrm.Enemy.MIN_VELOCITY_OFFSET) return;
+            
+            RotateBody(ref view, movement.NavAgent.velocity.normalized, data);
         }
 
 

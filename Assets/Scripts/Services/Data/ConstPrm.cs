@@ -51,6 +51,7 @@ namespace BT
             public const float VIEW_TARGET_RADIUS = 15f;
             public const float TARGET_ENCIRCLEMENT_RADIUS = 3f;
             public const float MIN_VELOCITY_OFFSET = 0.1f;
+            public const float TARGET_FOCUS_DIST = 15f;
         }
 
 

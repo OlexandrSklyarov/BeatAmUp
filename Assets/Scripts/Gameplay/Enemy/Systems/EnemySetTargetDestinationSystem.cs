@@ -9,7 +9,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var defaultSpeed = systems.GetShared<SharedData>().Config.EnemyConfig.Movement.Speed;
+            var data = systems.GetShared<SharedData>();
 
             var enemyEntities = world
                 .Filter<Enemy>()
@@ -43,7 +43,7 @@ namespace BT
 
                 movement.NavAgent.SetDestination(destination);
                 movement.NavAgent.stoppingDistance = bodyRadius * 2f;
-                movement.NavAgent.speed = defaultSpeed;
+                movement.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;
                 
                 index--;
             }
