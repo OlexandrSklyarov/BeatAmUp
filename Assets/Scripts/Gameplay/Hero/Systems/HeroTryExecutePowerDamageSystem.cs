@@ -13,7 +13,7 @@ namespace BT
                 .Filter<Hero>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterGrounded>()
-                .Inc<HeroAttack>()
+                .Inc<CharacterAttack>()
                 .Inc<CharacterView>()
                 .Inc<Translation>()
                 .Exc<CharacterSitDown>()
@@ -30,7 +30,7 @@ namespace BT
 
             var commandPool = world.GetPool<CharacterCommand>();
             var heroPool = world.GetPool<Hero>();            
-            var attackPool = world.GetPool<HeroAttack>();
+            var attackPool = world.GetPool<CharacterAttack>();
             var translationPool = world.GetPool<Translation>();
             var viewPool = world.GetPool<CharacterView>();   
 
@@ -52,14 +52,15 @@ namespace BT
                         if (IsCanAttackTarget(ref heroView, ref heroTranslation, ref targetTranslation))
                         {
                             TryAddFinishAttack(world, enemy, ref hero, ref attack);
-                            
+                            TryExecutePowerDamage(ref attack);
+
                             break;
                         }
                     }
                 }
             }
         }
-        
+
 
         private bool IsCanAttackTarget(ref CharacterView heroView, ref Translation heroTR, ref Translation targetTR)
         {
@@ -70,7 +71,7 @@ namespace BT
             if (Vector3.Angle(toTarget, heroView.ViewTransform.forward) > ConstPrm.Hero.VIEW_ENEMY_ANGLE) return false;
             
             var sqDist = toTarget.sqrMagnitude;
-            var maxDist = heroView.BodyRadius * 2f;
+            var maxDist = heroView.BodyRadius * 3f;
 
             if (sqDist > maxDist * maxDist) return false;
 
@@ -78,22 +79,23 @@ namespace BT
         }
 
 
-        private void TryAddFinishAttack(EcsWorld world, int enemyEntity, ref Hero hero, ref HeroAttack heroAttack)
+        private void TryAddFinishAttack(EcsWorld world, int enemyEntity, ref Hero hero, ref CharacterAttack attack)
         {
             var hpPool = world.GetPool<Health>();
             
             if (hpPool.Has(enemyEntity))
             {
-                ref var enemyHP = ref hpPool.Get(enemyEntity);
-                heroAttack.IsNeedFinishAttack = enemyHP.CurrentHP <= hero.Data.Attack.MaxDamage;
+                ref var enemyHealth = ref hpPool.Get(enemyEntity);
+                attack.IsNeedFinishAttack = enemyHealth.CurrentHP <= hero.Data.Attack.MaxDamage;
             }
-
-            var hitCounterPool = world.GetPool<HitCounter>();
-            if (hitCounterPool.Has(enemyEntity))
-            {
-                ref var counter = ref hitCounterPool.Get(enemyEntity);
-                heroAttack.IsPowerfulDamage = counter.HitCount > ConstPrm.Character.MAX_HIT_COUNT;
-            }            
+        }
+        
+        
+        private void TryExecutePowerDamage(ref CharacterAttack attack)
+        {
+            if (attack.HitCount < ConstPrm.Character.MAX_HIT_COUNT) return;
+                
+            attack.IsPowerfulDamage = true;
         }
     }
 }

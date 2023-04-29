@@ -10,22 +10,25 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<HitCounter>()
+                .Filter<CharacterAttack>()
                 .Exc<Death>()
                 .End();            
 
-            var hitCounterPool = world.GetPool<HitCounter>();
+            var attackPool = world.GetPool<CharacterAttack>();
 
             foreach (var e in entities)
             {
-                ref var counter = ref hitCounterPool.Get(e);
+                ref var attack = ref attackPool.Get(e);
+                
+                Util.Debug.Print($"hit count {attack.HitCount} timer {attack.HitResetTimer}");
 
-                counter.HitResetTimer -= Time.deltaTime;
-
-                if (counter.HitResetTimer <= 0f)
+                if (attack.HitResetTimer > 0f)
                 {
-                    hitCounterPool.Del(e);
+                    attack.HitResetTimer -= Time.deltaTime;
+                    continue;
                 }
+                
+                attack.HitCount = 0;
             }
         }
     }

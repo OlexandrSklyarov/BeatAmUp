@@ -13,7 +13,7 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var entities = world.Filter<Hero>()
-                .Inc<HeroAttack>()
+                .Inc<CharacterAttack>()
                 .Inc<CharacterCommand>()
                 .Inc<CharacterGrounded>()
                 .Inc<HitInteraction>()
@@ -21,17 +21,17 @@ namespace BT
                 .End();
 
             var inputPool = world.GetPool<CharacterCommand>();
-            var heroAttackPool = world.GetPool<HeroAttack>();
+            var heroAttackPool = world.GetPool<CharacterAttack>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
 
-            foreach (var e in entities)
+            foreach (var ent in entities)
             {
-                ref var input = ref inputPool.Get(e);
-                ref var attack = ref heroAttackPool.Get(e);
-                ref var hitInteraction = ref hitInteractionPool.Get(e);
+                ref var input = ref inputPool.Get(ent);
+                ref var attack = ref heroAttackPool.Get(ent);
+                ref var hitInteraction = ref hitInteractionPool.Get(ent);
 
                 ResetPreviousAttack(ref attack);
-                SetComboAttack(ref input, ref attack, ref hitInteraction, world, config);
+                SetComboAttack(ref input, ref attack, ref hitInteraction, world, config, ent);
                 AddActionQueue(ref input, ref attack, config);
                 ResetComboState(ref attack); 
                 ResetActionQueue(ref attack);         
@@ -39,15 +39,15 @@ namespace BT
         }
 
 
-        private void ResetPreviousAttack(ref HeroAttack attack)
+        private void ResetPreviousAttack(ref CharacterAttack attack)
         {
             attack.CurrentKick = null;
             attack.CurrentPunch = null;
         }
 
 
-        private void SetComboAttack(ref CharacterCommand input, ref HeroAttack attack,  
-            ref HitInteraction hitInteraction, EcsWorld world, GameConfig config)
+        private void SetComboAttack(ref CharacterCommand input, ref CharacterAttack attack,
+            ref HitInteraction hitInteraction, EcsWorld world, GameConfig config, int ent)
         {
             if (attack.IsActiveAttack) return;
 
@@ -57,9 +57,10 @@ namespace BT
 
             var isPowerfulAttack = attack.IsNeedFinishAttack || attack.IsPowerfulDamage;
             var pushForce = config.HeroAttackData.PushTargetRagdollForce;
-
             var damage = (isPowerfulAttack) ? config.HeroAttackData.MaxDamage : config.HeroAttackData.DefaultDamage;             
            
+            attack.HitCount = (isPowerfulAttack) ? 0 : attack.HitCount;
+            
             if (input.IsPunch) // punch
             {                
                 attack.CurrentPunch = (attack.PunchQueue.Count > 0) ? 
@@ -71,7 +72,7 @@ namespace BT
                 attack.AttackTimer = attack.CurrentPunch.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentPunch, world, damage, pushForce);
+                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentPunch, world, damage, pushForce, ent);
             }            
             else if (input.IsKick) // kick
             {
@@ -84,21 +85,20 @@ namespace BT
                 attack.AttackTimer = attack.CurrentKick.AttackTime;
                 attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentKick, world, damage, pushForce);
+                CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentKick, world, damage, pushForce, ent);
             }            
         }
         
         
-        private void CreateHitEvent(ref HitInteraction hitInteraction, ref HeroAttack attack,
-            HeroAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce)
+        private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack,
+            HeroAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce, int ent)
         {
             var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
 
             if (hurtBox == null) return;
 
-            var entity = world.NewEntity();
             var eventPool = world.GetPool<TryHitEvent>(); 
-            ref var damageEvent = ref eventPool.Add(entity);
+            ref var damageEvent = ref eventPool.Add(ent);
 
             damageEvent.AttackerHurtBox = hurtBox;
             damageEvent.IgnoredHitBoxes = hitInteraction.HitBoxes;
@@ -112,7 +112,7 @@ namespace BT
         }
 
 
-        private void AddActionQueue(ref CharacterCommand input, ref HeroAttack attack, GameConfig config)
+        private void AddActionQueue(ref CharacterCommand input, ref CharacterAttack attack, GameConfig config)
         {
             if (attack.IsNeedFinishAttack) return;
 
@@ -139,7 +139,7 @@ namespace BT
         }
         
         
-        private void ResetComboState(ref HeroAttack attack)
+        private void ResetComboState(ref CharacterAttack attack)
         {     
             if (attack.IsActiveAttack && attack.AttackTimer <= 0f)
             {
@@ -157,7 +157,7 @@ namespace BT
         }        
 
 
-        private void ResetActionQueue(ref HeroAttack attack)
+        private void ResetActionQueue(ref CharacterAttack attack)
         {
             if (attack.ResetNextActionTimer <= 0f)
             {

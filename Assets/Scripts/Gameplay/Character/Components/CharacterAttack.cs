@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace BT
 {
-    public struct HeroAttack
+    public struct CharacterAttack
     {
         public HeroAttackAnimationData CurrentPunch;
         public HeroAttackAnimationData CurrentKick;
@@ -15,5 +15,7 @@ namespace BT
         public bool IsActiveAttack;
         public bool IsNeedFinishAttack;
         public bool IsPowerfulDamage;
+        public int HitCount;
+        public float HitResetTimer;
     }
 }

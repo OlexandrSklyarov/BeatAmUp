@@ -14,6 +14,7 @@ namespace BT
 
             var attackers = world
                 .Filter<TryHitEvent>()
+                .Inc<CharacterAttack>()
                 .End();
 
             var liveCharacters = world
@@ -27,10 +28,12 @@ namespace BT
             var hitEventPool = world.GetPool<TryHitEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
             var viewPool = world.GetPool<CharacterView>();
+            var attackPool = world.GetPool<CharacterAttack>();
 
             foreach (var atk in attackers)
             {
                 ref var hitEvent = ref hitEventPool.Get(atk);
+                ref var attack = ref attackPool.Get(atk);
 
                 hitEvent.ExecuteHitTimer -= Time.deltaTime;
 
@@ -42,7 +45,7 @@ namespace BT
                 //try hit
                 for (int i = 0; i < count; i++)
                 {
-                    TryApplyDamage(world, result[i], liveCharacters, hitInteractionPool, viewPool, ref hitEvent);
+                    TryApplyDamage(world, result[i], liveCharacters, hitInteractionPool, viewPool, ref hitEvent, ref attack);
                 }
 
                 hitEventPool.Del(atk);
@@ -76,8 +79,9 @@ namespace BT
         }
 
 
-        private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters, 
-            EcsPool<HitInteraction> hitInteractionPool, EcsPool<CharacterView> viewPool, ref TryHitEvent hit)
+        private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters,
+            EcsPool<HitInteraction> hitInteractionPool, EcsPool<CharacterView> viewPool, 
+            ref TryHitEvent hit, ref CharacterAttack attack)
         {
             if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
@@ -92,7 +96,7 @@ namespace BT
                 {
                     if (hitBox != receiveHitBox) continue;
                     
-                    IncreaseHitCounter(world, ent);
+                    IncreaseHitCounter(ref attack);
                     CreateTakeDamageEvent(world, ent, ref hit, ref view); 
                     break;
                 }
@@ -111,21 +115,10 @@ namespace BT
         }
 
 
-        private void IncreaseHitCounter(EcsWorld world, int damageEntity)
+        private void IncreaseHitCounter(ref CharacterAttack attack)
         {
-            var counterPool = world.GetPool<HitCounter>();
-
-            if (counterPool.Has(damageEntity))
-            {
-                ref var curCounter = ref counterPool.Get(damageEntity);
-                curCounter.HitCount++;
-                curCounter.HitResetTimer = ConstPrm.Character.HIT_COUNT_RESET_TIME; 
-                return;
-            }
-
-            ref var newCounter = ref counterPool.Add(damageEntity);
-            newCounter.HitCount++;
-            newCounter.HitResetTimer = ConstPrm.Character.HIT_COUNT_RESET_TIME;
+            attack.HitCount++;
+            attack.HitResetTimer = ConstPrm.Character.HIT_COUNT_RESET_TIME;
         }
 
 

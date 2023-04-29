@@ -9,12 +9,12 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world
-                .Filter<HeroAttack>()
+                .Filter<CharacterAttack>()
                 .Inc<CharacterControllerMovement>()  
                 .Inc<CharacterGrounded>()  
                 .End();
 
-            var attackPool = world.GetPool<HeroAttack>();
+            var attackPool = world.GetPool<CharacterAttack>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 
             foreach(var e in entities)

@@ -105,7 +105,7 @@ namespace BT
             
 
            //attack
-            var heroHandleAttackPool = world.GetPool<HeroAttack>();
+            var heroHandleAttackPool = world.GetPool<CharacterAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(entity);            
             heroAttack.IsActiveAttack = false;    
             heroAttack.IsNeedFinishAttack = false;

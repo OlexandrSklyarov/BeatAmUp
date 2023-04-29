@@ -19,7 +19,7 @@ namespace BT
             var viewPool = world.GetPool<CharacterView>();
             var inputPool = world.GetPool<CharacterCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
-            var heroAttackPool = world.GetPool<HeroAttack>();
+            var heroAttackPool = world.GetPool<CharacterAttack>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sittingPool = world.GetPool<CharacterSitDown>();
 
@@ -58,7 +58,7 @@ namespace BT
         }
 
 
-        private string GetAttackTrigger(ref HeroAttack attack)
+        private string GetAttackTrigger(ref CharacterAttack attack)
         {        
             if (attack.CurrentPunch != null) return attack.CurrentPunch.StateName;
             if (attack.CurrentKick != null) return attack.CurrentKick.StateName;

@@ -31,7 +31,7 @@ namespace BT
                 
                 if (!IsCanActiveRagdoll(ref damageEvt, isActiveRagdoll)) continue;
 
-                ActiveCharacterRagdoll(ref damageEvt, ref body, ref view);
+                AddForceCharacterRagdoll(ref damageEvt, ref body, ref view);
                 
                 if (!isActiveRagdoll) ragdollStatePoll.Add(ent);
             }
@@ -44,7 +44,7 @@ namespace BT
         }
 
 
-        private void ActiveCharacterRagdoll(ref TakeDamageEvent damageEvt,
+        private void AddForceCharacterRagdoll(ref TakeDamageEvent damageEvt,
             ref CharacterPhysicsBody body, ref CharacterView view)
         {
             Rigidbody targetRb = body.BodyRagdoll.First();
