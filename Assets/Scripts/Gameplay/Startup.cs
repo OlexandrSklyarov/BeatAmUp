@@ -64,6 +64,12 @@ namespace BT
         private void AddSystems()
         {
             _updateSystems  
+
+                //editor debug
+            #if UNITY_EDITOR
+                .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
+            #endif
+
                 //hero
                 .Add(new SpawnHeroSystem())
                 .Add(new PlayerInputSystem())

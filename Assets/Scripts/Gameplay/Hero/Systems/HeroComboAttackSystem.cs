@@ -150,7 +150,7 @@ namespace BT
                 attack.IsNeedFinishAttack = false;
                 attack.IsPowerfulDamage = false;
             }
-            else
+            else if (attack.AttackTimer > 0f)
             {
                 attack.AttackTimer -= Time.deltaTime;
             }            
@@ -159,15 +159,14 @@ namespace BT
 
         private void ResetActionQueue(ref CharacterAttack attack)
         {
-            if (attack.ResetNextActionTimer <= 0f)
-            {
-                attack.KickQueue.Clear();               
-                attack.PunchQueue.Clear();               
-            }
-            else
+            if (attack.ResetNextActionTimer > 0f)
             {
                 attack.ResetNextActionTimer -= Time.deltaTime;
+                return;
             }
+            
+            attack.KickQueue.Clear();               
+            attack.PunchQueue.Clear();    
         }
     }
 }
