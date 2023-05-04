@@ -34,5 +34,7 @@ namespace BT
     public class EnemyAnimationConfig
     {   
         [field: SerializeField] public AnimationCurve ChangeSpeedCurve {get; private set;}  
+        [field: SerializeField] public string StandUpFaceUpAnimationName {get; private set;}  
+        [field: SerializeField] public string StandUpFaceDownAnimationName {get; private set;}  
     }
 }

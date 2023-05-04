@@ -87,6 +87,7 @@ namespace BT
                 .Add(new CharacterActiveStunSystem())
                 .Add(new CharacterActiveRagdollSystem())
                 .Add(new CharacterReleaseStunSystem())
+                .Add(new PrepareDeactivateRagdollSystem())
                 .Add(new EnemyCharacterDeactivateRagdollSystem())
                 .Add(new ResetHitCountSystem())
                 .Add(new CharacterDamageAnimationSystem())

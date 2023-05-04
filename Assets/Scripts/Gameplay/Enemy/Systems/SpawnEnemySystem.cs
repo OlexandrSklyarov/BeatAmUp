@@ -36,27 +36,39 @@ namespace BT
             //enemy
             var enemyPool = world.GetPool<Enemy>();
             ref var enemyComp = ref enemyPool.Add(entity);
-            enemyComp.PoolItem = enemyViewProvider;
+            enemyComp.PoolItem = enemyViewProvider;   
 
-            //Physics body
-            var bodyPool = world.GetPool<CharacterPhysicsBody>();
-            ref var comp = ref bodyPool.Add(entity);
-            
-            comp.BodyRagdoll = enemyViewProvider.RagdollElements;
-            foreach (var r in comp.BodyRagdoll) r.isKinematic = true;
-            
-            var collider = enemyViewProvider.GetComponent<CapsuleCollider>();
-            collider.enabled = true;
-            comp.Collider = collider;
+
+            //Translation
+            var translationPool = world.GetPool<Translation>();
+            ref var translation = ref translationPool.Add(entity);
+            translation.Value = enemyViewProvider.transform;
+            translation.Value.SetPositionAndRotation(createPosition, createRotation);            
+                        
 
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(entity);
             view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
             view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
-            view.Height = collider.height;
-            view.BodyRadius = collider.radius;
+            view.Height = enemyViewProvider.Collider.height;
+            view.BodyRadius = enemyViewProvider.Collider.radius;
             view.HipBone = enemyViewProvider.BodyHips;
+           
+
+            //Physics body
+            var bodyPool = world.GetPool<CharacterPhysicsBody>();
+            ref var body = ref bodyPool.Add(entity);
+            
+            body.BodyRagdoll = enemyViewProvider.RagdollElements;
+            foreach (var r in body.BodyRagdoll) r.isKinematic = true;
+            
+            var collider = enemyViewProvider.Collider;
+            collider.enabled = true;
+            body.Collider = collider;
+
+            SetupRagdollBones(enemyViewProvider.BodyHips, data.Config.EnemyConfig, ref body, ref view, ref translation);
+
 
             //hit
             var hitPool = world.GetPool<HitInteraction>();
@@ -66,10 +78,12 @@ namespace BT
             hit.HurtBoxes = enemyViewProvider.GetComponentsInChildren<HurtBox>();
             foreach(var h in hit.HurtBoxes) h.Init();
 
+
             //hp
             var hpPool = world.GetPool<Health>();
             ref var hpComp = ref hpPool.Add(entity);
             hpComp.CurrentHP = hpComp.MaxHP = 100;
+
 
             //AI
             var aiPool = world.GetPool<MovementAI>();
@@ -80,14 +94,40 @@ namespace BT
             ai.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;   
             ai.NavAgent.acceleration = data.Config.EnemyConfig.Movement.Acceleration;   
             ai.NavAgent.angularSpeed = data.Config.EnemyConfig.Movement.AngularSpeed;   
-            ai.NavAgent.updateRotation = false;
-            
-            
-            //Translation
-            var translationPool = world.GetPool<Translation>();
-            ref var translation = ref translationPool.Add(entity);
-            translation.Value = enemyViewProvider.transform;
-            translation.Value.SetPositionAndRotation(createPosition, createRotation);   
+            ai.NavAgent.updateRotation = false;               
+        }
+
+
+        private void SetupRagdollBones(Transform hipsBone, EnemyData config, 
+            ref CharacterPhysicsBody body, ref CharacterView view, ref Translation translation)
+        {
+            body.Bones = hipsBone.GetComponentsInChildren<Transform>();
+
+            body.RagdollBoneTransforms = new BoneTransform[body.Bones.Length];        
+            body.StandUpBoneTransforms = new BoneTransform[body.Bones.Length]; 
+
+            for(int i = 0; i < body.Bones.Length; i++)
+            {
+                body.RagdollBoneTransforms[i] = new BoneTransform();        
+                body.StandUpBoneTransforms[i] = new BoneTransform();
+            } 
+
+            //configure stand up bones
+            var posBefore = translation.Value.position;
+            var rotBefore = translation.Value.rotation;
+
+            foreach(var clip in view.Animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == config.Animation.StandUpFaceUpAnimationName)
+                {
+                    clip.SampleAnimation(view.Animator.gameObject, 0f);
+                    GameplayExtensions.PopulateBoneTransforms(body.Bones, body.StandUpBoneTransforms);
+                    break;
+                }
+            }
+
+            translation.Value.position = posBefore;
+            translation.Value.rotation = rotBefore;
         }
     }
 }

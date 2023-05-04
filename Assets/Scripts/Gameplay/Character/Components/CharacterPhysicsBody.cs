@@ -5,7 +5,10 @@ namespace BT
 {
     public struct CharacterPhysicsBody
     {
-        public IEnumerable<Rigidbody> BodyRagdoll;
         public CapsuleCollider Collider;
+        public IEnumerable<Rigidbody> BodyRagdoll;
+        public BoneTransform[] RagdollBoneTransforms;
+        public BoneTransform[] StandUpBoneTransforms;
+        public Transform[] Bones;
     }
 }

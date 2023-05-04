@@ -1,4 +1,5 @@
 using Leopotam.EcsLite;
+using UnityEngine;
 
 namespace BT
 {
@@ -9,19 +10,18 @@ namespace BT
             var world = systems.GetWorld();
                 
             var enemies = world
-                .Filter<Enemy>()
+                .Filter<DeactivateRagdoll>()
                 .Inc<RagdollState>()
-                .Inc<MovementAI>()
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();
 
-            var ragdollStatePool = world.GetPool<RagdollState>();
+            var ragdollPool = world.GetPool<RagdollState>();
+            var deactivateRagdollPool = world.GetPool<DeactivateRagdoll>();
             var viewPool = world.GetPool<CharacterView>();
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
-            var movementAiPool = world.GetPool<MovementAI>();
             var deathPool = world.GetPool<Death>();
             var standUpAnimationPool = world.GetPool<StandUpAnimationEvent>();
 
@@ -29,34 +29,57 @@ namespace BT
             {
                 ref var view = ref viewPool.Get(ent);
                 ref var body = ref bodyPool.Get(ent);
-                ref var movementAI = ref movementAiPool.Get(ent);
+                ref var ragdoll = ref ragdollPool.Get(ent);
+                ref var deactivateRagdoll = ref deactivateRagdollPool.Get(ent);
                  
-                var isGrounded = TryResetRagdoll(ref body, ref view, ref movementAI);
-
-                if (!isGrounded) 
+                if (!deactivateRagdoll.IsCanStandUp) 
+                {
                     deathPool.Add(ent); //death
-                else
-                    standUpAnimationPool.Add(ent); //stand up event
+                    continue;
+                }
 
-                ragdollStatePool.Del(ent);
+                ragdoll.RestoreTimer -= Time.deltaTime;
+
+                if (ragdoll.RestoreTimer > 0f)
+                {
+                    StandUpRagdollProcess(ref ragdoll, ref body);
+                    continue;
+                }               
+                
+                ResetRagdoll(ref body, ref view);
+
+                standUpAnimationPool.Add(ent); //stand up anim event  
+                ragdollPool.Del(ent);
+                deactivateRagdollPool.Del(ent);
             }
         }
-        
 
-        private bool TryResetRagdoll(ref CharacterPhysicsBody body, ref CharacterView view, ref MovementAI ai)
+
+        private void StandUpRagdollProcess(ref RagdollState ragdoll, ref CharacterPhysicsBody body)
         {
-            foreach (var rb in body.BodyRagdoll)
+            var progress = Mathf.Clamp01(1f - ragdoll.RestoreTimer / ConstPrm.Character.RESTORE_RAGDOLL_TIME);
+
+            for(int i = 0; i < body.Bones.Length; i++)
             {
-                rb.isKinematic = true;
+                body.Bones[i].localPosition = Vector3.Lerp(
+                    body.RagdollBoneTransforms[i].Position, 
+                    body.StandUpBoneTransforms[i].Position, 
+                    progress);
+               
+                body.Bones[i].localRotation = Quaternion.Lerp(
+                    body.RagdollBoneTransforms[i].Rotation, 
+                    body.StandUpBoneTransforms[i].Rotation, 
+                    progress);
             }
+        }
+
+
+        private void ResetRagdoll(ref CharacterPhysicsBody body, ref CharacterView view)
+        {
+            foreach (var rb in body.BodyRagdoll) rb.isKinematic = true;
 
             view.Animator.enabled = true;
             body.Collider.enabled = true;
-            
-            var origin = view.HipBone.position;
-            var isStandSuccess = ai.NavAgent.Warp(origin);
-
-            return isStandSuccess;
-        }
+        }        
     }
 }

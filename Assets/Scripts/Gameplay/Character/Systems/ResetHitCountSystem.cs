@@ -18,10 +18,8 @@ namespace BT
 
             foreach (var e in entities)
             {
-                ref var attack = ref attackPool.Get(e);
+                ref var attack = ref attackPool.Get(e);                
                 
-                Util.Debug.Print($"hit count {attack.HitCount} timer {attack.HitResetTimer}");
-
                 if (attack.HitResetTimer > 0f)
                 {
                     attack.HitResetTimer -= Time.deltaTime;

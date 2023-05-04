@@ -1,3 +1,4 @@
+using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -20,6 +21,16 @@ namespace BT
         public static bool IsCurrentAnimationState(this Animator animator, string animationState, int layer = 0)
         {
             return animator.GetCurrentAnimatorStateInfo(layer).IsName(animationState);
+        }
+
+
+        public static void PopulateBoneTransforms(Transform[] bones, BoneTransform[] boneTransforms)
+        {
+            for(int i = 0; i < bones.Length; i++)
+            {
+                boneTransforms[i].Position = bones[i].localPosition;
+                boneTransforms[i].Rotation = bones[i].localRotation;
+            }
         }
     }
 }

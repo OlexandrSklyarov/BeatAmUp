@@ -17,7 +17,7 @@ namespace BT
                 .End();
 
             var damageEventPool = world.GetPool<TakeDamageEvent>();
-            var ragdollStatePoll = world.GetPool<RagdollState>();
+            var ragdollPool = world.GetPool<RagdollState>();
             var physicsBodyPool = world.GetPool<CharacterPhysicsBody>();
             var viewPool = world.GetPool<CharacterView>();
 
@@ -27,25 +27,25 @@ namespace BT
                 ref var body = ref physicsBodyPool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
 
-                var isActiveRagdoll = ragdollStatePoll.Has(ent);
+                var isHasRagdollState = ragdollPool.Has(ent);
                 
-                if (!IsCanActiveRagdoll(ref damageEvt, isActiveRagdoll)) continue;
+                if (!IsCanActiveRagdoll(ref damageEvt, isHasRagdollState)) continue;
 
                 AddForceCharacterRagdoll(ref damageEvt, ref body, ref view);
-                
-                if (!isActiveRagdoll) ragdollStatePoll.Add(ent);
+
+                AddRagdollState(isHasRagdollState, ragdollPool, ent);                
             }
         }
-        
 
-        private bool IsCanActiveRagdoll(ref TakeDamageEvent damageEvt, bool isRagdollEnabled)
+
+        private bool IsCanActiveRagdoll(ref TakeDamageEvent damageEvt, bool isHasRagdollState)
         {
-            return isRagdollEnabled || (damageEvt.IsPowerDamage && !damageEvt.IsHammeringDamage);
+            return isHasRagdollState || (damageEvt.IsPowerDamage && !damageEvt.IsHammeringDamage);
         }
 
 
-        private void AddForceCharacterRagdoll(ref TakeDamageEvent damageEvt,
-            ref CharacterPhysicsBody body, ref CharacterView view)
+        private void AddForceCharacterRagdoll(ref TakeDamageEvent damageEvt, ref CharacterPhysicsBody body, 
+            ref CharacterView view)
         {
             Rigidbody targetRb = body.BodyRagdoll.First();
             var minSqDist = float.MaxValue;
@@ -67,6 +67,20 @@ namespace BT
 
             var force = damageEvt.HitDirection * damageEvt.PushForce;
             targetRb.AddForceAtPosition(force, targetRb.position, ForceMode.Impulse);
+        }
+
+
+        private void AddRagdollState(bool isHasRagdollState, EcsPool<RagdollState> pool, int ent)
+        {
+            if (isHasRagdollState)
+            {
+                ref var curState = ref pool.Get(ent);
+                curState.RestoreTimer = ConstPrm.Character.RESTORE_RAGDOLL_TIME;
+                return;
+            }
+            
+            ref var state = ref pool.Add(ent);
+            state.RestoreTimer = ConstPrm.Character.RESTORE_RAGDOLL_TIME;
         }
     }
 }

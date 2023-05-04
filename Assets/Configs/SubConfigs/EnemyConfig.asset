@@ -50,6 +50,8 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
+    <StandUpFaceUpAnimationName>k__BackingField: STAND_UP_FACE_UP
+    <StandUpFaceDownAnimationName>k__BackingField: STAND_UP_FACE_DOWN
   <EnemyPoolData>k__BackingField:
   - <Type>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 2382251879883215331, guid: 6dc06b531568228b4b0caf423f1b5029,

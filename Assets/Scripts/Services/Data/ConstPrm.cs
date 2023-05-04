@@ -64,6 +64,7 @@ namespace BT
             public const float DEATH_TIME = 5f;
             public const float HIT_COUNT_RESET_TIME = 1f;
             public const int MAX_HIT_COUNT = 3;
+            public const float RESTORE_RAGDOLL_TIME = 2f;
         }
 
 
