@@ -11,7 +11,6 @@ namespace BT
             var enemies = world.Filter<Enemy>()
                 .Inc<Translation>()
                 .Exc<EnemyTarget>()
-                .Exc<RestoreRagdollState>()
                 .End();
 
             var heroes = world.Filter<Hero>()
@@ -29,8 +28,6 @@ namespace BT
 
                 foreach(var h in heroes)
                 {
-                    if (enemyTargetPool.Has(e)) continue;
-
                     ref var heroTR = ref heroCharacterView.Get(h).ViewTransform;
 
                     var sqDist = (translation.Value.position - heroTR.position).sqrMagnitude;
@@ -40,7 +37,7 @@ namespace BT
                     {
                         ref var targetComp = ref enemyTargetPool.Add(e);
                         targetComp.MyTarget = heroTR;
-                        Util.Debug.PrintColor($"I see target {heroTR.name}", UnityEngine.Color.yellow);
+                        Util.Debug.PrintColor($"{translation.Value.name} => I see target {heroTR.name}", UnityEngine.Color.yellow);
                     }
                 }
             }

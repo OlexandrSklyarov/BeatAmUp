@@ -22,6 +22,7 @@ namespace BT
             var movementPool = world.GetPool<MovementAI>();
             var targetPool = world.GetPool<EnemyTarget>();
             var stunPool = world.GetPool<Stun>();
+            var blockMovementPool = world.GetPool<BlockMovement>();
 
             var index = enemyEntities.GetEntitiesCount();
             var count = index;
@@ -31,7 +32,7 @@ namespace BT
                 ref var movement = ref movementPool.Get(e);
                 ref var target = ref targetPool.Get(e);
 
-                if (stunPool.Has(e))
+                if (stunPool.Has(e) || blockMovementPool.Has(e))
                 {
                     index--;
                     movement.NavAgent.speed = 0f;

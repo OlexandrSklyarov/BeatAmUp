@@ -35,6 +35,7 @@ namespace BT
     {   
         [field: SerializeField] public AnimationCurve ChangeSpeedCurve {get; private set;}  
         [field: SerializeField] public string StandUpFaceUpAnimationName {get; private set;}  
-        [field: SerializeField] public string StandUpFaceDownAnimationName {get; private set;}  
+        [field: SerializeField] public string StandUpFaceDownAnimationName {get; private set;}
+        [field: SerializeField, Min(0f)] public float StandUpAnimationDelay {get; private set;} = 2f;
     }
 }
