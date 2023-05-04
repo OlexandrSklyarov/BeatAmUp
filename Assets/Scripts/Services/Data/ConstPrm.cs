@@ -8,6 +8,7 @@ namespace BT
             public const string KEYBOARD = "Keyboard";
             public const string GAMEPAD = "Gamepad";
         }
+        
 
         public static class Animation
         {
@@ -30,6 +31,7 @@ namespace BT
             public const string VERTICAL_VELOCITY = "VERTICAL_VELOCITY";
             public const string STAND_UP_FACE_DOWN = "STAND_UP_FACE_DOWN";
             public const string STAND_UP_FACE_UP = "STAND_UP_FACE_UP";
+            public const string KNOCKED_OUT = "KNOCKED_OUT";            
         }
 
 
