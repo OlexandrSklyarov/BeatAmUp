@@ -4,7 +4,7 @@ using Util;
 
 namespace BT
 {
-    public sealed class EnemySetTargetDestinationSystem : IEcsRunSystem
+    public sealed class EnemySetAIDestinationSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -16,6 +16,7 @@ namespace BT
                 .Inc<MovementAI>()
                 .Inc<EnemyTarget>()
                 .Exc<Death>()
+                .Exc<RagdollState>()
                 .End();
 
             var movementPool = world.GetPool<MovementAI>();

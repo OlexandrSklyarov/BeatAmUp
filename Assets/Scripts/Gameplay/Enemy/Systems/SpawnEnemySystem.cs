@@ -104,30 +104,42 @@ namespace BT
             body.Bones = hipsBone.GetComponentsInChildren<Transform>();
 
             body.RagdollBoneTransforms = new BoneTransform[body.Bones.Length];        
-            body.StandUpBoneTransforms = new BoneTransform[body.Bones.Length]; 
+            body.StandUpFaceBoneTransforms = new BoneTransform[body.Bones.Length];        
+            body.StandUpFaceDownBoneTransforms = new BoneTransform[body.Bones.Length]; 
 
             for(int i = 0; i < body.Bones.Length; i++)
-            {
-                body.RagdollBoneTransforms[i] = new BoneTransform();        
-                body.StandUpBoneTransforms[i] = new BoneTransform();
+            {       
+                body.RagdollBoneTransforms[i] = new BoneTransform();
+                body.StandUpFaceBoneTransforms[i] = new BoneTransform();
+                body.StandUpFaceDownBoneTransforms[i] = new BoneTransform();
             } 
 
             //configure stand up bones
+            view.Animator.enabled = false;
             var posBefore = translation.Value.position;
             var rotBefore = translation.Value.rotation;
 
-            foreach(var clip in view.Animator.runtimeAnimatorController.animationClips)
-            {
-                if (clip.name == config.Animation.StandUpFaceUpAnimationName)
-                {
-                    clip.SampleAnimation(view.Animator.gameObject, 0f);
-                    GameplayExtensions.PopulateBoneTransforms(body.Bones, body.StandUpBoneTransforms);
-                    break;
-                }
-            }
+            ConfigureBonesTransform(config.Animation.StandUpFaceUpAnimationName, body.Bones, body.StandUpFaceBoneTransforms, view.Animator);
+            ConfigureBonesTransform(config.Animation.StandUpFaceDownAnimationName, body.Bones, body.StandUpFaceDownBoneTransforms, view.Animator);
 
             translation.Value.position = posBefore;
             translation.Value.rotation = rotBefore;
+            view.Animator.enabled = true;
+        }
+
+        
+        
+        private static void ConfigureBonesTransform(string checkName, Transform[] bones, BoneTransform[] targetBones, Animator animator)
+        {
+            foreach (var clip in animator.runtimeAnimatorController.animationClips)
+            {
+                if (clip.name == checkName)
+                {
+                    clip.SampleAnimation(animator.gameObject, 0f);
+                    GameplayExtensions.PopulateBoneTransforms(bones, targetBones);
+                    break;
+                }
+            }
         }
     }
 }

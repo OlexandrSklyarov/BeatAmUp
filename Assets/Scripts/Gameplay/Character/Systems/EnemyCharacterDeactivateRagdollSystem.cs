@@ -10,7 +10,7 @@ namespace BT
             var world = systems.GetWorld();
                 
             var enemies = world
-                .Filter<DeactivateRagdoll>()
+                .Filter<RestoreRagdollState>()
                 .Inc<RagdollState>()
                 .Inc<CharacterView>()
                 .Inc<CharacterPhysicsBody>()
@@ -19,7 +19,7 @@ namespace BT
                 .End();
 
             var ragdollPool = world.GetPool<RagdollState>();
-            var deactivateRagdollPool = world.GetPool<DeactivateRagdoll>();
+            var deactivateRagdollPool = world.GetPool<RestoreRagdollState>();
             var viewPool = world.GetPool<CharacterView>();
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             var deathPool = world.GetPool<Death>();
@@ -30,9 +30,9 @@ namespace BT
                 ref var view = ref viewPool.Get(ent);
                 ref var body = ref bodyPool.Get(ent);
                 ref var ragdoll = ref ragdollPool.Get(ent);
-                ref var deactivateRagdoll = ref deactivateRagdollPool.Get(ent);
+                ref var restoreRagdoll = ref deactivateRagdollPool.Get(ent);
                  
-                if (!deactivateRagdoll.IsCanStandUp) 
+                if (!restoreRagdoll.IsCanStandUp) 
                 {
                     deathPool.Add(ent); //death
                     continue;
@@ -42,44 +42,43 @@ namespace BT
 
                 if (ragdoll.RestoreTimer > 0f)
                 {
-                    StandUpRagdollProcess(ref ragdoll, ref body);
+                    StandUpRagdollProcess(ref ragdoll, ref restoreRagdoll, ref body);
                     continue;
                 }               
                 
-                ResetRagdoll(ref body, ref view);
+                view.Animator.enabled = true;
+                body.Collider.enabled = true;
 
-                standUpAnimationPool.Add(ent); //stand up anim event  
+                ref var animEvent = ref standUpAnimationPool.Add(ent); //stand up anim event  
+                animEvent.IsFaceDown = restoreRagdoll.IsFaceDown;
+                
                 ragdollPool.Del(ent);
                 deactivateRagdollPool.Del(ent);
             }
         }
 
 
-        private void StandUpRagdollProcess(ref RagdollState ragdoll, ref CharacterPhysicsBody body)
+        private void StandUpRagdollProcess(ref RagdollState ragdoll, ref RestoreRagdollState restoreRagdoll,
+            ref CharacterPhysicsBody body)
         {
             var progress = Mathf.Clamp01(1f - ragdoll.RestoreTimer / ConstPrm.Character.RESTORE_RAGDOLL_TIME);
 
+            var targetBones = (restoreRagdoll.IsFaceDown) ? 
+                body.StandUpFaceDownBoneTransforms : 
+                body.StandUpFaceBoneTransforms;
+                
             for(int i = 0; i < body.Bones.Length; i++)
             {
                 body.Bones[i].localPosition = Vector3.Lerp(
                     body.RagdollBoneTransforms[i].Position, 
-                    body.StandUpBoneTransforms[i].Position, 
+                    targetBones[i].Position, 
                     progress);
                
                 body.Bones[i].localRotation = Quaternion.Lerp(
                     body.RagdollBoneTransforms[i].Rotation, 
-                    body.StandUpBoneTransforms[i].Rotation, 
+                    targetBones[i].Rotation, 
                     progress);
             }
         }
-
-
-        private void ResetRagdoll(ref CharacterPhysicsBody body, ref CharacterView view)
-        {
-            foreach (var rb in body.BodyRagdoll) rb.isKinematic = true;
-
-            view.Animator.enabled = true;
-            body.Collider.enabled = true;
-        }        
     }
 }

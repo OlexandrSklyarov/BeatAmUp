@@ -87,7 +87,7 @@ namespace BT
                 .Add(new CharacterActiveStunSystem())
                 .Add(new CharacterActiveRagdollSystem())
                 .Add(new CharacterReleaseStunSystem())
-                .Add(new PrepareDeactivateRagdollSystem())
+                .Add(new PrepareRestoreRagdollSystem())
                 .Add(new EnemyCharacterDeactivateRagdollSystem())
                 .Add(new ResetHitCountSystem())
                 .Add(new CharacterDamageAnimationSystem())
@@ -95,7 +95,7 @@ namespace BT
                 //enemy
                 .Add(new SpawnEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
-                .Add(new EnemySetTargetDestinationSystem())
+                .Add(new EnemySetAIDestinationSystem())
                 .Add(new EnemyBodyRotateSystem())
                 .Add(new EnemyCharacterDieSystem())
                 .Add(new EnemyAnimationSystem())

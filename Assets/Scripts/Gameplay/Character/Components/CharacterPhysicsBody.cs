@@ -8,7 +8,8 @@ namespace BT
         public CapsuleCollider Collider;
         public IEnumerable<Rigidbody> BodyRagdoll;
         public BoneTransform[] RagdollBoneTransforms;
-        public BoneTransform[] StandUpBoneTransforms;
+        public BoneTransform[] StandUpFaceBoneTransforms;
+        public BoneTransform[] StandUpFaceDownBoneTransforms;
         public Transform[] Bones;
     }
 }

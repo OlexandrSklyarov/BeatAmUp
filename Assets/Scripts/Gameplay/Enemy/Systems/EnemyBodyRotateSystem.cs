@@ -16,6 +16,7 @@ namespace BT
                 .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Inc<MovementAI>()
+                .Exc<RagdollState>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();

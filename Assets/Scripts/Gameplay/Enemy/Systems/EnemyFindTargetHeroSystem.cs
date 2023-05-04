@@ -8,10 +8,10 @@ namespace BT
         {
             var world = systems.GetWorld();
             
-            var entities = world.Filter<Enemy>()
+            var enemies = world.Filter<Enemy>()
                 .Inc<Translation>()
                 .Exc<EnemyTarget>()
-                .Exc<Stun>()
+                .Exc<RestoreRagdollState>()
                 .End();
 
             var heroes = world.Filter<Hero>()
@@ -23,7 +23,7 @@ namespace BT
             var translationPool = world.GetPool<Translation>();
             var heroCharacterView = world.GetPool<CharacterView>();
 
-            foreach(var e in entities)
+            foreach(var e in enemies)
             {
                 ref var translation = ref translationPool.Get(e);
 

@@ -603,6 +603,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1082271958561512970, guid: bb6c89e06c2b486a6aea7902b68c2f24,
         type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000,
+        type: 0}
+    - target: {fileID: 1082271958561512970, guid: bb6c89e06c2b486a6aea7902b68c2f24,
+        type: 3}
       propertyPath: m_Layer
       value: 7
       objectReference: {fileID: 0}

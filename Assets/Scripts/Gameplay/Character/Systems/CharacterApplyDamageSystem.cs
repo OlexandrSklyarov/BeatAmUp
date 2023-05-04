@@ -17,7 +17,6 @@ namespace BT
             var damageEventPool = world.GetPool<TakeDamageEvent>();
             var hpPool = world.GetPool<Health>();
             var healthFlagPool = world.GetPool<ChangeHealthflag>();
-            var ragdollPool = world.GetPool<RagdollState>();
 
             foreach (var ent in damageReceivers)
             {

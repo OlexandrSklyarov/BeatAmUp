@@ -36,17 +36,17 @@ namespace BT
 
                 if (standAnimPool.Has(ent))
                 {
-                    view.Animator.SetTrigger(GetStandTrigger(ref view));
+                    ref var evt = ref standAnimPool.Get(ent);
+                    view.Animator.SetTrigger(GetStandTrigger(ref evt));
                     standAnimPool.Del(ent);
                 }
             }
         }
 
         
-        private string GetStandTrigger(ref CharacterView view)
+        private string GetStandTrigger(ref StandUpAnimationEvent evt)
         {
-            var dot = Vector3.Dot(view.HipBone.forward, Vector3.up);
-            return (dot < 0f) ? ConstPrm.Animation.STAND_UP_FACE_DOWN : ConstPrm.Animation.STAND_UP_FACE_UP;
+            return (evt.IsFaceDown) ? ConstPrm.Animation.STAND_UP_FACE_DOWN : ConstPrm.Animation.STAND_UP_FACE_UP;
         }
 
 

@@ -11,6 +11,7 @@ namespace BT
             var entities = world
                 .Filter<TakeDamageEvent>()
                 .Inc<CharacterView>()
+                .Exc<RagdollState>()
                 .End();
 
             var damageEventPool = world.GetPool<TakeDamageEvent>();

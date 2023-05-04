@@ -3,8 +3,9 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct DeactivateRagdoll
+    public struct RestoreRagdollState
     {
         public bool IsCanStandUp;
+        public bool IsFaceDown;
     }
 }
