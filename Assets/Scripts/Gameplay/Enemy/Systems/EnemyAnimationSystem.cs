@@ -32,8 +32,8 @@ namespace BT
                 
                 view.Animator.SetBool(ConstPrm.Animation.STUN, stunPool.Has(ent));
                 view.Animator.SetBool(ConstPrm.Animation.DEATH, deathPool.Has(ent));
-                view.Animator.SetFloat(ConstPrm.Animation.SIDE_PRM, side * curSpeed, 0.25f, Time.deltaTime);
-                view.Animator.SetFloat(ConstPrm.Animation.FORWARD_PRM, forward * curSpeed, 0.25f, Time.deltaTime);
+                view.Animator.SetFloat(ConstPrm.Animation.SIDE_PRM, side * curSpeed, 0.1f, Time.deltaTime);
+                view.Animator.SetFloat(ConstPrm.Animation.FORWARD_PRM, forward * curSpeed, 0.1f, Time.deltaTime);
 
                 if (standAnimPool.Has(ent))
                 {
@@ -66,8 +66,9 @@ namespace BT
             var agent = movement.NavAgent;
             var vel = agent.velocity.magnitude;
 
-            var normalizeSpeed = (agent.velocity.magnitude >= agent.stoppingDistance) ?
-                vel /agent.speed : vel / agent.stoppingDistance;
+            var normalizeSpeed = Mathf.Clamp01((vel >= Mathf.Epsilon) ? vel / agent.speed : 0f);
+
+            Util.Debug.PrintColor($"anim norm speed {normalizeSpeed}", Color.cyan);
 
             return data.Config.EnemyConfig.Animation.ChangeSpeedCurve.Evaluate(normalizeSpeed);
         }
