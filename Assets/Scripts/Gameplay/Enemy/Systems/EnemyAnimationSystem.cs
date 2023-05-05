@@ -18,21 +18,22 @@ namespace BT
 
             var viewPool = world.GetPool<CharacterView>();
             var movementAIPool = world.GetPool<MovementAI>();
-            var stunPool = world.GetPool<Stun>();
             var standAnimPool = world.GetPool<StandUpAnimationEvent>();
+            var stunPool = world.GetPool<Stun>();
+            var deathPool = world.GetPool<Death>();
 
             foreach (var ent in entities)
             {
                 ref var view = ref viewPool.Get(ent);
                 ref var movement = ref movementAIPool.Get(ent);
                 
-                var isStun = stunPool.Has(ent);
                 var curSpeed = GetCurrentSpeed(ref movement, data);
                 var (side, forward) = CalculateDirectionParam(ref movement, ref view);
                 
-                view.Animator.SetBool(ConstPrm.Animation.STUN, isStun);
+                view.Animator.SetBool(ConstPrm.Animation.STUN, stunPool.Has(ent));
+                view.Animator.SetBool(ConstPrm.Animation.DEATH, deathPool.Has(ent));
                 view.Animator.SetFloat(ConstPrm.Animation.SIDE_PRM, side * curSpeed, 0.25f, Time.deltaTime);
-                view.Animator.SetFloat(ConstPrm.Animation.FORWARD_PRM, forward * curSpeed,0.25f, Time.deltaTime);
+                view.Animator.SetFloat(ConstPrm.Animation.FORWARD_PRM, forward * curSpeed, 0.25f, Time.deltaTime);
 
                 if (standAnimPool.Has(ent))
                 {
@@ -63,9 +64,10 @@ namespace BT
         private float GetCurrentSpeed(ref MovementAI movement, SharedData data)
         {
             var agent = movement.NavAgent;
+            var vel = agent.velocity.magnitude;
 
             var normalizeSpeed = (agent.velocity.magnitude >= agent.stoppingDistance) ?
-                agent.speed / agent.velocity.magnitude : 0f;
+                vel /agent.speed : vel / agent.stoppingDistance;
 
             return data.Config.EnemyConfig.Animation.ChangeSpeedCurve.Evaluate(normalizeSpeed);
         }
