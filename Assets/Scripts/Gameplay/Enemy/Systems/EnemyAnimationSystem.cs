@@ -65,11 +65,8 @@ namespace BT
         {
             var agent = movement.NavAgent;
             var vel = agent.velocity.magnitude;
-
             var normalizeSpeed = Mathf.Clamp01((vel >= Mathf.Epsilon) ? vel / agent.speed : 0f);
-
-            Util.Debug.PrintColor($"anim norm speed {normalizeSpeed}", Color.cyan);
-
+            
             return data.Config.EnemyConfig.Animation.ChangeSpeedCurve.Evaluate(normalizeSpeed);
         }
     }
