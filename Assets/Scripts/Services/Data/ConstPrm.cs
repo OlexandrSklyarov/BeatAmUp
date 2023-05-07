@@ -75,5 +75,11 @@ namespace BT
             public const float CHANGE_HP_BAR_DURATION = 0.5f;
             public const int ENEMY_UI_ID = -1;
         }
+
+
+        public static class AddressablesID
+        {
+            public const string LOADING_SCREEN = "LoadingScreen";
+        }
     }
 }
