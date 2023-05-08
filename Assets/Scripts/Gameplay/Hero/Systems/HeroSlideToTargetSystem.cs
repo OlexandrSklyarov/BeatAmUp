@@ -8,7 +8,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var entities = world
                 .Filter<Hero>()
@@ -60,12 +59,8 @@ namespace BT
             cc.CharacterController.enabled = true;
 
             //rotate
-            heroView.ViewTransform.rotation = Quaternion.RotateTowards
-            (
-                heroView.ViewTransform.rotation,
-                Util.Vector3Math.DirToQuaternion(toTarget), 
-                Time.deltaTime * hero.Data.SlideRotationSpeed
-            );
+            heroView.ViewTransform.rotation = Util.Vector3Math.DirToQuaternion(toTarget);
+            
             
             return Vector3.SqrMagnitude(heroTranslation.Value.position - target) <= slide.TargetSqBodyRadius;
         }

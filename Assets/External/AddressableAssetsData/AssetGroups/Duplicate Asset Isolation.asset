@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: SharedAssets
+  m_Name: Duplicate Asset Isolation
   m_EditorClassIdentifier: 
-  m_GroupName: SharedAssets
+  m_GroupName: Duplicate Asset Isolation
   m_Data:
     m_SerializedData: []
-  m_GUID: a4b0fe9ae81ee2c2eb26056dfd82a62a
+  m_GUID: f699c1f09c4d372de8b023bcf439df51
   m_SerializeEntries:
-  - m_GUID: f54d1bd14bd3ca042bd867b519fee8cc
-    m_Address: TextMesh Pro
+  - m_GUID: 76ed11d84beb10846a746b4259e26d39
+    m_Address: Assets/External/Graphy - Ultimate Stats Monitor/Font/Roboto/Roboto-Regular.ttf
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6770cc330494b17c8b25d126398b8f12
-    m_Address: LoadingScreen
+  - m_GUID: 9568ece128856a54cbc1060379ab498d
+    m_Address: Assets/External/Graphy - Ultimate Stats Monitor/Font/Roboto/Roboto-Bold.ttf
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
@@ -31,5 +31,5 @@ MonoBehaviour:
   m_Settings: {fileID: 11400000, guid: f8070abc14f81f7839fdf91be990ce61, type: 2}
   m_SchemaSet:
     m_Schemas:
-    - {fileID: 11400000, guid: da0385270566bddfda5d255f975b1efa, type: 2}
-    - {fileID: 11400000, guid: a1531fcdfbff96db8b41c4c52033b702, type: 2}
+    - {fileID: 11400000, guid: a38ab53e6857b6852a3e8136450b55e9, type: 2}
+    - {fileID: 11400000, guid: 6770d9d009aa2ce378f1a106d455ca7b, type: 2}

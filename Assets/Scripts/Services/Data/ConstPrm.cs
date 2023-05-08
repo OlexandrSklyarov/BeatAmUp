@@ -43,7 +43,7 @@ namespace BT
         public static class Hero
         {
             public const float ACTION_TIME_MULTIPLIER = 2f;
-            public const float VIEW_ENEMY_ANGLE = 85f;
+            public const float VIEW_ENEMY_ANGLE = 45f;
             public const float ATTACK_RADIUS_MULTIPLIER = 6f;
             public const float TARGET_RADIUS_OFFSET = 0.5f;
             public const float MIN_VELOCITY_MULTIPLIER = 0.01f;
