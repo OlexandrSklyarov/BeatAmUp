@@ -20,7 +20,13 @@ namespace BT
             {
                 ref var evt = ref eventPool.Get(ent);
 
-                GameplayExtensions.CreateVfxEntity(world, vfxViewPool, data, evt.Position, VfxType.CHARACTER_DEATH);
+                GameplayExtensions.CreateVfxEntity
+                (
+                    world, vfxViewPool, 
+                    data, 
+                    evt.Position, 
+                    VfxType.CHARACTER_DEATH
+                );
                 
                 eventPool.Del(ent);
             }
