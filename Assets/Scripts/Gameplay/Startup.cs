@@ -55,7 +55,6 @@ namespace BT
             _initSystems                
                 .Add(new InitWorldSystem())
                 .Add(new InitCameraSystem())
-                .Add(new InitSpawnEnemyZoneSystem())
                 .Add(new InitPlayerControlSystem())
                 .Init();
         }
@@ -100,6 +99,7 @@ namespace BT
                 .Add(new CharacterDamageAnimationSystem())
 
                 //enemy
+                .Add(new CheckEnemySpawnSystem())
                 .Add(new SpawnEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemySetAIDestinationSystem())
