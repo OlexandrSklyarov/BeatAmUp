@@ -1,9 +1,8 @@
-using System;
 using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class EnemyResetAttackStateSystem : IEcsRunSystem
+    public sealed class EnemyResetAttackStateSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

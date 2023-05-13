@@ -2,7 +2,7 @@ using Leopotam.EcsLite;
 
 namespace BT
 {
-    public class EnemyTryAddAttackStateSystem : IEcsRunSystem
+    public sealed class EnemyTryAddAttackStateSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -36,7 +36,8 @@ namespace BT
                 if (!IsTargetClose(ref target, ref tr)) continue;
                 if (!IsAttackСhance()) continue;
 
-                attackStatePool.Add(ent);
+                ref var attack = ref attackStatePool.Add(ent);
+                attack.AttackDistance = 3f;
             }
         }
 

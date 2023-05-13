@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public class CheckEnemySpawnSystem : IEcsInitSystem, IEcsRunSystem
+    public sealed class CheckEnemySpawnSystem : IEcsInitSystem, IEcsRunSystem
     {
         public void Init(IEcsSystems systems)
         {

@@ -4,12 +4,11 @@ using Util;
 
 namespace BT
 {
-    public sealed class EnemySetAIDestinationSystem : IEcsRunSystem
+    public sealed class EnemyAssigningPointNearTargetSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var enemyEntities = world
                 .Filter<Enemy>()
@@ -35,32 +34,16 @@ namespace BT
 
                 if (stunPool.Has(e) || blockMovementPool.Has(e))
                 {
-                    index--;
-                    movement.NavAgent.speed = 0f;
-                    movement.NavAgent.velocity = Vector3.zero;
+                    index--;                    
                     targetPool.Del(e);
                     continue;
-                }                
-
-                var bodyRadius = movement.NavAgent.radius;
-                var destination = GetTargetAroundPosition(ref target, count, index, 360f);
-
-                movement.NavAgent.SetDestination(destination);
-                movement.NavAgent.stoppingDistance = bodyRadius * 2f;
-                movement.NavAgent.speed = GetRandomSpeed(data);
+                }              
+                
+                movement.Destination = GetTargetAroundPosition(ref target, count, index, 360f);
                 
                 index--;
             }
-        }       
-
-
-        private float GetRandomSpeed(SharedData data)
-        {
-            var max = data.Config.EnemyConfig.Movement.Speed;
-            var min = max * 0.7f;
-
-            return UnityEngine.Random.Range(min, max);
-        }
+        }     
 
 
         private Vector3 GetTargetAroundPosition(ref EnemyTarget target, int count, int index, float maxAngle)
