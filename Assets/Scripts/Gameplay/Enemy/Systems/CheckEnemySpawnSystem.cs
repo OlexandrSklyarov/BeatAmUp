@@ -61,9 +61,7 @@ namespace BT
                         ref var createEvent = ref createEventPool.Add(entity);
                         createEvent.Type = EnemyType.TestKnight;
                         createEvent.CreatePosition = point.position;
-                        createEvent.CreateRotation = point.rotation;
-
-                        needCreateAmount--;
+                        createEvent.CreateRotation = point.rotation;                        
 
                         if (--needCreateAmount <= 0)
                         {

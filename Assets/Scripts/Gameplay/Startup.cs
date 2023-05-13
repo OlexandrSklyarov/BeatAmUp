@@ -103,6 +103,7 @@ namespace BT
                 .Add(new SpawnEnemySystem())
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemySetAIDestinationSystem())
+                .Add(new EnemyTryAddAttackStateSystem())
                 .Add(new EnemyBodyRotateSystem())
                 .Add(new EnemyCharacterDieSystem())
                 .Add(new EnemyAnimationSystem())

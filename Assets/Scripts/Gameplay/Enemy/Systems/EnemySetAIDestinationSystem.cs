@@ -15,6 +15,7 @@ namespace BT
                 .Filter<Enemy>()
                 .Inc<MovementAI>()
                 .Inc<EnemyTarget>()
+                .Exc<AttackState>()
                 .Exc<Death>()
                 .Exc<RagdollState>()
                 .End();
@@ -39,10 +40,10 @@ namespace BT
                     movement.NavAgent.velocity = Vector3.zero;
                     targetPool.Del(e);
                     continue;
-                }
+                }                
 
                 var bodyRadius = movement.NavAgent.radius;
-                var destination = GetaTargetAroundPosition(ref target, bodyRadius, count, index, 360f);
+                var destination = GetTargetAroundPosition(ref target, count, index, 360f);
 
                 movement.NavAgent.SetDestination(destination);
                 movement.NavAgent.stoppingDistance = bodyRadius * 2f;
@@ -50,8 +51,8 @@ namespace BT
                 
                 index--;
             }
-        }
-        
+        }       
+
 
         private float GetRandomSpeed(SharedData data)
         {
@@ -62,13 +63,10 @@ namespace BT
         }
 
 
-        private Vector3 GetaTargetAroundPosition(ref EnemyTarget target, float bodyRadius, 
-            int count, int index, float maxAngle)
-        {
-            var r = bodyRadius + ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS;
-            
+        private Vector3 GetTargetAroundPosition(ref EnemyTarget target, int count, int index, float maxAngle)
+        {        
             var destination = MathUtility.GetCirclePosition2D(
-                target.MyTarget.position, maxAngle, count, index, r);
+                target.MyTarget.position, maxAngle, count, index, target.TargetRadius);
             
             UnityEngine.Debug.DrawLine(target.MyTarget.position, destination, UnityEngine.Color.red);
             return destination;
