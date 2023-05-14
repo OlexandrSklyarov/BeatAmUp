@@ -94,7 +94,14 @@ namespace BT
             ai.NavAgent.speed = data.Config.EnemyConfig.Movement.Speed;   
             ai.NavAgent.acceleration = data.Config.EnemyConfig.Movement.Acceleration;   
             ai.NavAgent.angularSpeed = data.Config.EnemyConfig.Movement.AngularSpeed;   
-            ai.NavAgent.updateRotation = false;               
+            ai.NavAgent.updateRotation = false;   
+
+
+            //Navigation
+            var navigationPool = world.GetPool<EnemyNavigation>();
+            ref var navigation = ref navigationPool.Add(entity);
+            navigation.Destination = Vector3.zero;            
+            navigation.StopDistance = ai.NavAgent.radius;            
         }
 
 

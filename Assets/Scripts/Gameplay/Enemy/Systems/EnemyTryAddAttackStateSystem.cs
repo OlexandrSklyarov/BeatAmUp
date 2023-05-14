@@ -8,13 +8,10 @@ namespace BT
         {
             var world = systems.GetWorld();
 
-            var enemies = world
-                .Filter<Enemy>()
-                .Inc<Translation>()
+            var enemies = world                
+                .Filter<Translation>()
                 .Inc<EnemyTarget>()
                 .Exc<AttackState>()
-                .Exc<Death>()
-                .Exc<RagdollState>()
                 .End();           
 
             var attackedEnemies = world

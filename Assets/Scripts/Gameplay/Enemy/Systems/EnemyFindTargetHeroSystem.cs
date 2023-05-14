@@ -22,7 +22,7 @@ namespace BT
             var enemyTargetPool = world.GetPool<EnemyTarget>();
             var translationPool = world.GetPool<Translation>();
             var aiPool = world.GetPool<MovementAI>();
-            var heroCharacterView = world.GetPool<CharacterView>();
+            var viewPool = world.GetPool<CharacterView>();
 
             foreach(var e in enemies)
             {
@@ -31,27 +31,27 @@ namespace BT
 
                 foreach(var h in heroes)
                 {
-                    ref var heroTR = ref heroCharacterView.Get(h).ViewTransform;
+                    ref var heroView = ref viewPool.Get(h);
 
-                    var sqDist = (translation.Value.position - heroTR.position).sqrMagnitude;
+                    var sqDist = (translation.Value.position - heroView.ViewTransform.position).sqrMagnitude;
                     var sqRadius = ConstPrm.Enemy.VIEW_TARGET_RADIUS * ConstPrm.Enemy.VIEW_TARGET_RADIUS;
                     
                     if (sqDist <= sqRadius)
                     {
-                        ref var targetComp = ref enemyTargetPool.Add(e);
-                        targetComp.MyTarget = heroTR;
-                        targetComp.TargetRadius = GetTargetRadius(ref ai);
-                        Util.Debug.PrintColor($"{translation.Value.name} => I see target {heroTR.name}", UnityEngine.Color.yellow);
+                        ref var target = ref enemyTargetPool.Add(e);
+                        target.MyTarget = heroView.ViewTransform;
+                        target.TargetRadius = GetTargetVisualDistance(ref ai);
+                        Util.Debug.PrintColor($"{translation.Value.name} => I see target {heroView.ViewTransform.name}", UnityEngine.Color.yellow);
                     }
                 }
             }
         }
 
 
-        private float GetTargetRadius(ref MovementAI ai)
+        private float GetTargetVisualDistance(ref MovementAI ai)
         {
-            return ai.NavAgent.radius + ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS * 
-                UnityEngine.Random.Range(0.7f, 1f);
+            return ai.NavAgent.radius + 
+                ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS * UnityEngine.Random.Range(0.7f, 1f);
         }
     }
 }

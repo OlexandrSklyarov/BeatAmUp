@@ -7,30 +7,33 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var enemies = world
-                .Filter<MovementAI>()
+                .Filter<EnemyNavigation>()
                 .Inc<AttackState>()
                 .Inc<EnemyTarget>()
+                .Inc<CharacterView>()
                 .Inc<Translation>()
                 .End();
 
-            var movementPool = world.GetPool<MovementAI>();
+            var navigationPool = world.GetPool<EnemyNavigation>();
             var attackStatePool = world.GetPool<AttackState>();
+            var viewPool = world.GetPool<CharacterView>();
             var targetPool = world.GetPool<EnemyTarget>();
             var translationPool = world.GetPool<Translation>();
 
             foreach (var ent in enemies)
             {
-                ref var movement = ref movementPool.Get(ent);
+                ref var navigation = ref navigationPool.Get(ent);
                 ref var attackState = ref attackStatePool.Get(ent);  
+                ref var view = ref viewPool.Get(ent);  
                 ref var target = ref targetPool.Get(ent);  
                 ref var tr = ref translationPool.Get(ent);  
 
                 if (IsTargetFar(ref attackState, ref target, ref tr))
                 {
-                    movement.Destination = target.MyTarget.position;
+                    navigation.Destination = target.MyTarget.position;
+                    navigation.StopDistance = target.TargetRadius + view.BodyRadius + attackState.AttackDistance;
                 }
                 else
                 {

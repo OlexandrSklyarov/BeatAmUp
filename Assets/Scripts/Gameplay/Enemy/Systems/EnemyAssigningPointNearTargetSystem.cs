@@ -11,17 +11,14 @@ namespace BT
             var world = systems.GetWorld();
 
             var enemyEntities = world
-                .Filter<Enemy>()
-                .Inc<MovementAI>()
+                .Filter<EnemyNavigation>()
+                .Inc<CharacterView>()
                 .Inc<EnemyTarget>()
-                .Exc<AttackState>()
-                .Exc<Death>()
-                .Exc<RagdollState>()
                 .End();
 
-            var movementPool = world.GetPool<MovementAI>();
+            var navigationPool = world.GetPool<EnemyNavigation>();
+            var viewPool = world.GetPool<CharacterView>();
             var targetPool = world.GetPool<EnemyTarget>();
-            var stunPool = world.GetPool<Stun>();
             var blockMovementPool = world.GetPool<BlockMovement>();
 
             var index = enemyEntities.GetEntitiesCount();
@@ -29,17 +26,19 @@ namespace BT
 
             foreach (var e in enemyEntities)
             {                
-                ref var movement = ref movementPool.Get(e);
+                ref var navigation = ref navigationPool.Get(e);
                 ref var target = ref targetPool.Get(e);
+                ref var view = ref viewPool.Get(e);
 
-                if (stunPool.Has(e) || blockMovementPool.Has(e))
+                if (blockMovementPool.Has(e))
                 {
                     index--;                    
                     targetPool.Del(e);
                     continue;
                 }              
                 
-                movement.Destination = GetTargetAroundPosition(ref target, count, index, 360f);
+                navigation.Destination = GetTargetAroundPosition(ref target, count, index, 360f);
+                navigation.StopDistance = view.BodyRadius;
                 
                 index--;
             }
@@ -49,7 +48,7 @@ namespace BT
         private Vector3 GetTargetAroundPosition(ref EnemyTarget target, int count, int index, float maxAngle)
         {        
             var destination = MathUtility.GetCirclePosition2D(
-                target.MyTarget.position, maxAngle, count, index, target.TargetRadius);
+                target.MyTarget.position, maxAngle, count, index, target.MinVisualDistance);
             
             UnityEngine.Debug.DrawLine(target.MyTarget.position, destination, UnityEngine.Color.red);
             return destination;

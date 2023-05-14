@@ -1,3 +1,4 @@
+using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -11,33 +12,41 @@ namespace BT
             var data = systems.GetShared<SharedData>();
 
             var enemies = world
-                .Filter<Enemy>()
-                .Inc<MovementAI>()
-                .Exc<Death>()
+                .Filter<MovementAI>()
+                .Inc<EnemyNavigation>()
+                .Inc<Translation>()
                 .End();
 
             var movementPool = world.GetPool<MovementAI>();
-            var stunPool = world.GetPool<Stun>();
+            var navigationPool = world.GetPool<EnemyNavigation>();
+            var translationPool = world.GetPool<Translation>();
             var blockMovementPool = world.GetPool<BlockMovement>();
+
 
             foreach (var ent in enemies)
             {
                 ref var movement = ref movementPool.Get(ent);
+                ref var navigation = ref navigationPool.Get(ent);                
+                ref var tr = ref translationPool.Get(ent);                
 
-                if (stunPool.Has(ent) || blockMovementPool.Has(ent))
+                if (blockMovementPool.Has(ent) || IsArrivedAtDestination(ref tr, ref navigation))
                 {
                     movement.NavAgent.speed = 0f;
                     movement.NavAgent.velocity = Vector3.zero;
-                    movement.Destination = Vector3.zero;
                     continue;
                 }
 
-                var bodyRadius = movement.NavAgent.radius;
-
-                movement.NavAgent.SetDestination(movement.Destination);
-                movement.NavAgent.stoppingDistance = bodyRadius * 2f;
+                movement.NavAgent.SetDestination(navigation.Destination);
+                movement.NavAgent.stoppingDistance = navigation.StopDistance;
                 movement.NavAgent.speed = GetRandomSpeed(data);
             }
+        }
+
+
+        private bool IsArrivedAtDestination(ref Translation tr, ref EnemyNavigation navigation)
+        {
+            return navigation.Destination == Vector3.zero ||
+                (navigation.Destination - tr.Value.position).sqrMagnitude <= navigation.StopDistance * navigation.StopDistance;
         }
 
 

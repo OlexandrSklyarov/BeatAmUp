@@ -24,11 +24,10 @@ namespace BT
                 ref var damageEvent = ref damageEventPool.Get(ent);
 
                 ChangeHealth(ref hp, ref damageEvent);
+
                 if (!healthFlagPool.Has(ent)) healthFlagPool.Add(ent);
 
-                if (hp.CurrentHP > 0) continue;
-                
-                AddDeathComponent(world, ent);
+                if (hp.CurrentHP <= 0) AddDeathComponent(world, ent);  
             }
         }
         

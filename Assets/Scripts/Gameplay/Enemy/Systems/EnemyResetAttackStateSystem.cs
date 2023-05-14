@@ -18,14 +18,14 @@ namespace BT
             var translationPool = world.GetPool<Translation>();
             var targetPool = world.GetPool<EnemyTarget>();
             var attackStatePool = world.GetPool<AttackState>();
-            var ragdollStatePool = world.GetPool<RagdollState>();
+            var blockMovementPool = world.GetPool<BlockMovement>();
             
             foreach(var ent in enemies)
             {
                 ref var tr = ref translationPool.Get(ent);
                 ref var target = ref targetPool.Get(ent);
 
-                if (IsTargetClose(ref target, ref tr) || ragdollStatePool.Has(ent)) 
+                if (IsTargetClose(ref target, ref tr) || !blockMovementPool.Has(ent)) 
                     continue;               
 
                 attackStatePool.Del(ent);
