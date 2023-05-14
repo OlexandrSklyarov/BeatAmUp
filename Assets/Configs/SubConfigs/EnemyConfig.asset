@@ -44,6 +44,7 @@ MonoBehaviour:
     <StandUpFaceUpAnimationName>k__BackingField: Stand_Up_Face_Up
     <StandUpFaceDownAnimationName>k__BackingField: Stand_Up_Face_Down
     <StandUpAnimationDelay>k__BackingField: 2
+    <AttackAnimationDelay>k__BackingField: 1
   <EnemyPoolData>k__BackingField:
   - <Type>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 2382251879883215331, guid: 6dc06b531568228b4b0caf423f1b5029,

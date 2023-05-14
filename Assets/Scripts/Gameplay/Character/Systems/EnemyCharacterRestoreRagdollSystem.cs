@@ -25,7 +25,7 @@ namespace BT
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             var deathPool = world.GetPool<Death>();
             var standUpAnimationPool = world.GetPool<StandUpAnimationEvent>();
-            var blockMovementPool = world.GetPool<BlockMovement>();
+            
 
             foreach (var ent in enemies)
             {
@@ -49,10 +49,7 @@ namespace BT
                 body.Collider.enabled = true;
 
                 ragdollPool.Del(ent);
-                deactivateRagdollPool.Del(ent);
-
-                ref var block = ref blockMovementPool.Add(ent);
-                block.Timer = data.Config.EnemyConfig.Animation.StandUpAnimationDelay;
+                deactivateRagdollPool.Del(ent);                
             }
         }
 
@@ -72,8 +69,8 @@ namespace BT
         }
 
 
-        private void StandUpRagdollProcess(ref RagdollState ragdoll, ref RestoreRagdollState restoreRagdoll,
-            ref CharacterPhysicsBody body)
+        private void StandUpRagdollProcess(ref RagdollState ragdoll, 
+        ref RestoreRagdollState restoreRagdoll, ref CharacterPhysicsBody body)
         {
             var progress = Mathf.Clamp01(1f - ragdoll.RestoreTimer / ConstPrm.Character.RESTORE_RAGDOLL_TIME);
 

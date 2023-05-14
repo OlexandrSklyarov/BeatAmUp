@@ -16,7 +16,7 @@ namespace BT
             
             var damageEventPool = world.GetPool<TakeDamageEvent>();
             var hpPool = world.GetPool<Health>();
-            var healthFlagPool = world.GetPool<ChangeHealthflag>();
+            var healthFlagPool = world.GetPool<ChangeHealthFlag>();
 
             foreach (var ent in damageReceivers)
             {
@@ -29,8 +29,8 @@ namespace BT
 
                 if (hp.CurrentHP <= 0) AddDeathComponent(world, ent);  
             }
-        }
-        
+        }        
+
 
         private void ChangeHealth(ref Health hpComp, ref TakeDamageEvent damageEvent)
         {

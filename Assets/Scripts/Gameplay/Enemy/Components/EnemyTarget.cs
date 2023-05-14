@@ -6,7 +6,6 @@ namespace BT
     {
         public Transform MyTarget;
         public float TargetRadius;
-
         public float MinVisualDistance;
     }
 }

@@ -21,7 +21,7 @@ namespace BT
             
             var evtPool = world.GetPool<CreateNewHeroEvent>();
             var heroPool = world.GetPool<Hero>();
-            var healthFlagPool = world.GetPool<ChangeHealthflag>();
+            var healthFlagPool = world.GetPool<ChangeHealthFlag>();
 
             foreach (var ent in filter)
             {

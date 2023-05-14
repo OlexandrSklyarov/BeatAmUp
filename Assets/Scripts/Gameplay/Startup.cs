@@ -95,6 +95,7 @@ namespace BT
                 .Add(new PrepareRestoreRagdollSystem())
                 .Add(new EnemyCharacterRestoreRagdollSystem())
                 .Add(new ResetHitCountSystem())
+                .Add(new CharacterAddBlockMovementSystem())
                 .Add(new CharacterUnBlockMovementSystem())
                 .Add(new CharacterDamageAnimationSystem())
 
@@ -104,7 +105,6 @@ namespace BT
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemyAssigningPointNearTargetSystem())
                 .Add(new EnemyTryAddAttackStateSystem())
-                .Add(new EnemyResetAttackStateSystem())
                 .Add(new EnemyAttackTargetSystem())
                 .Add(new EnemyApplyNavMeshDestinationSystem())
                 .Add(new EnemyBodyRotateSystem())

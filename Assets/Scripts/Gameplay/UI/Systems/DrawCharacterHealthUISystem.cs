@@ -19,17 +19,17 @@ namespace BT
             var heroEntities = world
                 .Filter<Hero>()
                 .Inc<Health>()
-                .Inc<ChangeHealthflag>()
+                .Inc<ChangeHealthFlag>()
                 .End();
 
             var enemyEntities = world
                 .Filter<Enemy>()
                 .Inc<Health>()
-                .Inc<ChangeHealthflag>()
+                .Inc<ChangeHealthFlag>()
                 .End();
 
             var healthPool = world.GetPool<Health>();
-            var healthFlagPool = world.GetPool<ChangeHealthflag>();
+            var healthFlagPool = world.GetPool<ChangeHealthFlag>();
             var heroPool = world.GetPool<Hero>();
 
             foreach(var h in heroEntities)

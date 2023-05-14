@@ -40,8 +40,8 @@ namespace BT
                     {
                         ref var target = ref enemyTargetPool.Add(e);
                         target.MyTarget = heroView.ViewTransform;
-                        target.TargetRadius = GetTargetVisualDistance(ref ai);
-                        Util.Debug.PrintColor($"{translation.Value.name} => I see target {heroView.ViewTransform.name}", UnityEngine.Color.yellow);
+                        target.TargetRadius = heroView.BodyRadius;
+                        target.MinVisualDistance = GetTargetVisualDistance(ref ai);
                     }
                 }
             }
@@ -51,7 +51,7 @@ namespace BT
         private float GetTargetVisualDistance(ref MovementAI ai)
         {
             return ai.NavAgent.radius + 
-                ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS * UnityEngine.Random.Range(0.7f, 1f);
+                ConstPrm.Enemy.TARGET_ENCIRCLEMENT_RADIUS * UnityEngine.Random.Range(0.65f, 1f);
         }
     }
 }

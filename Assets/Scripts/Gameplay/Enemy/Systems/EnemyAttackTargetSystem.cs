@@ -7,6 +7,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var data = systems.GetShared<SharedData>();
 
             var enemies = world
                 .Filter<EnemyNavigation>()
@@ -14,6 +15,7 @@ namespace BT
                 .Inc<EnemyTarget>()
                 .Inc<CharacterView>()
                 .Inc<Translation>()
+                .Exc<BlockMovement>()
                 .End();
 
             var navigationPool = world.GetPool<EnemyNavigation>();
@@ -21,6 +23,7 @@ namespace BT
             var viewPool = world.GetPool<CharacterView>();
             var targetPool = world.GetPool<EnemyTarget>();
             var translationPool = world.GetPool<Translation>();
+            var blockPool = world.GetPool<BlockMovement>();
 
             foreach (var ent in enemies)
             {
@@ -30,24 +33,29 @@ namespace BT
                 ref var target = ref targetPool.Get(ent);  
                 ref var tr = ref translationPool.Get(ent);  
 
-                if (IsTargetFar(ref attackState, ref target, ref tr))
+                var stopDistance = target.TargetRadius + view.BodyRadius + attackState.AttackDistance;
+
+                if (IsTargetFar(ref target, ref tr, stopDistance))
                 {
                     navigation.Destination = target.MyTarget.position;
-                    navigation.StopDistance = target.TargetRadius + view.BodyRadius + attackState.AttackDistance;
+                    navigation.StopDistance = stopDistance;
                 }
                 else
                 {
                     //attack
                     Util.Debug.PrintColor("Enemy Attack", UnityEngine.Color.red);
+                    ref var block = ref blockPool.Add(ent);
+                    block.Timer = data.Config.EnemyConfig.Animation.AttackAnimationDelay;
                 }                
             }   
         }
 
 
-        private bool IsTargetFar(ref AttackState attackState, ref EnemyTarget target, ref Translation tr)
+        private bool IsTargetFar(ref EnemyTarget target, 
+            ref Translation tr, float stopDistance)
         {
             var sqDist = (target.MyTarget.position - tr.Value.transform.position).sqrMagnitude;
-            var minDist = attackState.AttackDistance * attackState.AttackDistance;
+            var minDist = stopDistance * stopDistance;
             return sqDist > minDist;
         }
     }

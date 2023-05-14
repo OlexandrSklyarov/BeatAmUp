@@ -9,7 +9,12 @@ namespace BT
         {
             var world = systems.GetWorld();
 
-            var filter = world.Filter<BlockMovement>().End();
+            var filter = world
+                .Filter<BlockMovement>()
+                .Exc<RagdollState>()
+                .Exc<Stun>()
+                .Exc<Death>()
+                .End();
 
             var blockPool = world.GetPool<BlockMovement>();
 
