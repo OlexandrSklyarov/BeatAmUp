@@ -3,6 +3,6 @@ namespace BT
 {
     public struct AttackData
     {
-        public HeroAttackDataConfig Data;       
+        public CharacterAttackData Data;       
     }
 }

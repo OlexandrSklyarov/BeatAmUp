@@ -105,7 +105,7 @@ namespace BT
 
 
         private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack,
-            HeroAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce, int ent)
+            CharacterAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce, int ent)
         {
             var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
 

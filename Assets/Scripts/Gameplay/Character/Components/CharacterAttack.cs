@@ -4,10 +4,10 @@ namespace BT
 {
     public struct CharacterAttack
     {
-        public HeroAttackAnimationData CurrentPunch;
-        public HeroAttackAnimationData CurrentKick;
-        public Queue<HeroAttackAnimationData> PunchQueue;
-        public Queue<HeroAttackAnimationData> KickQueue;        
+        public CharacterAttackAnimationData CurrentPunch;
+        public CharacterAttackAnimationData CurrentKick;
+        public Queue<CharacterAttackAnimationData> PunchQueue;
+        public Queue<CharacterAttackAnimationData> KickQueue;        
         public int NextPunchState;
         public int NextKickState;
         public float AttackTimer;

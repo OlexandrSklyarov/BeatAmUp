@@ -122,8 +122,8 @@ namespace BT
             heroAttack.IsNeedFinishAttack = false;
             heroAttack.CurrentPunch = null; 
             heroAttack.CurrentKick = null; 
-            heroAttack.KickQueue = new Queue<HeroAttackAnimationData>();
-            heroAttack.PunchQueue = new Queue<HeroAttackAnimationData>();
+            heroAttack.KickQueue = new Queue<CharacterAttackAnimationData>();
+            heroAttack.PunchQueue = new Queue<CharacterAttackAnimationData>();
 
 
             //HP
