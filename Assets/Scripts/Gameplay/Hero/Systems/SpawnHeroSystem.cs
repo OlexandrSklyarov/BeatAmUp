@@ -54,7 +54,7 @@ namespace BT
         private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest spawnRequest)
         {
             var id = spawnRequest.HeroID;
-            var unitData = data.Config.Heroes.First(u => u.ID == id);
+            var unitData = data.Config.Heroes.First(u => (int)u.ID == id);
             
             var heroView = UnityEngine.Object.Instantiate
             (

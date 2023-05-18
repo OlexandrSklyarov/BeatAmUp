@@ -8,6 +8,6 @@ namespace BT
     {
         public InputHandleProvider InputProvider;
         public InputDevice Device;
-        public InputUser User { get; internal set; }
+        public InputUser User;
     }
 }

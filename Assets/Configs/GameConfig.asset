@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 629e972438c8f63b2b20e1ec771302b8, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  <MaxPlayerCount>k__BackingField: 2
+  <GameRules>k__BackingField:
+    <MaxPlayerCount>k__BackingField: 2
+    <ControlType>k__BackingField: 0
   <Heroes>k__BackingField:
   - <ID>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 2570892583415431742, guid: 8c9e65a1a4e3009969067d48003c4c92,

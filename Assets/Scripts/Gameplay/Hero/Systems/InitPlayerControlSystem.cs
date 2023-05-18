@@ -20,9 +20,7 @@ namespace BT
         {
             Util.Debug.PrintColor($"InputSystem.devices: {InputSystem.devices.Count}", UnityEngine.Color.green);
 
-            var gameDevices = InputSystem.devices
-                .Where(d => d.name == ConstPrm.DevicesName.KEYBOARD || d.name == ConstPrm.DevicesName.GAMEPAD)
-                .ToArray();
+            var gameDevices = GetDevices(data);
 
             ShowDebugDeviceInfo(gameDevices, data);         
 
@@ -33,12 +31,33 @@ namespace BT
         }
 
 
+        private InputDevice[] GetDevices(SharedData data)
+        {
+            var allDevices = InputSystem.devices;
+
+            return data.Config.GameRules.ControlType switch
+            {
+                ControlDeviceType.KEYBOARD => allDevices
+                    .Where(k => k.name == ConstPrm.DevicesName.KEYBOARD)
+                    .ToArray(),
+
+                ControlDeviceType.GAMEPAD => allDevices
+                    .Where(g => g.name == ConstPrm.DevicesName.GAMEPAD)
+                    .ToArray(),
+
+                _ => allDevices
+                    .Where(d => d.name == ConstPrm.DevicesName.KEYBOARD || d.name == ConstPrm.DevicesName.GAMEPAD)
+                    .ToArray(),
+            };
+        }
+
+
         private void ShowDebugDeviceInfo(InputDevice[] gameDevices, SharedData data)
         {
             if (!data.Config.GameDebugConfig.ShowDeviceInfo) return;
 
             var colorValue = 0.5f;
-            var addValue = 1f / data.Config.MaxPlayerCount;
+            var addValue = 1f / data.Config.GameRules.MaxPlayerCount;
             
             Array.ForEach(gameDevices, d =>
             {
@@ -79,7 +98,7 @@ namespace BT
         {
             var heroCount = heroes.GetEntitiesCount();
 
-            if (heroCount > data.Config.MaxPlayerCount) 
+            if (heroCount > data.Config.GameRules.MaxPlayerCount) 
             {
                 Util.Debug.PrintColor($"The player limit in the game has been exceeded, count: {heroCount}", UnityEngine.Color.yellow);
                 return true;

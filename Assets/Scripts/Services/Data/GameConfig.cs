@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace BT
@@ -7,8 +6,8 @@ namespace BT
     [CreateAssetMenu(menuName = "SO/GameConfig")]
     public class GameConfig : ScriptableObject
     {
-        [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
-        [field: Space(20f), SerializeField] public HeroUnit[] Heroes { get; private set; }
+        [field: SerializeField] public GameRules GameRules { get; private set; }
+        [field: Space(50f), SerializeField] public HeroUnit[] Heroes { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
         [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
@@ -20,9 +19,17 @@ namespace BT
 
 
     [Serializable]
+    public class GameRules
+    {
+        [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
+        [field: SerializeField] public ControlDeviceType ControlType { get; private set; } = ControlDeviceType.KEYBOARD;
+
+    }
+
+    [Serializable]
     public sealed class HeroUnit
     {
-        [field: SerializeField, Range(1, 4)] public int ID { get; private set; }
+        [field: SerializeField] public HeroID ID { get; private set; }
         [field: SerializeField] public HeroViewProvider Prefab { get; private set; }
         [field: SerializeField] public HeroData Data { get; private set; }
     }
