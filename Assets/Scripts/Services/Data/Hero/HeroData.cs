@@ -17,6 +17,5 @@ namespace BT
         [field: SerializeField, Min(0.01f)] public float AccelerationReleaseTime { get; private set; } = 1.5f;
         [field: SerializeField, Min(0.01f)] public float SlideSpeed { get; private set; } = 10f;
         [field: SerializeField, Min(0.01f)] public float SlideRotationSpeed { get; private set; } = 60f;
-        [field: Space(10f), SerializeField] public CharacterAttackData Attack { get; private set; }
     }
 }

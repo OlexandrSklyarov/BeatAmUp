@@ -15,11 +15,13 @@ namespace BT
                 .Inc<EnemyTarget>()
                 .Inc<CharacterView>()
                 .Inc<Translation>()
+                .Inc<CombatCommand>()
                 .Exc<BlockMovement>()
                 .End();
 
             var navigationPool = world.GetPool<EnemyNavigation>();
             var attackStatePool = world.GetPool<AttackState>();
+            var combatCommandPool = world.GetPool<CombatCommand>();
             var viewPool = world.GetPool<CharacterView>();
             var targetPool = world.GetPool<EnemyTarget>();
             var translationPool = world.GetPool<Translation>();
@@ -28,12 +30,13 @@ namespace BT
             foreach (var ent in enemies)
             {
                 ref var navigation = ref navigationPool.Get(ent);
-                ref var attackState = ref attackStatePool.Get(ent);  
-                ref var view = ref viewPool.Get(ent);  
-                ref var target = ref targetPool.Get(ent);  
-                ref var tr = ref translationPool.Get(ent);  
+                ref var attackState = ref attackStatePool.Get(ent);
+                ref var view = ref viewPool.Get(ent);
+                ref var target = ref targetPool.Get(ent);
+                ref var tr = ref translationPool.Get(ent);
+                ref var combat = ref combatCommandPool.Get(ent);
 
-                var stopDistance = target.TargetRadius + view.BodyRadius + attackState.AttackDistance;
+                var stopDistance = target.TargetRadius + view.BodyRadius + attackState.AttackDistance;                
 
                 if (IsTargetFar(ref target, ref tr, stopDistance))
                 {
@@ -46,12 +49,27 @@ namespace BT
                     Util.Debug.PrintColor("Enemy Attack", UnityEngine.Color.red);
                     ref var block = ref blockPool.Add(ent);
                     block.Timer = data.Config.EnemyConfig.Animation.AttackAnimationDelay;
-                }                
-            }   
+
+                    SetRandomCombatAction(ref combat);
+                }
+            }
         }
 
 
-        private bool IsTargetFar(ref EnemyTarget target, 
+        private void SetRandomCombatAction(ref CombatCommand combat)
+        {
+            if (UnityEngine.Random.Range(0, 100) > 50)
+            {
+                combat.IsKick = true;
+            }
+            else
+            {
+                combat.IsPunch = true;
+            }
+        }
+
+
+        private bool IsTargetFar(ref EnemyTarget target,
             ref Translation tr, float stopDistance)
         {
             var sqDist = (target.MyTarget.position - tr.Value.transform.position).sqrMagnitude;

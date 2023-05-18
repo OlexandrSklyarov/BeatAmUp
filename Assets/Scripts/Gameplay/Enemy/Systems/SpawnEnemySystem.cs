@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
 using UnityEngine.AI;
@@ -34,9 +36,27 @@ namespace BT
             var entity = world.NewEntity();
 
             //enemy
-            var enemyPool = world.GetPool<Enemy>();
-            ref var enemyComp = ref enemyPool.Add(entity);
+            ref var enemyComp = ref world.GetPool<Enemy>().Add(entity);
             enemyComp.PoolItem = enemyViewProvider;   
+
+
+            //attackData
+            ref var attackData = ref world.GetPool<AttackData>().Add(entity);
+            attackData.Data = data.Config.EnemyConfig.EnemyPoolData.First(d => d.Type == type).Attack;
+
+
+            //attack
+            ref var attack = ref world.GetPool<CharacterAttack>().Add(entity);
+            attack.IsActiveAttack = false;
+            attack.IsNeedFinishAttack = false;
+            attack.CurrentPunch = null;
+            attack.CurrentKick = null;
+            attack.KickQueue = new Queue<CharacterAttackAnimationData>();
+            attack.PunchQueue = new Queue<CharacterAttackAnimationData>();
+           
+
+            //combat command
+            world.GetPool<CombatCommand>().Add(entity);
 
 
             //Translation
@@ -49,11 +69,18 @@ namespace BT
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(entity);
-            view.ViewTransform = enemyViewProvider.transform.GetChild(0).transform;             
-            view.Animator = enemyViewProvider.GetComponentInChildren<Animator>();            
+            view.ViewTransform = enemyViewProvider.BodyView;             
+            view.Animator = enemyViewProvider.Animator;            
             view.Height = enemyViewProvider.Collider.height;
             view.BodyRadius = enemyViewProvider.Collider.radius;
             view.HipBone = enemyViewProvider.BodyHips;
+
+
+            //hit interaction
+            var hitPool = world.GetPool<HitInteraction>();
+            ref var hit = ref hitPool.Add(entity);
+            hit.HitBoxes = enemyViewProvider.HitBoxes;
+            hit.HurtBoxes = enemyViewProvider.HurtBoxes;
            
 
             //Physics body
@@ -68,16 +95,7 @@ namespace BT
             body.Collider = collider;
 
             SetupRagdollBones(enemyViewProvider.BodyHips, data.Config.EnemyConfig, ref body, ref view, ref translation);
-
-
-            //hit
-            var hitPool = world.GetPool<HitInteraction>();
-            ref var hit = ref hitPool.Add(entity);
-            hit.HitBoxes = enemyViewProvider.GetComponentsInChildren<HitBox>();
-            
-            hit.HurtBoxes = enemyViewProvider.GetComponentsInChildren<HurtBox>();
-            foreach(var h in hit.HurtBoxes) h.Init();
-
+           
 
             //hp
             var hpPool = world.GetPool<Health>();

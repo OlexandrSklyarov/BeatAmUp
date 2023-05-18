@@ -17,6 +17,7 @@ namespace BT
                 .Inc<CharacterAttack>()
                 .Inc<CharacterView>()
                 .Inc<Translation>()
+                .Inc<AttackData>()
                 .Exc<CharacterSitDown>()
                 .Exc<Stun>()
                 .Exc<Death>()
@@ -35,12 +36,14 @@ namespace BT
             var attackPool = world.GetPool<CharacterAttack>();
             var translationPool = world.GetPool<Translation>();
             var viewPool = world.GetPool<CharacterView>();
+            var attackDataPool = world.GetPool<AttackData>();
 
             foreach (var heroEnt in heroes)
             {
                 ref var command = ref commandPool.Get(heroEnt);
                 ref var combat = ref combatCommandPool.Get(heroEnt);
                 ref var attack = ref attackPool.Get(heroEnt);
+                ref var attackData = ref attackDataPool.Get(heroEnt);
                 ref var hero = ref heroPool.Get(heroEnt);
 
                 if (!combat.IsPunch && !combat.IsKick) return;
@@ -54,7 +57,7 @@ namespace BT
 
                     if (IsCanAttackTarget(ref heroView, ref heroTranslation, ref targetTranslation))
                     {
-                        TryAddFinishAttack(world, enemy, ref hero, ref attack);
+                        TryAddFinishAttack(world, enemy, ref attackData, ref attack);
                         TryExecutePowerDamage(ref attack);
 
                         break;
@@ -81,14 +84,14 @@ namespace BT
         }
 
 
-        private void TryAddFinishAttack(EcsWorld world, int enemyEntity, ref Hero hero, ref CharacterAttack attack)
+        private void TryAddFinishAttack(EcsWorld world, int enemyEntity, ref AttackData attackData, ref CharacterAttack attack)
         {
             var hpPool = world.GetPool<Health>();
 
             if (hpPool.Has(enemyEntity))
             {
                 ref var enemyHealth = ref hpPool.Get(enemyEntity);
-                attack.IsNeedFinishAttack = enemyHealth.CurrentHP <= hero.Data.Attack.MaxDamage;
+                attack.IsNeedFinishAttack = enemyHealth.CurrentHP <= attackData.Data.MaxDamage;
             }
         }
 

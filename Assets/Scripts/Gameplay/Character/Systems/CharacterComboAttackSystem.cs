@@ -10,12 +10,11 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var config = systems.GetShared<SharedData>().Config;
 
-            var entities = world.Filter<AttackData>()
+            var entities = world
+                .Filter<AttackData>()
                 .Inc<CharacterAttack>()
                 .Inc<CombatCommand>()
-                .Inc<CharacterGrounded>()
                 .Inc<HitInteraction>()
                 .Exc<CharacterSitDown>()
                 .End();
@@ -35,7 +34,7 @@ namespace BT
                 ResetPreviousAttack(ref attack);
                 SetComboAttack(ref input, ref attack, ref hitInteraction, ref attackData, world, ent);
                 AddActionQueue(ref input, ref attack, ref attackData);
-                ResetComboState(ref attack); 
+                ResetComboState(ref attack, ref input); 
                 ResetActionQueue(ref attack);         
             }
         }
@@ -61,19 +60,21 @@ namespace BT
            
             attack.HitCount = (isPowerfulAttack) ? 0 : attack.HitCount;
             
-            if (input.IsPunch) // punch
+            if (input.IsPunch)
             {
-                PunchHandle(ref attack, ref hitInteraction, ref attackData, world, ent, isPowerfulAttack, pushForce, damage);
+                PunchHandle(ref attack, ref hitInteraction, ref attackData, 
+                    world, ent, isPowerfulAttack, pushForce, damage);
             }
-            else if (input.IsKick) // kick
+            else if (input.IsKick)
             {
-                KickHandle(ref attack, ref hitInteraction, ref attackData, world, ent, isPowerfulAttack, pushForce, damage);
+                KickHandle(ref attack, ref hitInteraction, ref attackData, 
+                    world, ent, isPowerfulAttack, pushForce, damage);
             }
         }
 
 
-        private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackData, EcsWorld world, 
-            int ent, bool isPowerfulAttack, float pushForce, int damage)
+        private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, 
+            ref AttackData attackData, EcsWorld world, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentKick = (attack.KickQueue.Count > 0) ?
                 attack.KickQueue.Dequeue() : attackData.Data.KickAnimationData[0];
@@ -88,8 +89,8 @@ namespace BT
         }
 
 
-        private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackDat, EcsWorld world, 
-            int ent, bool isPowerfulAttack, float pushForce, int damage)
+        private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, 
+            ref AttackData attackDat, EcsWorld world, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentPunch = (attack.PunchQueue.Count > 0) ?
                 attack.PunchQueue.Dequeue() : attackDat.Data.PunchAnimationData[0];
@@ -153,7 +154,7 @@ namespace BT
         }
         
         
-        private void ResetComboState(ref CharacterAttack attack)
+        private void ResetComboState(ref CharacterAttack attack, ref CombatCommand combat)
         {     
             if (attack.IsActiveAttack && attack.AttackTimer <= 0f)
             {
@@ -167,7 +168,9 @@ namespace BT
             else if (attack.AttackTimer > 0f)
             {
                 attack.AttackTimer -= Time.deltaTime;
-            }            
+            }
+
+            combat.IsKick = combat.IsPunch = false;           
         }        
 
 

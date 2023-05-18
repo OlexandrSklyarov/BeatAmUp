@@ -49,4 +49,6 @@ MonoBehaviour:
   - <Type>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 2382251879883215331, guid: 6dc06b531568228b4b0caf423f1b5029,
       type: 3}
+    <Attack>k__BackingField: {fileID: 11400000, guid: 0ec6c7ff75b62c6e389d147a2d235808,
+      type: 2}
     <PoolSize>k__BackingField: 16

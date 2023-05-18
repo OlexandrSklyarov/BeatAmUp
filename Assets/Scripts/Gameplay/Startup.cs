@@ -84,7 +84,7 @@ namespace BT
                 .Add(new HeroChangeHorizontalVelocitySystem())
                 .Add(new HeroSlowDownHorizontalVelocitySystem())
                 .Add(new ApplyHorizontalVelocitySystem())
-                .Add(new HeroAnimationSystem())
+                .Add(new HeroDieSystem())
 
                 //character hit
                 .Add(new CharacterTryHitSystem())
@@ -97,11 +97,11 @@ namespace BT
                 .Add(new ResetHitCountSystem())
                 .Add(new CharacterAddBlockMovementSystem())
                 .Add(new CharacterUnBlockMovementSystem())
-                .Add(new CharacterDamageAnimationSystem())
 
                 //enemy
                 .Add(new CheckEnemySpawnSystem())
                 .Add(new SpawnEnemySystem())
+                .Add(new EnemyCheckAliveTargetHeroSystem())
                 .Add(new EnemyFindTargetHeroSystem())
                 .Add(new EnemyAssigningPointNearTargetSystem())
                 .Add(new EnemyTryAddAttackStateSystem())
@@ -109,6 +109,11 @@ namespace BT
                 .Add(new EnemyApplyNavMeshDestinationSystem())
                 .Add(new EnemyBodyRotateSystem())
                 .Add(new EnemyCharacterDieSystem())
+
+                //Animation
+                .Add(new HeroAnimationSystem())
+                .Add(new CharacterDamageAnimationSystem())
+                .Add(new CharacterAttackAnimationSystem())
                 .Add(new EnemyAnimationSystem())
 
                 //UI

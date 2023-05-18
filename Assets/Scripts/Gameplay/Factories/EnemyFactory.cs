@@ -23,7 +23,7 @@ namespace BT
 
         public EnemyViewProvider GetEnemyView(EnemyType type)
         {
-            return _factories[type].GetItem((enemy, storage)=>
+            return _factories[type].GetItem((enemy, storage) =>
             {
                 enemy.Init(storage);
             });

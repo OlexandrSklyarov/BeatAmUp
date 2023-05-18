@@ -17,6 +17,7 @@ namespace BT
     {
         [field: SerializeField] public EnemyType Type {get; private set;}        
         [field: SerializeField] public EnemyViewProvider Prefab {get; private set;} 
+        [field: Space(10f), SerializeField] public CharacterAttackData Attack { get; private set; }
         [field: SerializeField, Min(1)] public int PoolSize {get; private set;} = 16;
     }
 
@@ -25,7 +26,7 @@ namespace BT
     public class EnemyMovementConfig
     {
         [field: SerializeField, Min(0.01f)] public float Speed {get; private set;} = 4f;      
-        [field: SerializeField, Min(0.01f)] public float Acceleration {get; private set;} =8f;      
+        [field: SerializeField, Min(0.01f)] public float Acceleration {get; private set;} = 8f;      
         [field: SerializeField, Min(0.01f)] public float AngularSpeed {get; private set;} = 800f;
     }
 

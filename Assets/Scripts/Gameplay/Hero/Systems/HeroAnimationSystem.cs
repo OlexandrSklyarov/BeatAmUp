@@ -11,17 +11,12 @@ namespace BT
             var entities = world
                 .Filter<Hero>()
                 .Inc<CharacterView>()
-                .Inc<MovementCommand>()
-                .Inc<CombatCommand>()
                 .Inc<CharacterControllerMovement>()                
                 .End();
 
             var heroPool = world.GetPool<Hero>();
             var viewPool = world.GetPool<CharacterView>();
-            var inputPool = world.GetPool<MovementCommand>();
-            var combatPool = world.GetPool<CombatCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
-            var heroAttackPool = world.GetPool<CharacterAttack>();
             var groundedPool = world.GetPool<CharacterGrounded>();
             var sittingPool = world.GetPool<CharacterSitDown>();
 
@@ -29,10 +24,7 @@ namespace BT
             {
                 ref var hero = ref heroPool.Get(e);
                 ref var view = ref viewPool.Get(e);
-                ref var input = ref inputPool.Get(e);
-                ref var combat = ref combatPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
-                ref var attack = ref heroAttackPool.Get(e);
 
                 var isGrounded = groundedPool.Has(e);
                 var isSitting = sittingPool.Has(e);
@@ -47,26 +39,8 @@ namespace BT
                 view.Animator.SetBool(ConstPrm.Animation.FALLING, isFalling);
                 view.Animator.SetFloat(ConstPrm.Animation.VERTICAL_VELOCITY, movement.VerticalVelocity);
 
-                if (isJumping) 
-                {
-                    view.Animator.SetTrigger(ConstPrm.Animation.JUMP);      
-                }   
-
-                if (isGrounded && combat.IsKick || combat.IsPunch) 
-                {
-                    var attackTrigger = GetAttackTrigger(ref attack);                    
-                    if (!string.IsNullOrEmpty(attackTrigger)) view.Animator.SetTrigger(attackTrigger);  
-                }    
+                if (isJumping) view.Animator.SetTrigger(ConstPrm.Animation.JUMP);  
             }
-        }
-
-
-        private string GetAttackTrigger(ref CharacterAttack attack)
-        {        
-            if (attack.CurrentPunch != null) return attack.CurrentPunch.StateName;
-            if (attack.CurrentKick != null) return attack.CurrentKick.StateName;
-            
-            return string.Empty;
         }
     }
 }

@@ -31,6 +31,8 @@ namespace BT
         [field: SerializeField] public HeroID ID { get; private set; }
         [field: SerializeField] public HeroViewProvider Prefab { get; private set; }
         [field: SerializeField] public HeroData Data { get; private set; }
+        [field: Space(10f), SerializeField] public CharacterAttackData Attack { get; private set; }
+
     }
     
 

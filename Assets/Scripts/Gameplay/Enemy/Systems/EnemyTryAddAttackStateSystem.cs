@@ -34,7 +34,7 @@ namespace BT
                 if (!IsAttackСhance()) continue;
 
                 ref var attack = ref attackStatePool.Add(ent);
-                attack.AttackDistance = 0.3f;
+                attack.AttackDistance = 0.01f;
             }
         }
 

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44b930b330f0defaeaef1e0cf79d78ad, type: 3}
+  m_Name: CharacterAttackData_TestKnight
+  m_EditorClassIdentifier: 
+  <PunchAnimationData>k__BackingField:
+  - <StateName>k__BackingField: PUNCH_1
+    <HitType>k__BackingField: 0
+    <DamageTimeMultiplier>k__BackingField: 0.55
+    _clip: {fileID: 7400000, guid: 45c6d88a10e2cf3b88d651b55188a5c4, type: 2}
+    _animSpeed: 1
+  - <StateName>k__BackingField: PUNCH_2
+    <HitType>k__BackingField: 0
+    <DamageTimeMultiplier>k__BackingField: 0.48
+    _clip: {fileID: 7400000, guid: b6af997a9288014f3a6665fb74f5331b, type: 2}
+    _animSpeed: 1
+  <PunchAnimationFinishData>k__BackingField:
+  - <StateName>k__BackingField: PUNCH_FINISH_1
+    <HitType>k__BackingField: 2
+    <DamageTimeMultiplier>k__BackingField: 0.67
+    _clip: {fileID: 7400000, guid: 242f80d13524faa47a02fa65a875de21, type: 2}
+    _animSpeed: 1
+  <KickAnimationData>k__BackingField:
+  - <StateName>k__BackingField: KICK_1
+    <HitType>k__BackingField: 1
+    <DamageTimeMultiplier>k__BackingField: 0.4
+    _clip: {fileID: 7400000, guid: 2d1d9e093fd8f53e7b9ddd0595586da0, type: 2}
+    _animSpeed: 1
+  <KickAnimationFinishData>k__BackingField:
+  - <StateName>k__BackingField: KICK_FINISH_1
+    <HitType>k__BackingField: 4
+    <DamageTimeMultiplier>k__BackingField: 0.5
+    _clip: {fileID: 7400000, guid: ddbf9975b459c664c9906d0270dbe86a, type: 2}
+    _animSpeed: 1
+  <DefaultDamage>k__BackingField: 20
+  <MaxDamage>k__BackingField: 5
+  <PushTargetRagdollForce>k__BackingField: 300

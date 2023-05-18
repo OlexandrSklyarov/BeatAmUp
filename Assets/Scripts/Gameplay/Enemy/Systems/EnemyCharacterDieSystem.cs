@@ -10,8 +10,8 @@ namespace BT
             var world = systems.GetWorld();
 
             var enemyEntities = world
-                .Filter<Death>()
-                .Inc<Enemy>()
+                .Filter<Enemy>()
+                .Inc<Death>()
                 .Inc<CharacterView>()
                 .Inc<MovementAI>()
                 .End();

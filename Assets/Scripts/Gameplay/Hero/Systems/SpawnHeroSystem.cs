@@ -18,18 +18,18 @@ namespace BT
             var entities = world.Filter<CreateHeroRequest>().End();
             var requestPool = world.GetPool<CreateHeroRequest>();
 
-            foreach(var e in entities)
+            foreach (var e in entities)
             {
                 ref var request = ref requestPool.Get(e);
 
                 Spawn(world, data, ref request);
                 SpawnHeroEvent(world, ref request);
-                
+
                 requestPool.Del(e);
             }
         }
 
-        
+
         private void ClearCreateNewHeroEvents(EcsWorld world)
         {
             var filter = world.Filter<CreateNewHeroEvent>().End();
@@ -55,13 +55,15 @@ namespace BT
         {
             var id = spawnRequest.HeroID;
             var unitData = data.Config.Heroes.First(u => (int)u.ID == id);
-            
+
             var heroView = UnityEngine.Object.Instantiate
             (
-                unitData.Prefab, 
-                data.WorldData.HeroSpawnPoints[spawnRequest.HeroID].position, 
+                unitData.Prefab,
+                data.WorldData.HeroSpawnPoints[spawnRequest.HeroID].position,
                 Quaternion.identity
             );
+
+            heroView.Init();
 
             var entity = world.NewEntity();
 
@@ -71,71 +73,70 @@ namespace BT
             hero.Data = unitData.Data;
 
 
-            //attackData
-            ref var attackData = ref world.GetPool<AttackData>().Add(entity);
-            attackData.Data = unitData.Data.Attack;
-
-
             //input command
             world.GetPool<MovementCommand>().Add(entity);
 
 
             //combat command
             world.GetPool<CombatCommand>().Add(entity);
-            
+
 
             //movement
-            var movementPool =  world.GetPool<CharacterControllerMovement>();
+            var movementPool = world.GetPool<CharacterControllerMovement>();
             ref var movement = ref movementPool.Add(entity);
             var characterController = heroView.GetComponent<CharacterController>();
             movement.CharacterController = characterController;
 
 
             //translation
-            var translationPool =  world.GetPool<Translation>();
+            var translationPool = world.GetPool<Translation>();
             ref var translation = ref translationPool.Add(entity);
-            translation.Value = heroView.transform;   
+            translation.Value = heroView.transform;
 
 
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(entity);
             view.Animator = heroView.GetComponentInChildren<Animator>();
-            view.ViewTransform = heroView.transform.GetChild(0).transform; 
+            view.ViewTransform = heroView.transform.GetChild(0).transform;
             view.Height = characterController.height;
             view.BodyRadius = characterController.radius;
             view.HipBone = heroView.BodyHips;
-          
+
 
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
-            hit.HitBoxes = heroView.GetComponentsInChildren<HitBox>();
-            hit.HurtBoxes = heroView.GetComponentsInChildren<HurtBox>();
-            foreach(var h in hit.HurtBoxes) h.Init();
-            
+            hit.HitBoxes = heroView.HitBoxes;
+            hit.HurtBoxes = heroView.HurtBoxes;
 
-           //attack
+
+            //attackData
+            ref var attackData = ref world.GetPool<AttackData>().Add(entity);
+            attackData.Data = unitData.Attack;
+
+
+            //attack
             var heroHandleAttackPool = world.GetPool<CharacterAttack>();
-            ref var heroAttack = ref heroHandleAttackPool.Add(entity);            
-            heroAttack.IsActiveAttack = false;    
+            ref var heroAttack = ref heroHandleAttackPool.Add(entity);
+            heroAttack.IsActiveAttack = false;
             heroAttack.IsNeedFinishAttack = false;
-            heroAttack.CurrentPunch = null; 
-            heroAttack.CurrentKick = null; 
+            heroAttack.CurrentPunch = null;
+            heroAttack.CurrentKick = null;
             heroAttack.KickQueue = new Queue<CharacterAttackAnimationData>();
             heroAttack.PunchQueue = new Queue<CharacterAttackAnimationData>();
 
 
             //HP
             var healthPool = world.GetPool<Health>();
-            ref var heroHealth = ref healthPool.Add(entity); 
+            ref var heroHealth = ref healthPool.Add(entity);
             heroHealth.CurrentHP = heroHealth.MaxHP = unitData.Data.StartHP;
 
 
             //input
             var heroInputPool = world.GetPool<HeroInputUser>();
             ref var input = ref heroInputPool.Add(entity);
-            var action = new InputServices();   
+            var action = new InputServices();
             input.InputProvider = new InputHandleProvider(action);
             input.InputProvider.Enable();
             input.Device = spawnRequest.Device;

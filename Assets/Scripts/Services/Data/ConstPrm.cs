@@ -64,7 +64,7 @@ namespace BT
 
         public static class Character
         {
-            public const float STUN_TIME = 3f;
+            public const float STUN_TIME = 1f;
             public const float POWER_STUN_TIME = 6f;
             public const float DEATH_TIME = 5f;
             public const float HIT_COUNT_RESET_TIME = 1f;
