@@ -11,7 +11,8 @@ namespace BT
 
             var heroes = world
                 .Filter<Hero>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
+                .Inc<CombatCommand>()
                 .Inc<CharacterGrounded>()
                 .Inc<CharacterAttack>()
                 .Inc<CharacterView>()
@@ -28,34 +29,35 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var commandPool = world.GetPool<CharacterCommand>();
-            var heroPool = world.GetPool<Hero>();            
+            var commandPool = world.GetPool<MovementCommand>();
+            var combatCommandPool = world.GetPool<CombatCommand>();
+            var heroPool = world.GetPool<Hero>();
             var attackPool = world.GetPool<CharacterAttack>();
             var translationPool = world.GetPool<Translation>();
-            var viewPool = world.GetPool<CharacterView>();   
+            var viewPool = world.GetPool<CharacterView>();
 
             foreach (var heroEnt in heroes)
             {
                 ref var command = ref commandPool.Get(heroEnt);
+                ref var combat = ref combatCommandPool.Get(heroEnt);
                 ref var attack = ref attackPool.Get(heroEnt);
                 ref var hero = ref heroPool.Get(heroEnt);
-                
-                if (command.IsPunch || command.IsKick)
+
+                if (!combat.IsPunch && !combat.IsKick) return;
+
+                ref var heroTranslation = ref translationPool.Get(heroEnt);
+                ref var heroView = ref viewPool.Get(heroEnt);
+
+                foreach (var enemy in enemies)
                 {
-                    ref var heroTranslation = ref translationPool.Get(heroEnt);
-                    ref var heroView = ref viewPool.Get(heroEnt);
+                    ref var targetTranslation = ref translationPool.Get(enemy);
 
-                    foreach (var enemy in enemies)
+                    if (IsCanAttackTarget(ref heroView, ref heroTranslation, ref targetTranslation))
                     {
-                        ref var targetTranslation = ref translationPool.Get(enemy);
+                        TryAddFinishAttack(world, enemy, ref hero, ref attack);
+                        TryExecutePowerDamage(ref attack);
 
-                        if (IsCanAttackTarget(ref heroView, ref heroTranslation, ref targetTranslation))
-                        {
-                            TryAddFinishAttack(world, enemy, ref hero, ref attack);
-                            TryExecutePowerDamage(ref attack);
-
-                            break;
-                        }
+                        break;
                     }
                 }
             }
@@ -67,9 +69,9 @@ namespace BT
             if (Mathf.Abs(heroTR.Value.position.y - targetTR.Value.position.y) > heroView.Height) return false;
 
             var toTarget = targetTR.Value.position - heroTR.Value.position;
-            
+
             if (Vector3.Angle(toTarget, heroView.ViewTransform.forward) > ConstPrm.Hero.VIEW_ENEMY_ANGLE) return false;
-            
+
             var sqDist = toTarget.sqrMagnitude;
             var maxDist = heroView.BodyRadius * 3f;
 
@@ -82,19 +84,19 @@ namespace BT
         private void TryAddFinishAttack(EcsWorld world, int enemyEntity, ref Hero hero, ref CharacterAttack attack)
         {
             var hpPool = world.GetPool<Health>();
-            
+
             if (hpPool.Has(enemyEntity))
             {
                 ref var enemyHealth = ref hpPool.Get(enemyEntity);
                 attack.IsNeedFinishAttack = enemyHealth.CurrentHP <= hero.Data.Attack.MaxDamage;
             }
         }
-        
-        
+
+
         private void TryExecutePowerDamage(ref CharacterAttack attack)
         {
             if (attack.HitCount < ConstPrm.Character.MAX_HIT_COUNT) return;
-                
+
             attack.IsPowerfulDamage = true;
         }
     }

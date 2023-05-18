@@ -11,10 +11,10 @@ namespace BT
 
             var entities = world
                 .Filter<Hero>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
                 .End();
 
-            var characterCommandPool = world.GetPool<CharacterCommand>();
+            var characterCommandPool = world.GetPool<MovementCommand>();
             var sitingPool = world.GetPool<CharacterSitDown>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 

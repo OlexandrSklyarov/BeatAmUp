@@ -2,14 +2,12 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct CharacterCommand
+    public struct MovementCommand
     {
         public Vector3 Direction;
         public bool IsJump;
         public bool IsRunning;
-        public bool IsMoved;
-        public bool IsKick;
-        public bool IsPunch;
+        public bool IsMoved;        
         public bool IsSitting;
     }
 }

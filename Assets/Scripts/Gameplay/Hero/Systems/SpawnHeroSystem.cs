@@ -70,8 +70,18 @@ namespace BT
             hero.ID = spawnRequest.HeroID;
             hero.Data = unitData.Data;
 
-            //input
-            world.GetPool<CharacterCommand>().Add(entity);
+
+            //attackData
+            ref var attackData = ref world.GetPool<AttackData>().Add(entity);
+            attackData.Data = unitData.Data.Attack;
+
+
+            //input command
+            world.GetPool<MovementCommand>().Add(entity);
+
+
+            //combat command
+            world.GetPool<CombatCommand>().Add(entity);
             
 
             //movement
@@ -79,6 +89,7 @@ namespace BT
             ref var movement = ref movementPool.Add(entity);
             var characterController = heroView.GetComponent<CharacterController>();
             movement.CharacterController = characterController;
+
 
             //translation
             var translationPool =  world.GetPool<Translation>();

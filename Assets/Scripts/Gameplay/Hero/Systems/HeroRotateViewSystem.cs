@@ -10,14 +10,14 @@ namespace BT
             var world = systems.GetWorld();
 
             var entities = world.Filter<Hero>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
                 .Inc<CharacterView>()
                 .Inc<CharacterControllerMovement>()
                 .Exc<CharacterSitDown>()
                 .End();
                 
             var heroPool = world.GetPool<Hero>();
-            var inputPool = world.GetPool<CharacterCommand>();
+            var inputPool = world.GetPool<MovementCommand>();
             var viewPool = world.GetPool<CharacterView>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
 

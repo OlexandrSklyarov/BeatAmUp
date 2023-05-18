@@ -11,7 +11,8 @@ namespace BT
 
             var heroes = world
                 .Filter<Hero>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
+                .Inc<CombatCommand>()
                 .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
@@ -28,19 +29,21 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var commandPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<MovementCommand>();
+            var combatCommandPool = world.GetPool<CombatCommand>();
             var translationPool = world.GetPool<Translation>();
             var viewPool = world.GetPool<CharacterView>();             
             var slidePool = world.GetPool<HeroSlideToTarget>();            
 
             foreach (var heroEnt in heroes)
             {
-                ref var command = ref commandPool.Get(heroEnt);
+                ref var movementCommand = ref commandPool.Get(heroEnt);
+                ref var combatCommand = ref combatCommandPool.Get(heroEnt);
                 ref var heroTranslation = ref translationPool.Get(heroEnt);
                 ref var heroView = ref viewPool.Get(heroEnt);
 
-                if (!command.IsRunning) continue;
-                if (!command.IsPunch && !command.IsKick) continue;
+                if (!movementCommand.IsRunning) continue;
+                if (!combatCommand.IsPunch && !combatCommand.IsKick) continue;
 
                 foreach (var enemy in enemies)
                 {

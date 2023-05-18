@@ -12,13 +12,13 @@ namespace BT
 
             var entities = world
                 .Filter<Hero>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<Translation>()
                 .End();
 
             var heroPool = world.GetPool<Hero>();
-            var commandPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<MovementCommand>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var translationPool = world.GetPool<Translation>();
             var groundedPool = world.GetPool<CharacterGrounded>();
@@ -52,7 +52,7 @@ namespace BT
 
 
         private void ChangeVelocity(ref CharacterControllerMovement movement, ref Translation translation, 
-            ref CharacterCommand command, ref Hero hero, bool isGrounded)
+            ref MovementCommand command, ref Hero hero, bool isGrounded)
         {
             var newVelocity = GetMovementVelocity
             (
@@ -74,7 +74,7 @@ namespace BT
         }
 
 
-        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref CharacterCommand command, ref Hero hero)
+        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref MovementCommand command, ref Hero hero)
         {
             if (command.IsMoved)
             {

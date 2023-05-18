@@ -12,11 +12,11 @@ namespace BT
 
             var entities = world
                 .Filter<CharacterControllerMovement>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
                 .End();
 
             var movementPool = world.GetPool<CharacterControllerMovement>();
-            var commandPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<MovementCommand>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)

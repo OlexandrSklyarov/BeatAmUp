@@ -12,23 +12,26 @@ namespace BT
             var entities = world
                 .Filter<Hero>()
                 .Inc<HeroInputUser>()
-                .Inc<CharacterCommand>()
+                .Inc<MovementCommand>()
+                .Inc<CombatCommand>()
                 .End();
 
             var inputPool = world.GetPool<HeroInputUser>();
-            var commandPool = world.GetPool<CharacterCommand>();
+            var commandPool = world.GetPool<MovementCommand>();
+            var combatCommandPool = world.GetPool<CombatCommand>();
 
             foreach(var e in entities)
             {
                 ref var command = ref commandPool.Get(e); 
-
+                ref var combat = ref combatCommandPool.Get(e); 
                 ref var input = ref inputPool.Get(e); 
+
                 var provider = input.InputProvider;
 
-                command.IsKick = provider.IsKick;
-                command.IsPunch = provider.IsPunch;
+                combat.IsKick = provider.IsKick;
+                combat.IsPunch = provider.IsPunch;
 
-                var isAttack = (command.IsKick || command.IsPunch);
+                var isAttack = (combat.IsKick || combat.IsPunch);
 
                 command.Direction = GetDirection(provider, isAttack);
 

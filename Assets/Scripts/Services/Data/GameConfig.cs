@@ -9,7 +9,6 @@ namespace BT
         [field: SerializeField] public GameRules GameRules { get; private set; }
         [field: Space(50f), SerializeField] public HeroUnit[] Heroes { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
-        [field: Space(20f), SerializeField] public HeroAttackDataConfig HeroAttackData { get; private set; }
         [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
         [field: Space(20f), SerializeField] public EnemyData EnemyConfig { get; private set; }
         [field: Space(20f), SerializeField] public UIData UI { get; private set; }
