@@ -31,7 +31,7 @@ namespace BT
                 ref var ai = ref aiPool.Get(ent);               
 
                 var isFaceDown = IsFaceDown(ref view);
-                var isCanStandUp = IsCanStandUp(ref view, ref ai, ref body, isFaceDown);
+                var isCanStandUp = IsCanStandUp(ref view, ref ai);
 
                 ref var comp = ref restoreRagdollPool.Add(ent);
 
@@ -40,7 +40,7 @@ namespace BT
                 comp.IsCanStandUp = isCanStandUp;
                 comp.IsFaceDown = isFaceDown;
                 
-                PrepareBonesToRestore(ref body, ref view);
+                PrepareBonesToRestore(ref body, ref view, ref comp);
                 ResetRagdoll(ref body);
             }
         }
@@ -53,8 +53,7 @@ namespace BT
         }
 
 
-        private bool IsCanStandUp(ref CharacterView view, ref MovementAI ai, ref CharacterPhysicsBody body, 
-            bool isFaceDown)
+        private bool IsCanStandUp(ref CharacterView view, ref MovementAI ai)
         {            
             var origin = view.HipBone.position;
             var isStandSuccess = ai.NavAgent.Warp(origin);            
@@ -68,12 +67,14 @@ namespace BT
         }
         
 
-        private void PrepareBonesToRestore(ref CharacterPhysicsBody body, ref CharacterView view)
+        private void PrepareBonesToRestore(ref CharacterPhysicsBody body, ref CharacterView view, 
+            ref RestoreRagdollState comp)
         {
             var originalHipsPos = view.HipBone.transform.position;
             var originalHipsRot = view.HipBone.transform.rotation;
 
-            var desiredDirection = view.HipBone.transform.up * -1f;
+            var side  = (comp.IsFaceDown) ? 1f : -1f;
+            var desiredDirection = view.HipBone.transform.up * side;
             desiredDirection.y = 0f;
             desiredDirection.Normalize();
 

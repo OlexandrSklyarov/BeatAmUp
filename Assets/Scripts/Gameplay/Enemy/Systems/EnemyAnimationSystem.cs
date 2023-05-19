@@ -41,6 +41,11 @@ namespace BT
                     view.Animator.SetTrigger(GetStandTrigger(ref evt));
                     standAnimPool.Del(ent);
                 }
+                else
+                {
+                    view.Animator.ResetTrigger(ConstPrm.Animation.STAND_UP_FACE_UP);
+                    view.Animator.ResetTrigger(ConstPrm.Animation.STAND_UP_FACE_DOWN);
+                }
             }
         }
 

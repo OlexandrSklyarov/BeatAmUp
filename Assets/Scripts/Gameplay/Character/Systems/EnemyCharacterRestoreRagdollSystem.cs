@@ -8,7 +8,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var enemies = world
                 .Filter<RestoreRagdollState>()

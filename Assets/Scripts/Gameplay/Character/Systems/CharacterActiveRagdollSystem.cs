@@ -33,7 +33,7 @@ namespace BT
 
                 AddForceCharacterRagdoll(ref damageEvt, ref body, ref view);
 
-                AddRagdollState(isHasRagdollState, ragdollPool, ent);                
+                AddRagdollState(ref view, isHasRagdollState, ragdollPool, ent);                
             }
         }
 
@@ -70,7 +70,7 @@ namespace BT
         }
 
 
-        private void AddRagdollState(bool isHasRagdollState, EcsPool<RagdollState> pool, int ent)
+        private void AddRagdollState(ref CharacterView view, bool isHasRagdollState, EcsPool<RagdollState> pool, int ent)
         {
             if (isHasRagdollState)
             {
@@ -80,7 +80,7 @@ namespace BT
             }
             
             ref var state = ref pool.Add(ent);
-            state.RestoreTimer = ConstPrm.Character.RESTORE_RAGDOLL_TIME;
+            state.RestoreTimer = ConstPrm.Character.RESTORE_RAGDOLL_TIME;            
         }
     }
 }

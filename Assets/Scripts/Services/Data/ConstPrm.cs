@@ -57,7 +57,7 @@ namespace BT
             public const float MIN_VELOCITY_OFFSET = 0.1f;
             public const float TARGET_FOCUS_DIST = 15f;
             public const float CHECK_SPAWN_TIME = 10f;
-            public const int MAX_ENEMY_ON_LEVEL = 5;
+            public const int MAX_ENEMY_ON_LEVEL = 3;
             public const int MAX_ATTACKING_ENEMY_COUNT = 1;
         }
 
