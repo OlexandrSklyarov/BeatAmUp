@@ -28,7 +28,7 @@ namespace BT
             var hitEventPool = world.GetPool<TryHitEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
             var viewPool = world.GetPool<CharacterView>();
-            var attackPool = world.GetPool<CharacterAttack>();
+            var attackPool = world.GetPool<CharacterAttack>();            
 
             foreach (var atk in attackers)
             {

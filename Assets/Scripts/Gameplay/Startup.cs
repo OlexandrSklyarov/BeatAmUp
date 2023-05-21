@@ -78,7 +78,6 @@ namespace BT
                 .Add(new HeroSlideToTargetSystem())
                 .Add(new HeroTryExecutePowerDamageSystem())
                 .Add(new HeroSittingSystem())
-                .Add(new CharacterComboAttackSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new HeroRotateViewSystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())
@@ -87,6 +86,9 @@ namespace BT
                 .Add(new HeroDieSystem())
 
                 //character hit
+                .Add(new TryResetCombatCommandSystem())
+                .Add(new CharacterComboAttackSystem())
+                .Add(new TryResetHitEventSystem())
                 .Add(new CharacterTryHitSystem())
                 .Add(new CharacterApplyDamageSystem())
                 .Add(new CharacterActiveStunSystem())

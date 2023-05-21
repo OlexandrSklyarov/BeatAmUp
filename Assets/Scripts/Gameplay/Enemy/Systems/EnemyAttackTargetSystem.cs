@@ -41,21 +41,31 @@ namespace BT
 
                 if (IsTargetFar(ref target, ref tr, stopDistance))
                 {
-                    navigation.Destination = target.MyTarget.position;
-                    navigation.StopDistance = stopDistance;
+                    MoveToTarget(ref target, ref navigation, stopDistance);
                 }
                 else
                 {
-                    //attack
-                    Util.Debug.PrintColor("Enemy Attack", UnityEngine.Color.red);
-                    ref var block = ref blockPool.Add(ent);
-                    block.Timer = GetAttackDelay(data);
-
-                    SetRandomCombatAction(ref combat);
+                    AddAttackCommand(data, blockPool, ent, ref combat);
                 }
             }
         }
 
+
+        private void AddAttackCommand(SharedData data, EcsPool<BlockMovement> blockPool, int ent, ref CombatCommand combat)
+        {
+            ref var block = ref blockPool.Add(ent);
+            block.Timer = GetAttackDelay(data);
+
+            SetRandomCombatAction(ref combat);
+        }
+
+
+        private static void MoveToTarget(ref EnemyTarget target, ref EnemyNavigation navigation, float stopDistance)
+        {
+            navigation.Destination = target.MyTarget.position;
+            navigation.StopDistance = stopDistance;
+        }
+        
 
         private float GetAttackDelay(SharedData data)
         {

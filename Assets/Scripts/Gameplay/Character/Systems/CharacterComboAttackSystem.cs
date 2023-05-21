@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
@@ -23,6 +24,7 @@ namespace BT
             var inputPool = world.GetPool<CombatCommand>();
             var heroAttackPool = world.GetPool<CharacterAttack>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
+            var hitEventPool = world.GetPool<TryHitEvent>();   
 
             foreach (var ent in entities)
             {
@@ -32,13 +34,13 @@ namespace BT
                 ref var hitInteraction = ref hitInteractionPool.Get(ent);
 
                 ResetPreviousAttack(ref attack);
-                SetComboAttack(ref input, ref attack, ref hitInteraction, ref attackData, world, ent);
+                SetComboAttack(ref input, ref attack, ref hitInteraction, ref attackData, ent, hitEventPool);
                 AddActionQueue(ref input, ref attack, ref attackData);
                 ResetComboState(ref attack, ref input); 
                 ResetActionQueue(ref attack);         
             }
         }
-
+   
 
         private void ResetPreviousAttack(ref CharacterAttack attack)
         {
@@ -47,8 +49,8 @@ namespace BT
         }
 
 
-        private void SetComboAttack(ref CombatCommand input, ref CharacterAttack attack,
-            ref HitInteraction hitInteraction, ref AttackData attackData, EcsWorld world, int ent)
+        private void SetComboAttack(ref CombatCommand input, ref CharacterAttack attack, ref HitInteraction hitInteraction, 
+            ref AttackData attackData, int ent, EcsPool<TryHitEvent> hitEventPool)
         {
             if (attack.IsActiveAttack) return;
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;            
@@ -62,19 +64,19 @@ namespace BT
             
             if (input.IsPunch)
             {
-                PunchHandle(ref attack, ref hitInteraction, ref attackData, 
-                    world, ent, isPowerfulAttack, pushForce, damage);
+                PunchHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool,
+                    ent, isPowerfulAttack, pushForce, damage);
             }
             else if (input.IsKick)
             {
-                KickHandle(ref attack, ref hitInteraction, ref attackData, 
-                    world, ent, isPowerfulAttack, pushForce, damage);
+                KickHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool,
+                    ent, isPowerfulAttack, pushForce, damage);
             }
         }
 
 
-        private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, 
-            ref AttackData attackData, EcsWorld world, int ent, bool isPowerfulAttack, float pushForce, int damage)
+        private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackData, 
+            EcsPool<TryHitEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentKick = (attack.KickQueue.Count > 0) ?
                 attack.KickQueue.Dequeue() : attackData.Data.KickAnimationData[0];
@@ -85,12 +87,12 @@ namespace BT
             attack.AttackTimer = attack.CurrentKick.AttackTime;
             attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-            CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentKick, world, damage, pushForce, ent);
+            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, attack.CurrentKick, damage, pushForce, ent);
         }
 
 
-        private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, 
-            ref AttackData attackDat, EcsWorld world, int ent, bool isPowerfulAttack, float pushForce, int damage)
+        private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackDat, 
+            EcsPool<TryHitEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentPunch = (attack.PunchQueue.Count > 0) ?
                 attack.PunchQueue.Dequeue() : attackDat.Data.PunchAnimationData[0];
@@ -101,25 +103,24 @@ namespace BT
             attack.AttackTimer = attack.CurrentPunch.AttackTime;
             attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-            CreateHitEvent(ref hitInteraction, ref attack, attack.CurrentPunch, world, damage, pushForce, ent);
+            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, attack.CurrentPunch, damage, pushForce, ent);
         }
 
 
-        private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack,
-            CharacterAttackAnimationData attackAnimData, EcsWorld world, int damage, float pushForce, int ent)
+        private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack, EcsPool<TryHitEvent> hitEventPool,
+            CharacterAttackAnimationData attackAnimData, int damage, float pushForce, int ent)
         {
             var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
 
             if (hurtBox == null) return;
 
-            var eventPool = world.GetPool<TryHitEvent>(); 
-            ref var damageEvent = ref eventPool.Add(ent);
+            ref var damageEvent = ref hitEventPool.Add(ent);
 
             damageEvent.AttackerHurtBox = hurtBox;
             damageEvent.IgnoredHitBoxes = hitInteraction.HitBoxes;
-            damageEvent.Damage = damage;
-            damageEvent.PushForce = pushForce;
             damageEvent.ExecuteHitTimer = attackAnimData.AttackTime * attackAnimData.DamageTimeMultiplier;
+            damageEvent.PushForce = pushForce;
+            damageEvent.Damage = damage;
             
             damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFUL) ? 
                 DamageType.HAMMERING : (attack.IsNeedFinishAttack || attack.IsPowerfulDamage) ? 
