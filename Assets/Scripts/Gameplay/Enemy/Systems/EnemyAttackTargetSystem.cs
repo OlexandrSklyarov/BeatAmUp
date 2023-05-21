@@ -1,4 +1,5 @@
 using Leopotam.EcsLite;
+using Random = UnityEngine.Random;
 
 namespace BT
 {
@@ -48,7 +49,7 @@ namespace BT
                     //attack
                     Util.Debug.PrintColor("Enemy Attack", UnityEngine.Color.red);
                     ref var block = ref blockPool.Add(ent);
-                    block.Timer = data.Config.EnemyConfig.Animation.AttackAnimationDelay;
+                    block.Timer = GetAttackDelay(data);
 
                     SetRandomCombatAction(ref combat);
                 }
@@ -56,9 +57,16 @@ namespace BT
         }
 
 
+        private float GetAttackDelay(SharedData data)
+        {
+            return data.Config.EnemyConfig.Animation.AttackAnimationDelay + 
+                Random.Range(1, 2);
+        }
+
+
         private void SetRandomCombatAction(ref CombatCommand combat)
         {
-            if (UnityEngine.Random.Range(0, 100) > 50)
+            if (Random.Range(0, 100) > 50)
             {
                 combat.IsKick = true;
             }
