@@ -9,7 +9,7 @@ namespace BT
         
         public CheckCollisionServices()
         {
-            HitResult = new Collider[10];
+            HitResult = new Collider[20];
         }
         
         

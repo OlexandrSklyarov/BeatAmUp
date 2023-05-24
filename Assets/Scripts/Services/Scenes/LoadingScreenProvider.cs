@@ -4,7 +4,7 @@ using Services.Scenes.LoadingScreen;
 using System.Collections.Generic;
 using Services.AddressablesProvider;
 
-namespace Services.SceneContext
+namespace Services.Scenes
 {
     public class LoadingScreenProvider : BaseLocalAssetProvider
     {

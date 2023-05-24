@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Services.Scenes.LoadingScreen;
 using UnityEngine;
 
-namespace Services.SceneContext
+namespace Services.Scenes
 {
     public class Loader : MonoBehaviour
     {        

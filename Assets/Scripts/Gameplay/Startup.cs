@@ -85,9 +85,11 @@ namespace BT
                 .Add(new ApplyHorizontalVelocitySystem())
                 .Add(new HeroDieSystem())
 
-                //character hit
+                //combat
                 .Add(new TryResetCombatCommandSystem())
                 .Add(new CharacterComboAttackSystem())
+
+                //character hit
                 .Add(new TryResetHitEventSystem())
                 .Add(new CharacterTryHitSystem())
                 .Add(new CharacterApplyDamageSystem())

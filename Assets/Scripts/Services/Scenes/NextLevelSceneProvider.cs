@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Services.Scenes.LoadingScreen;
 using UnityEngine.ResourceManagement.ResourceProviders;
 
-namespace Services.SceneContext
+namespace Services.Scenes
 {
     public class NextLevelSceneProvider : ILoadingOperation
     {
