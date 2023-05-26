@@ -131,7 +131,6 @@ namespace BT
 
                 //vfx
                 .Add(new CreateDamageVfxItemSystem())
-                .Add(new CreateDeathVfxItemSystem())
                 .Add(new DestroyCompletedVfxItemSystem())
                 .Init();   
         }

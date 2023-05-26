@@ -301,7 +301,7 @@ Transform:
   m_Children:
   - {fileID: 6874037334473596770}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &6562321263983668497
 NavMeshAgent:
@@ -475,6 +475,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 2.6646206
       objectReference: {fileID: 0}
+    - target: {fileID: -7813590141776298306, guid: bb6c89e06c2b486a6aea7902b68c2f24,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c3699a9e4c67bad0899dcc4a2f26ec3c, type: 2}
     - target: {fileID: -7219772299731422950, guid: bb6c89e06c2b486a6aea7902b68c2f24,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1126,6 +1131,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -0.2763378
       objectReference: {fileID: 0}
+    - target: {fileID: 5822821947120931875, guid: bb6c89e06c2b486a6aea7902b68c2f24,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5636516dea382a285bb8e61684e0ae7c, type: 2}
     - target: {fileID: 6000407479487422213, guid: bb6c89e06c2b486a6aea7902b68c2f24,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

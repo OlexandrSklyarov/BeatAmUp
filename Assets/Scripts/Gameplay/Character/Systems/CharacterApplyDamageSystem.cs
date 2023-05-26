@@ -43,7 +43,7 @@ namespace BT
         {
             var pool = world.GetPool<Death>();
             ref var deathComp = ref pool.Add(damageEntity);
-            deathComp.Timer = ConstPrm.Character.DEATH_TIME;            
+            deathComp.MaxTime = deathComp.Timer = ConstPrm.Character.DEATH_TIME;            
         }
     }
 }

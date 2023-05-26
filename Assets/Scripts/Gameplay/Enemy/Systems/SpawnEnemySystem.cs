@@ -74,6 +74,7 @@ namespace BT
             view.Height = enemyViewProvider.Collider.height;
             view.BodyRadius = enemyViewProvider.Collider.radius;
             view.HipBone = enemyViewProvider.BodyHips;
+            view.BodyMaterials = enemyViewProvider.BodyMaterials;
 
 
             //hit interaction

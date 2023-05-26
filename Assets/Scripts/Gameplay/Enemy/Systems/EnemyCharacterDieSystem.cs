@@ -1,3 +1,4 @@
+using System;
 using Leopotam.EcsLite;
 using UnityEngine;
 
@@ -32,22 +33,21 @@ namespace BT
                 
                 death.Timer -= Time.deltaTime;
 
+                ChangeDissolveValue(ref death, ref view);
+
                 if (death.Timer <= 0f)
                 {
-                    enemy.PoolItem.ReturnToStorage();
-                    CreateDeathEvent(world, ref view);
-                    
+                    enemy.PoolItem.ReturnToStorage();                    
                     world.DelEntity(e);
                 }   
             }
         }
-        
 
-        private void CreateDeathEvent(EcsWorld world, ref CharacterView view)
+
+        private void ChangeDissolveValue(ref Death death, ref CharacterView view)
         {
-            var entity = world.NewEntity();
-            ref var evt = ref world.GetPool<DeathVfxEvent>().Add(entity);
-            evt.Position = view.HipBone.position;
-        }
+            var progress = 1f - death.Timer / death.MaxTime;
+            view.BodyMaterials.ChangeDissolveValue(progress);
+        }       
     }
 }

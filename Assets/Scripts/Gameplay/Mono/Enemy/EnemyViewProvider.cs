@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Services.Pooling;
-using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -16,6 +15,7 @@ namespace BT
         [field: SerializeField] public Transform BodyView { get; private set; }
         public IEnumerable<Rigidbody> RagdollElements => _ragdollElements;
         public CapsuleCollider Collider => _collider;
+        public BodyMaterialProvider BodyMaterials => _bodyMaterials;
 
         public Animator Animator => _animator;
 
@@ -23,6 +23,7 @@ namespace BT
         private Animator _animator;
         private CapsuleCollider _collider;
         private Rigidbody[] _ragdollElements;
+        private BodyMaterialProvider _bodyMaterials;
         private bool _isInit;
 
         public void Init(IFactoryStorage<EnemyViewProvider> storage)
@@ -31,6 +32,8 @@ namespace BT
 
             if (!_isInit)
             {
+                _bodyMaterials = new BodyMaterialProvider(GetComponentsInChildren<SkinnedMeshRenderer>());
+
                 HitBoxes = GetComponentsInChildren<HitBox>();
                 HurtBoxes = GetComponentsInChildren<HurtBox>();
                 
@@ -41,6 +44,8 @@ namespace BT
                 _ragdollElements ??= GetRagdollElements();
                 _isInit = true;
             }
+
+            _bodyMaterials.SetDissolveValueSmooth(0f);
         }
         
         
