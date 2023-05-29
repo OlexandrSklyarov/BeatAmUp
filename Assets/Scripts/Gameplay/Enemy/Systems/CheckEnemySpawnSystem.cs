@@ -59,7 +59,7 @@ namespace BT
                         var entity = world.NewEntity();
 
                         ref var createEvent = ref createEventPool.Add(entity);
-                        createEvent.Type = EnemyType.TestKnight;
+                        createEvent.Type = (Random.Range(0, 2) == 0) ? EnemyType.TestKnight : EnemyType.NINJA;
                         createEvent.CreatePosition = point.position;
                         createEvent.CreateRotation = point.rotation;                        
 
