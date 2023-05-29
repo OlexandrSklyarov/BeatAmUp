@@ -14,7 +14,6 @@ namespace Services.AddressablesProvider
         private bool _isReady;
 
 
-
         public async Task Load(Action<float> onProgressCallback)
         {
             var op = Addressables.InitializeAsync();

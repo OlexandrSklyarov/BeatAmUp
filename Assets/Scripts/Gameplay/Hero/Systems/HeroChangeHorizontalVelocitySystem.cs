@@ -8,7 +8,6 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
-            var data = systems.GetShared<SharedData>();
 
             var entities = world
                 .Filter<Hero>()
@@ -107,7 +106,7 @@ namespace BT
 
         private void ChangeAcceleration(ref CharacterControllerMovement movement, float targetAcceleration, float time)
         {
-            movement.Acceleration = Mathf.MoveTowards
+            movement.Acceleration = Mathf.Lerp
             (
                 movement.Acceleration,
                 targetAcceleration,
