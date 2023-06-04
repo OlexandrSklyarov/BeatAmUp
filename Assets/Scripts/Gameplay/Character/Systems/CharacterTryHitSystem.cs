@@ -35,22 +35,27 @@ namespace BT
                 ref var hitEvent = ref hitEventPool.Get(atk);
                 ref var attack = ref attackPool.Get(atk);
 
-                hitEvent.ExecuteHitTimer -= Time.deltaTime;
-
-                //wait attack
-                if (hitEvent.ExecuteHitTimer > 0f) continue;
+                if (!IsHitTimeEnd(ref hitEvent)) continue;
 
                 var (count, result) = CheckHitCount(ref hitEvent, data);
 
                 //try hit
                 for (int i = 0; i < count; i++)
                 {
-                    TryApplyDamage(world, result[i], liveCharacters, hitInteractionPool, viewPool, ref hitEvent, ref attack);
+                    TryApplyDamage(world, result[i], liveCharacters, hitInteractionPool, viewPool, 
+                        ref hitEvent, ref attack);
                 }
 
                 hitEventPool.Del(atk);
             }
         }
+
+
+        private bool IsHitTimeEnd(ref TryHitEvent hitEvent)
+        {
+            hitEvent.ExecuteHitTimer -= Time.deltaTime;
+            return hitEvent.ExecuteHitTimer <= 0f;
+        }   
 
         
         private (int count, Collider[] result) CheckHitCount(ref TryHitEvent hitEvent, SharedData data)
