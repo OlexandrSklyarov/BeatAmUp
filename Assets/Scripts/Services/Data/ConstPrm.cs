@@ -3,6 +3,8 @@ namespace BT
 {
     public static class ConstPrm
     {
+        public static object Attack { get; internal set; }
+
         public static class DevicesName
         {
             public const string KEYBOARD = "Keyboard";

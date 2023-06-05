@@ -88,6 +88,7 @@ namespace BT
                 //combat
                 .Add(new TryResetCombatCommandSystem())
                 .Add(new CharacterComboAttackSystem())
+                .Add(new HeroRotateToNearTargetSystem())
 
                 //character hit
                 .Add(new TryResetHitEventSystem())

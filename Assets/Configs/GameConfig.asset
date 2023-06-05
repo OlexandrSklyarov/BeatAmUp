@@ -33,6 +33,9 @@ MonoBehaviour:
     <HitLayerMask>k__BackingField:
       serializedVersion: 2
       m_Bits: 128
+    <UnitLayerMask>k__BackingField:
+      serializedVersion: 2
+      m_Bits: 512
   <VfxConfig>k__BackingField: {fileID: 11400000, guid: e45bd0ec2c0285b38b26e003091337da,
     type: 2}
   <EnemyConfig>k__BackingField: {fileID: 11400000, guid: fcd1b7cc5598c4dc7b230a9691f86177,

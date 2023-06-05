@@ -63,6 +63,7 @@ namespace BT
         [field: SerializeField, Min(0.01f)] public float MinVerticalVelocity { get; private set; } = 2f;
         [field: SerializeField, Min(0.01f)] public float FallGravityMultiplier { get; private set; } = 2f;
         [field: Space(10f), SerializeField] public LayerMask HitLayerMask { get; private set; }
+        [field: Space(10f), SerializeField] public LayerMask UnitLayerMask { get; private set; }
     }
 
 

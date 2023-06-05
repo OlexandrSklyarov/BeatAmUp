@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace BT
@@ -21,6 +22,18 @@ namespace BT
                 hurtBox.HalfExtend,
                 HitResult,
                 Quaternion.identity,
+                layerMask
+            );
+        }
+
+
+        public int OverlapSphere(Transform origin, float radius, LayerMask layerMask)
+        {
+            return Physics.OverlapSphereNonAlloc
+            (
+                origin.position,
+                radius,
+                HitResult,
                 layerMask
             );
         }
