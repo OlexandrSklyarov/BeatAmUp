@@ -2,9 +2,9 @@ using UnityEngine;
 
 namespace BT
 {
-    public struct HeroSlideToTarget
+    public struct SlideToTargetProcess
     {
         public Vector3 TargetPosition;
-        public float TargetSqBodyRadius;
+        public float TargetBodyRadius;
     }
 }

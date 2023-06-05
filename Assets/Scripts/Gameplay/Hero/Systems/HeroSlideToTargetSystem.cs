@@ -11,7 +11,7 @@ namespace BT
 
             var entities = world
                 .Filter<Hero>()
-                .Inc<HeroSlideToTarget>()
+                .Inc<SlideToTargetProcess>()
                 .Inc<CharacterControllerMovement>()
                 .Inc<Translation>()
                 .Inc<CharacterView>()
@@ -21,7 +21,7 @@ namespace BT
             var translationPool = world.GetPool<Translation>();
             var ccPool = world.GetPool<CharacterControllerMovement>();
             var viewPool = world.GetPool<CharacterView>();            
-            var slidePool = world.GetPool<HeroSlideToTarget>();
+            var slidePool = world.GetPool<SlideToTargetProcess>();
 
             foreach (var ent in entities)
             {
@@ -39,7 +39,7 @@ namespace BT
         }
         
         
-        private bool IsSlideCompleted(ref HeroSlideToTarget slide, ref CharacterView heroView,
+        private bool IsSlideCompleted(ref SlideToTargetProcess slide, ref CharacterView heroView,
             ref CharacterControllerMovement cc, ref Translation heroTranslation, ref Hero hero)
         {
             var target = slide.TargetPosition;
@@ -49,7 +49,7 @@ namespace BT
             //move
             cc.CharacterController.enabled = false;
                 
-            heroTranslation.Value.position = Vector3.MoveTowards
+            heroTranslation.Value.position = Vector3.Lerp
             (
                 heroTranslation.Value.position, 
                 target,
@@ -59,10 +59,15 @@ namespace BT
             cc.CharacterController.enabled = true;
 
             //rotate
-            heroView.ViewTransform.rotation = Util.Vector3Math.DirToQuaternion(toTarget);
+            heroView.ViewTransform.rotation = Quaternion.Slerp
+            (
+                heroView.ViewTransform.rotation,
+                Util.Vector3Math.DirToQuaternion(toTarget),
+                hero.Data.SlideSpeed * Time.deltaTime
+            );           
             
-            
-            return Vector3.SqrMagnitude(heroTranslation.Value.position - target) <= slide.TargetSqBodyRadius;
+            return Vector3.SqrMagnitude(heroTranslation.Value.position - target) <= 
+                slide.TargetBodyRadius * slide.TargetBodyRadius;
         }
     }
 }

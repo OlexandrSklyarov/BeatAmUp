@@ -16,7 +16,7 @@ namespace BT
                 .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
-                .Exc<HeroSlideToTarget>()
+                .Exc<SlideToTargetProcess>()
                 .Exc<CharacterSitDown>()
                 .Exc<Stun>()
                 .Exc<Death>()
@@ -33,7 +33,7 @@ namespace BT
             var combatCommandPool = world.GetPool<CombatCommand>();
             var translationPool = world.GetPool<Translation>();
             var viewPool = world.GetPool<CharacterView>();             
-            var slidePool = world.GetPool<HeroSlideToTarget>();            
+            var slidePool = world.GetPool<SlideToTargetProcess>();            
 
             foreach (var heroEnt in heroes)
             {
@@ -61,14 +61,12 @@ namespace BT
         }
 
         
-        private void AddSlideState(EcsPool<HeroSlideToTarget> slidePool, int hero, ref CharacterView targetView,  
+        private void AddSlideState(EcsPool<SlideToTargetProcess> slidePool, int hero, ref CharacterView targetView,  
             ref Translation targetTranslation)
         {
-            var r = targetView.BodyRadius + ConstPrm.Hero.TARGET_RADIUS_OFFSET;
-
             ref var slide = ref slidePool.Add(hero);
             slide.TargetPosition = targetTranslation.Value.position;
-            slide.TargetSqBodyRadius = r * r;
+            slide.TargetBodyRadius = targetView.BodyRadius + ConstPrm.Hero.TARGET_RADIUS_OFFSET;
         }
 
 
@@ -84,9 +82,7 @@ namespace BT
             var minDist = heroView.BodyRadius * 2f;
             var maxDist = heroView.BodyRadius * ConstPrm.Hero.ATTACK_RADIUS_MULTIPLIER;
 
-            if (sqDist > maxDist * maxDist ||  sqDist <= minDist) return false;
-
-            return true;
+            return (sqDist <= maxDist * maxDist && sqDist >= minDist * minDist);
         }
     }
 }
