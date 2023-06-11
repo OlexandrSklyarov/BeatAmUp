@@ -47,19 +47,18 @@ namespace BT
             var entity = world.NewEntity();
             var eventPool = world.GetPool<CreateNewHeroEvent>();
             ref var evt = ref eventPool.Add(entity);
-            evt.NewHeroID = spawnRequest.HeroID;
+            evt.NewHeroID = spawnRequest.SpawnIndex;
         }
 
 
         private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest spawnRequest)
         {
-            var id = spawnRequest.HeroID;
-            var unitData = data.Config.Heroes.First(u => (int)u.ID == id);
+            var heroUnit = spawnRequest.Unit;
 
             var heroView = UnityEngine.Object.Instantiate
             (
-                unitData.Prefab,
-                data.WorldData.HeroSpawnPoints[spawnRequest.HeroID].position,
+                heroUnit.Prefab,
+                data.WorldData.HeroSpawnPoints[spawnRequest.SpawnIndex].position,
                 Quaternion.identity
             );
 
@@ -69,8 +68,8 @@ namespace BT
 
             //hero
             ref var hero = ref world.GetPool<Hero>().Add(entity);
-            hero.ID = spawnRequest.HeroID;
-            hero.Data = unitData.Data;
+            hero.ID = spawnRequest.SpawnIndex;
+            hero.Data = heroUnit.Data;
 
 
             //input command
@@ -113,7 +112,7 @@ namespace BT
 
             //attackData
             ref var attackData = ref world.GetPool<AttackData>().Add(entity);
-            attackData.Data = unitData.Attack;
+            attackData.Data = heroUnit.Attack;
 
 
             //attack
@@ -130,7 +129,7 @@ namespace BT
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(entity);
-            heroHealth.CurrentHP = heroHealth.MaxHP = unitData.Data.StartHP;
+            heroHealth.CurrentHP = heroHealth.MaxHP = heroUnit.Data.StartHP;
 
 
             //input

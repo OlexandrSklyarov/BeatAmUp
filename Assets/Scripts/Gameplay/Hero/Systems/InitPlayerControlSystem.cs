@@ -73,7 +73,7 @@ namespace BT
         }
 
 
-        private void CreateHeroRequest(EcsWorld world, InputDevice device, SharedData data, int heroID)
+        private void CreateHeroRequest(EcsWorld world, InputDevice device, SharedData data, int heroIndex)
         {
             var heroes = world
                 .Filter<Hero>()
@@ -89,7 +89,8 @@ namespace BT
 
             var requestEntity = world.NewEntity();                       
             ref var request = ref requestPool.Add(requestEntity);            
-            request.HeroID = heroID;
+            request.SpawnIndex = heroIndex;
+            request.Unit = data.Config.Heroes[heroIndex];
             request.Device = device;
         }
 
@@ -109,8 +110,7 @@ namespace BT
 
 
         private bool IsRequestCreated(EcsWorld world, InputDevice device, EcsPool<CreateHeroRequest> requestPool)
-        {
-            
+        {            
             var requestEntities = world.Filter<CreateHeroRequest>().End();
             foreach(var r in requestEntities) 
             {

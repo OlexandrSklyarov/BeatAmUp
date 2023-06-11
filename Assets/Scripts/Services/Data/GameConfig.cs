@@ -23,17 +23,7 @@ namespace BT
         [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
         [field: SerializeField] public ControlDeviceType ControlType { get; private set; } = ControlDeviceType.KEYBOARD;
 
-    }
-
-    [Serializable]
-    public sealed class HeroUnit
-    {
-        [field: SerializeField] public HeroID ID { get; private set; }
-        [field: SerializeField] public HeroViewProvider Prefab { get; private set; }
-        [field: SerializeField] public HeroData Data { get; private set; }
-        [field: Space(10f), SerializeField] public CharacterAttackData Attack { get; private set; }
-
-    }
+    }    
     
 
     [Serializable]

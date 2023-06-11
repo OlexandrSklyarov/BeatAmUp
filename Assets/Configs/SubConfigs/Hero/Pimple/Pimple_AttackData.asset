@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 44b930b330f0defaeaef1e0cf79d78ad, type: 3}
-  m_Name: PimpleAttackDataConfig
+  m_Name: Pimple_AttackData
   m_EditorClassIdentifier: 
   <PunchAnimationData>k__BackingField:
   - <StateName>k__BackingField: PUNCH_1
