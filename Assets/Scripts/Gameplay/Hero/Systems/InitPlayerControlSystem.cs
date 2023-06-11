@@ -90,8 +90,17 @@ namespace BT
             var requestEntity = world.NewEntity();                       
             ref var request = ref requestPool.Add(requestEntity);            
             request.SpawnIndex = heroIndex;
-            request.Unit = data.Config.Heroes[heroIndex];
+            request.Unit = GetHeroUnitData(data, heroIndex);
             request.Device = device;
+        }
+
+
+        private HeroUnit GetHeroUnitData(SharedData data, int index)
+        {
+            return (data.Config.Heroes.Length <= index + 1) ? 
+                data.Config.Heroes[index] :
+                data.Config.Heroes.Last();
+
         }
 
 
