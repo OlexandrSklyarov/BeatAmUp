@@ -8,6 +8,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
                 .Filter<Hero>()
@@ -21,7 +22,6 @@ namespace BT
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var translationPool = world.GetPool<Translation>();
             var groundedPool = world.GetPool<CharacterGrounded>();
-            var sitingPool = world.GetPool<CharacterSitDown>();
             var stunPool = world.GetPool<Stun>();
 
             foreach (var ent in entities)
@@ -32,26 +32,19 @@ namespace BT
                 ref var translation = ref translationPool.Get(ent);
 
                 var isGrounded = groundedPool.Has(ent);
-                var isSitting = sitingPool.Has(ent);
+                
+                var data = config.Heroes[hero.ID].Data;
+                var speed = (!stunPool.Has(ent)) ? data.Speed : 0f;
 
-                if (isGrounded && isSitting)
-                {
-                    movement.Acceleration = 0f;
-                    movement.HorizontalVelocity = Vector3.zero;
-                    continue;
-                }
-
-                var speed = (!stunPool.Has(ent)) ? hero.Data.Speed : 0f;
-
-                ApplyAcceleration(ref movement, ref command, ref hero);
+                ApplyAcceleration(ref movement, ref command, data);
                 ApplySpeed(ref movement, speed, isGrounded);
-                ChangeVelocity(ref movement, ref translation, ref command, ref hero, isGrounded);
+                ChangeVelocity(ref movement, ref translation, ref command, isGrounded, data);
             }
         }
 
 
         private void ChangeVelocity(ref CharacterControllerMovement movement, ref Translation translation, 
-            ref MovementCommand command, ref Hero hero, bool isGrounded)
+            ref MovementCommand command, bool isGrounded, HeroData data)
         {
             var newVelocity = GetMovementVelocity
             (
@@ -61,8 +54,8 @@ namespace BT
             );
 
             var changeTime = (isGrounded) ?
-                hero.Data.ChangeVelocityTime :
-                hero.Data.ChangeVelocityTime * hero.Data.ChangeVelocityTimeMultiplier;
+                data.ChangeVelocityTime :
+                data.ChangeVelocityTime * data.ChangeVelocityTimeMultiplier;
 
             movement.HorizontalVelocity = Vector3.Lerp
             (
@@ -73,19 +66,20 @@ namespace BT
         }
 
 
-        private void ApplyAcceleration(ref CharacterControllerMovement movement, ref MovementCommand command, ref Hero hero)
+        private void ApplyAcceleration(ref CharacterControllerMovement movement, 
+            ref MovementCommand command, HeroData data)
         {
             if (command.IsMoved)
             {
                 var accelerationValue = (command.IsRunning) ?
-                    hero.Data.AccelerationRun :
-                    hero.Data.AccelerationWalk;
+                    data.AccelerationRun :
+                    data.AccelerationWalk;
 
-                ChangeAcceleration(ref movement, accelerationValue, hero.Data.AccelerationTime);
+                ChangeAcceleration(ref movement, accelerationValue, data.AccelerationTime);
             }
             else
             {
-                ChangeAcceleration(ref movement, 0f, hero.Data.AccelerationReleaseTime);
+                ChangeAcceleration(ref movement, 0f, data.AccelerationReleaseTime);
             }
         }
 

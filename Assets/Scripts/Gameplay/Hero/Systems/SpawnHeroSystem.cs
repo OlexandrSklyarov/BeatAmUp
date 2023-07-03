@@ -32,8 +32,8 @@ namespace BT
 
         private void ClearCreateNewHeroEvents(EcsWorld world)
         {
-            var filter = world.Filter<CreateNewHeroEvent>().End();
-            var eventPool = world.GetPool<CreateNewHeroEvent>();
+            var filter = world.Filter<SpawnedHeroEvent>().End();
+            var eventPool = world.GetPool<SpawnedHeroEvent>();
 
             foreach (var ent in filter)
             {
@@ -45,7 +45,7 @@ namespace BT
         private void SpawnHeroEvent(EcsWorld world, ref CreateHeroRequest spawnRequest)
         {
             var entity = world.NewEntity();
-            var eventPool = world.GetPool<CreateNewHeroEvent>();
+            var eventPool = world.GetPool<SpawnedHeroEvent>();
             ref var evt = ref eventPool.Add(entity);
             evt.NewHeroID = spawnRequest.SpawnIndex;
         }
@@ -69,7 +69,6 @@ namespace BT
             //hero
             ref var hero = ref world.GetPool<Hero>().Add(entity);
             hero.ID = spawnRequest.SpawnIndex;
-            hero.Data = heroUnit.Data;
 
 
             //input command

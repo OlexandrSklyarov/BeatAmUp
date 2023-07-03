@@ -17,7 +17,6 @@ namespace BT
                 .Inc<CharacterView>()
                 .Inc<CharacterGrounded>()
                 .Exc<SlideToTargetProcess>()
-                .Exc<CharacterSitDown>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();

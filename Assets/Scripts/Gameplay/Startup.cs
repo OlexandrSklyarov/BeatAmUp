@@ -77,7 +77,6 @@ namespace BT
                 .Add(new HeroFindNearEnemyTargetSystem())
                 .Add(new HeroSlideToTargetSystem())
                 .Add(new HeroTryExecutePowerDamageSystem())
-                .Add(new HeroSittingSystem())
                 .Add(new HeroJumpSystem())
                 .Add(new HeroRotateViewSystem())
                 .Add(new HeroChangeHorizontalVelocitySystem())

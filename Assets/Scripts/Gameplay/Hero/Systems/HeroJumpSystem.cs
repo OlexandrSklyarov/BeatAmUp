@@ -8,6 +8,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world.Filter<Hero>()
                 .Inc<MovementCommand>()
@@ -33,7 +34,8 @@ namespace BT
 
                 if (!movement.IsJumpProcess && command.IsJump)
                 {
-                    var jumpForce = hero.Data.JumpForce;
+                    var data = config.Heroes[hero.ID].Data;
+                    var jumpForce = data.JumpForce;
                     movement.VerticalVelocity = Mathf.Sqrt(jumpForce * -2f * Physics.gravity.y);
                     movement.IsJumpProcess = true;
                 }

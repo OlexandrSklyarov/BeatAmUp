@@ -1,7 +1,7 @@
 
 namespace BT
 {
-    public struct CreateNewHeroEvent
+    public struct SpawnedHeroEvent
     {
         public int NewHeroID;
     }

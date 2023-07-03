@@ -7,6 +7,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
                 .Filter<Hero>()
@@ -18,7 +19,6 @@ namespace BT
             var viewPool = world.GetPool<CharacterView>();
             var movementPool = world.GetPool<CharacterControllerMovement>();
             var groundedPool = world.GetPool<CharacterGrounded>();
-            var sittingPool = world.GetPool<CharacterSitDown>();
 
             foreach(var e in entities)
             {
@@ -26,16 +26,16 @@ namespace BT
                 ref var view = ref viewPool.Get(e);
                 ref var movement = ref movementPool.Get(e);
 
+                var data = config.Heroes[hero.ID].Data;
+
                 var isGrounded = groundedPool.Has(e);
-                var isSitting = sittingPool.Has(e);
                 var velMagnitude = movement.HorizontalVelocity.magnitude;
                 var isFalling = !isGrounded && movement.VerticalVelocity < 0f;                
                 var isJumping = !isGrounded && movement.VerticalVelocity > 0f;  
-                var speedProgress = velMagnitude / hero.Data.Speed;
+                var speedProgress = velMagnitude / data.Speed;
                 
                 view.Animator.SetFloat(ConstPrm.Animation.MOVE_SPEED, speedProgress);
                 view.Animator.SetBool(ConstPrm.Animation.GROUND, isGrounded);
-                view.Animator.SetBool(ConstPrm.Animation.SITTING, isSitting);
                 view.Animator.SetBool(ConstPrm.Animation.FALLING, isFalling);
                 view.Animator.SetFloat(ConstPrm.Animation.VERTICAL_VELOCITY, movement.VerticalVelocity);
 

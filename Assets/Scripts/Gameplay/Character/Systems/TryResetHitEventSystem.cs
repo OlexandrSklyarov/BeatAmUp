@@ -14,12 +14,9 @@ namespace BT
                 .End();
 
             var eventPool = world.GetPool<TryHitEvent>();
-            var stunPool = world.GetPool<Stun>();
 
             foreach (var ent in entities)
             {
-                if (!stunPool.Has(ent)) continue;
-                
                 eventPool.Del(ent);              
             }
         }

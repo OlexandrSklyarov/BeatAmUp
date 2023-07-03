@@ -14,7 +14,6 @@ namespace BT
                 .Filter<TryHitEvent>()
                 .Inc<Translation>()
                 .Inc<CharacterView>()
-                .Exc<CharacterSitDown>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();
@@ -27,14 +26,14 @@ namespace BT
                 ref var tr = ref translationPool.Get(ent);  
                 ref var view = ref viewPool.Get(ent);   
 
-                if (!IsFindNearTarget(ref tr, ref view, data, out Transform target)) continue;
+                if (!IsFindNearTarget(data, ref tr, ref view, out Transform target)) continue;
 
                 RotateToTarget(ref tr, ref view, target);
             }
         }
 
 
-        private bool IsFindNearTarget(ref Translation tr, ref CharacterView view, SharedData data, out Transform target)
+        private bool IsFindNearTarget(SharedData data, ref Translation tr, ref CharacterView view, out Transform target)
         {
             target = default;
 

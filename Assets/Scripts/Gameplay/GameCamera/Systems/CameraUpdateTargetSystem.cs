@@ -12,7 +12,7 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var eventEntities = world.Filter<CreateNewHeroEvent>().End();
+            var eventEntities = world.Filter<SpawnedHeroEvent>().End();
 
             var heroes = world.
                 Filter<Hero>()
@@ -20,7 +20,7 @@ namespace BT
                 .End();
 
             var translationPool = world.GetPool<Translation>();
-            var eventPool = world.GetPool<CreateNewHeroEvent>();
+            var eventPool = world.GetPool<SpawnedHeroEvent>();
 
             var cam = data.WorldData.GameVirtualCamera;
             var targetGroup = data.WorldData.TargetGroup;

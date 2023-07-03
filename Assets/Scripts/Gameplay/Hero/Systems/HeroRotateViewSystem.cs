@@ -8,12 +8,12 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world.Filter<Hero>()
                 .Inc<MovementCommand>()
                 .Inc<CharacterView>()
                 .Inc<CharacterControllerMovement>()
-                .Exc<CharacterSitDown>()
                 .End();
                 
             var heroPool = world.GetPool<Hero>();
@@ -34,7 +34,7 @@ namespace BT
                 (
                     view.ViewTransform.rotation,
                     Util.Vector3Math.DirToQuaternion(move.HorizontalVelocity),
-                    Time.deltaTime * hero.Data.RotateSpeed
+                    Time.deltaTime * config.Heroes[hero.ID].Data.RotateSpeed
                 );
             }
         }

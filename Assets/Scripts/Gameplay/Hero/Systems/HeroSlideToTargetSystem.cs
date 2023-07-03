@@ -8,6 +8,7 @@ namespace BT
         public void Run(IEcsSystems systems)
         {
             var world = systems.GetWorld();
+            var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
                 .Filter<Hero>()
@@ -31,7 +32,9 @@ namespace BT
                 ref var heroTranslation = ref translationPool.Get(ent);
                 ref var heroView = ref viewPool.Get(ent);
 
-                if (IsSlideCompleted(ref slide, ref heroView, ref cc, ref heroTranslation, ref hero))
+                var data = config.Heroes[hero.ID].Data;
+
+                if (IsSlideCompleted(data, ref slide, ref heroView, ref cc, ref heroTranslation, ref hero))
                 {
                     slidePool.Del(ent);
                 }
@@ -39,7 +42,7 @@ namespace BT
         }
         
         
-        private bool IsSlideCompleted(ref SlideToTargetProcess slide, ref CharacterView heroView,
+        private bool IsSlideCompleted(HeroData data, ref SlideToTargetProcess slide, ref CharacterView heroView,
             ref CharacterControllerMovement cc, ref Translation heroTranslation, ref Hero hero)
         {
             var target = slide.TargetPosition;
@@ -53,7 +56,7 @@ namespace BT
             (
                 heroTranslation.Value.position, 
                 target,
-                hero.Data.SlideSpeed * Time.deltaTime
+                data.SlideSpeed * Time.deltaTime
             );
                 
             cc.CharacterController.enabled = true;
@@ -63,7 +66,7 @@ namespace BT
             (
                 heroView.ViewTransform.rotation,
                 Util.Vector3Math.DirToQuaternion(toTarget),
-                hero.Data.SlideSpeed * Time.deltaTime
+                data.SlideSpeed * Time.deltaTime
             );           
             
             return Vector3.SqrMagnitude(heroTranslation.Value.position - target) <= 

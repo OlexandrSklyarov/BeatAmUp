@@ -16,7 +16,6 @@ namespace BT
                 .Inc<CharacterAttack>()
                 .Inc<CombatCommand>()
                 .Inc<HitInteraction>()
-                .Exc<CharacterSitDown>()
                 .End();
 
             var attackDataPool = world.GetPool<AttackData>();

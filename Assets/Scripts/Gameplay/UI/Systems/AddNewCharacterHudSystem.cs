@@ -16,10 +16,10 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            var filter = world.Filter<CreateNewHeroEvent>().End();
+            var filter = world.Filter<SpawnedHeroEvent>().End();
             var heroes = world.Filter<Hero>().End();
             
-            var evtPool = world.GetPool<CreateNewHeroEvent>();
+            var evtPool = world.GetPool<SpawnedHeroEvent>();
             var heroPool = world.GetPool<Hero>();
             var healthFlagPool = world.GetPool<ChangeHealthFlag>();
 

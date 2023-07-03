@@ -10,12 +10,20 @@ namespace Services.Scenes
         {
             ProjectContext.Instance.Init();
 
-            var operations = new Queue<ILoadingOperation>();
-            operations.Enqueue(ProjectContext.Instance.AssetProvider);
-            operations.Enqueue(ProjectContext.Instance.NextLevelSceneProvider);
+            var operations = GetLoadingOperations();
 
             await ProjectContext.Instance.LoadingScreenProvider.LoadAndDestroy(operations);
         }
-        
+
+
+        private static Queue<ILoadingOperation> GetLoadingOperations()
+        {
+            var operations = new Queue<ILoadingOperation>();
+            
+            operations.Enqueue(ProjectContext.Instance.AssetProvider);
+            operations.Enqueue(ProjectContext.Instance.NextLevelSceneProvider);
+
+            return operations;
+        }
     }
 }

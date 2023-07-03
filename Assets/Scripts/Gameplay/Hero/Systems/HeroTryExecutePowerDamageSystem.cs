@@ -18,7 +18,6 @@ namespace BT
                 .Inc<CharacterView>()
                 .Inc<Translation>()
                 .Inc<AttackData>()
-                .Exc<CharacterSitDown>()
                 .Exc<Stun>()
                 .Exc<Death>()
                 .End();
