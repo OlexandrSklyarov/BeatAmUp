@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e3976da977cb49238499ea3b4c237ae, type: 3}
-  m_Name: ProfileDataSourceSettings
+  m_Script: {fileID: 11500000, guid: 5834b5087d578d24c926ce20cd31e6d6, type: 3}
+  m_Name: UI_ContentUpdateGroupSchema
   m_EditorClassIdentifier: 
-  profileGroupTypes: []
-  environments: []
-  currentEnvironment:
-    id: 
-    projectId: 
-    projectGenesisId: 
-    name: 
-    isDefault: 0
+  m_Group: {fileID: 11400000, guid: e702db7802af46062857d63fa46c8484, type: 2}
+  m_StaticContent: 0

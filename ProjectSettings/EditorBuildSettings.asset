@@ -13,7 +13,7 @@ EditorBuildSettings:
       type: 2}
     com.unity.adaptiveperformance.simulator.provider_settings: {fileID: 11400000,
       guid: ccba35239335b41f0ad6d9397b7f5d1e, type: 2}
-    com.unity.addressableassets: {fileID: 11400000, guid: 6402688e164a3fb6890ad0030606be5f,
+    com.unity.addressableassets: {fileID: 11400000, guid: 2871d17fcbd40e88dbffa76453edee64,
       type: 2}
     com.unity.input.settings: {fileID: 11400000, guid: 35b2bf1490fbd7d9085773a91451dc3f,
       type: 2}

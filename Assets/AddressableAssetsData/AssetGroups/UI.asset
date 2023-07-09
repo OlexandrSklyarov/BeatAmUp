@@ -1,0 +1,195 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: UI
+  m_EditorClassIdentifier: 
+  m_GroupName: UI
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 850db837e8dba60f28f4358834d1e5c1
+  m_SerializeEntries:
+  - m_GUID: 6770cc330494b17c8b25d126398b8f12
+    m_Address: LoadingScreen
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f54d1bd14bd3ca042bd867b519fee8cc
+    m_Address: Assets/External/TextMesh Pro
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 243e06394e614e5d99fab26083b707fa
+    m_Address: Assets/External/TextMesh Pro/Resources
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6ab70aee4d56447429c680537fbf93ed
+    m_Address: Assets/External/TextMesh Pro/Fonts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e3265ab4bf004d28a9537516768c1c75
+    m_Address: Assets/External/TextMesh Pro/Fonts/LiberationSans.ttf
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e59c59b81ab47f9b6ec5781fa725d2c
+    m_Address: Assets/External/TextMesh Pro/Fonts/LiberationSans - OFL.txt
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d0603b6d5186471b96c778c3949c7ce2
+    m_Address: Assets/External/TextMesh Pro/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e9f693669af91aa45ad615fc681ed29f
+    m_Address: Assets/External/TextMesh Pro/Shaders
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ce51c8e33b734b4db6086586558c53a3
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 48bb5f55d8670e349b6e614913f9d910
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_Bitmap-Custom-Atlas.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: fe393ace9b354375a9cb14cdbbc28be4
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cf81c85f95fe47e1a27f6ae460cf182c
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_Sprite.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: dd89cf5b9246416f84610a006f916af7
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF Overlay.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 14eb328de4b8eb245bb7cea29e4ac00b
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF SSD.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68e6db2ebdc24f95958faec2be5558d6
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: bc1ede39bf3643ee8e493720e4259791
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Mobile Masking.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 85187c2149c549c5b33f0cdb02836b17
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Surface-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 128e987d567d4e2c824d754223b3f3b0
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_Bitmap.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 1e3b057af24249748ff873be7fafee47
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_Bitmap-Mobile.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: a02a7d8c237544f1962732b55a9aebf1
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Mobile Overlay.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c8d12adcee749c344b8117cf7c7eb912
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Mobile SSD.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: f7ada0af4f174f0694ca6a487b8f543d
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMP_SDF-Surface.shader
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 407bc68d299748449bbf7f48ee690f8d
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMPro.cginc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: c334973cef89a9840b0b0c507e0377ab
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMPro_Mobile.cginc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3997e2241185407d80309a82f9148466
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMPro_Properties.cginc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d930090c0cd643c7b55f19a38538c162
+    m_Address: Assets/External/TextMesh Pro/Shaders/TMPro_Surface.cginc
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: b63e0053080646b9819789bf3bf9fa17
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Fonts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5808953df7a24274a851aa6dee52d30e
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Materials
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5bff2544887143f5807c7d5059d07f79
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Prefabs
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d6d3a169ad794942a21da6a552d62f6f
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Resources
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: db1090641b3241f6995b587eb21637bc
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Scenes
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 3979ce59e55144c89a2b3b3f8dcf7fd3
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Scripts
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 701e577af2ba48b689972d42efb95456
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Sprites
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6e5c6d5e25574122a7a12dbdbbeed156
+    m_Address: Assets/External/TextMesh Pro/Examples & Extras/Textures
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 6fc2146060526bbefbefb6559888a425, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: a2463b5c9c5dda8acb50bdcb32d9e583, type: 2}
+    - {fileID: 11400000, guid: fad3d9e1f8b34736d920e75b1e2f8cb3, type: 2}
