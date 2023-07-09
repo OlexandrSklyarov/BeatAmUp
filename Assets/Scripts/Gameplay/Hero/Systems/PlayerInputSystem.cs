@@ -38,7 +38,6 @@ namespace BT
                 command.IsMoved = !isAttack && provider.IsMoved;
                 command.IsJump = provider.IsJump;
                 command.IsRunning = provider.IsRunning;
-                command.IsSitting = provider.IsSitting;
                 
                 provider.ResetInputValue();
             }

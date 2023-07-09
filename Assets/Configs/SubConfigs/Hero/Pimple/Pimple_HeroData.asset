@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8eb0e8e2b832eb7994eaf7acf55a78a, type: 3}
   m_Name: Pimple_HeroData
   m_EditorClassIdentifier: 
-  <Prefab>k__BackingField: {fileID: 2570892583415431742, guid: 8c9e65a1a4e3009969067d48003c4c92,
-    type: 3}
+  <StartHP>k__BackingField: 100
   <Speed>k__BackingField: 5.5
   <ChangeVelocityTime>k__BackingField: 8
   <ChangeVelocityTimeMultiplier>k__BackingField: 0.65
@@ -23,17 +22,5 @@ MonoBehaviour:
   <AccelerationWalk>k__BackingField: 0.6
   <AccelerationTime>k__BackingField: 10
   <AccelerationReleaseTime>k__BackingField: 1.5
-  <SlideSpeed>k__BackingField: 10
+  <SlideSpeed>k__BackingField: 6
   <SlideRotationSpeed>k__BackingField: 60
-  <StartHP>k__BackingField: 100
-  <GroundLayer>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 64
-  <CheckGroundRadius>k__BackingField: 0.5
-  <MinVerticalVelocity>k__BackingField: 3
-  <FallGravityMultiplier>k__BackingField: 2
-  <HitLayerMask>k__BackingField:
-    serializedVersion: 2
-    m_Bits: 128
-  <Attack>k__BackingField: {fileID: 11400000, guid: 51785c64be06d7ac7b2b10f52de49737,
-    type: 2}

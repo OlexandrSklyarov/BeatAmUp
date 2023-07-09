@@ -51,15 +51,6 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Sitting",
-                    "type": "Button",
-                    "id": "07d56511-6c13-48c4-bab9-ab4d13833d08",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "ToggleDebugConsole",
                     "type": "Button",
                     "id": "84670a81-28a0-461b-9e9d-6052ef024e9a",
@@ -285,28 +276,6 @@
                     "processors": "",
                     "groups": "Gamepad",
                     "action": "Punch",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "472749f3-aceb-49c4-9001-492050badba0",
-                    "path": "<Keyboard>/ctrl",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Keyboard",
-                    "action": "Sitting",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f52c6a1a-071c-4062-aec7-51e2c46f44a3",
-                    "path": "<Gamepad>/buttonSouth",
-                    "interactions": "Press",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "Sitting",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
