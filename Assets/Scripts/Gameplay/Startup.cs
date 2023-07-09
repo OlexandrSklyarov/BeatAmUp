@@ -1,5 +1,9 @@
+using System;
+using System.Threading.Tasks;
 using Gameplay.FX;
 using Leopotam.EcsLite;
+using Services.Scenes.LoadingScreen;
+using UnityEditor.SearchService;
 using UnityEngine;
 using Util.Console;
 
@@ -15,8 +19,10 @@ namespace BT
         private IEcsSystems _updateSystems;
 
 
-        private void Start()
+        private async void Start()
         {   
+            await WaitLoadScene();
+
             _world = new EcsWorld();
 
             var inputService = new InputServices();
@@ -30,6 +36,7 @@ namespace BT
                 EnemyFactory = new EnemyFactory(_gameConfig.EnemyConfig.EnemyPoolData),
                 CollisionService = new CheckCollisionServices()
             };
+
             
             _initSystems = new EcsSystems(_world, data);
             _updateSystems = new EcsSystems(_world, data);
@@ -40,6 +47,12 @@ namespace BT
             TryCreateDebugConsole(inputService); 
         }
 
+
+        private async Task WaitLoadScene()
+        {
+            while(LoadingScreenView.Instance != null) await Task.Delay(100);
+        }
+        
 
         private void TryCreateDebugConsole(InputServices inputService)
         {
@@ -68,12 +81,13 @@ namespace BT
             #if UNITY_EDITOR
                 .Add (new Leopotam.EcsLite.UnityEditor.EcsWorldDebugSystem())
             #endif
+                //gravity
+                .Add(new CharacterControllerCheckGroundSystem())
+                .Add(new CharacterControllerApplyGravitySystem())
 
                 //hero
                 .Add(new SpawnHeroSystem())
                 .Add(new PlayerInputSystem())
-                .Add(new CharacterControllerCheckGroundSystem())
-                .Add(new CharacterControllerApplyGravitySystem())
                 .Add(new HeroFindNearEnemyTargetSystem())
                 .Add(new HeroSlideToTargetSystem())
                 .Add(new HeroTryExecutePowerDamageSystem())
