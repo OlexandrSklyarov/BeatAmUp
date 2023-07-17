@@ -8,14 +8,24 @@ namespace BT
         {
             var world = systems.GetWorld();
 
-            var entities = world
+            var stunnedEntities = world
                 .Filter<TryHitEvent>()
                 .Inc<Stun>()
                 .End();
 
+            var deathEntities = world
+                .Filter<TryHitEvent>()
+                .Inc<Death>()
+                .End();
+
             var eventPool = world.GetPool<TryHitEvent>();
 
-            foreach (var ent in entities)
+            foreach (var ent in stunnedEntities)
+            {
+                eventPool.Del(ent);              
+            }
+
+            foreach (var ent in deathEntities)
             {
                 eventPool.Del(ent);              
             }
