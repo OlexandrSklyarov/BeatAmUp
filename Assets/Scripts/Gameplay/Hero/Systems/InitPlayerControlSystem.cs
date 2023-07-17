@@ -90,7 +90,7 @@ namespace BT
             var requestEntity = world.NewEntity();                       
             ref var request = ref requestPool.Add(requestEntity);            
             request.SpawnIndex = heroIndex;
-            request.Unit = GetHeroUnitData(data, heroIndex);
+            request.UnitData = GetHeroUnitData(data, heroIndex);
             request.Device = device;
         }
 

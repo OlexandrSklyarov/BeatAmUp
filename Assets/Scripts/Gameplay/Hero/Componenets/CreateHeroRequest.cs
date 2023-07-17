@@ -6,6 +6,6 @@ namespace BT
     {
         public int SpawnIndex;
         public InputDevice Device;
-        public HeroUnit Unit;
+        public HeroUnit UnitData;
     }
 }

@@ -13,7 +13,7 @@ namespace BT
             var world = systems.GetWorld();
             var data = systems.GetShared<SharedData>();
 
-            ClearCreateNewHeroEvents(world);
+            ClearCreateHeroEvents(world);
 
             var entities = world.Filter<CreateHeroRequest>().End();
             var requestPool = world.GetPool<CreateHeroRequest>();
@@ -23,14 +23,14 @@ namespace BT
                 ref var request = ref requestPool.Get(e);
 
                 Spawn(world, data, ref request);
-                SpawnHeroEvent(world, ref request);
+                SendSpawnHeroEvent(world, ref request);
 
                 requestPool.Del(e);
             }
         }
 
 
-        private void ClearCreateNewHeroEvents(EcsWorld world)
+        private void ClearCreateHeroEvents(EcsWorld world)
         {
             var filter = world.Filter<SpawnedHeroEvent>().End();
             var eventPool = world.GetPool<SpawnedHeroEvent>();
@@ -42,7 +42,7 @@ namespace BT
         }
 
 
-        private void SpawnHeroEvent(EcsWorld world, ref CreateHeroRequest spawnRequest)
+        private void SendSpawnHeroEvent(EcsWorld world, ref CreateHeroRequest spawnRequest)
         {
             var entity = world.NewEntity();
             var eventPool = world.GetPool<SpawnedHeroEvent>();
@@ -53,17 +53,29 @@ namespace BT
 
         private void Spawn(EcsWorld world, SharedData data, ref CreateHeroRequest spawnRequest)
         {
-            var heroUnit = spawnRequest.Unit;
+            var monoView = InstantiateHeroView(data, ref spawnRequest);
 
+            SetupEntity(world, ref spawnRequest, monoView);
+        }
+
+
+        private IHeroViewProvider InstantiateHeroView(SharedData data, ref CreateHeroRequest spawnRequest)
+        {
             var heroView = UnityEngine.Object.Instantiate
             (
-                heroUnit.Prefab,
+                spawnRequest.UnitData.Prefab,
                 data.WorldData.HeroSpawnPoints[spawnRequest.SpawnIndex].position,
                 Quaternion.identity
             );
 
             heroView.Init();
 
+            return heroView;
+        }
+
+
+        private void SetupEntity(EcsWorld world, ref CreateHeroRequest spawnRequest, IHeroViewProvider monoView)
+        {
             var entity = world.NewEntity();
 
             //hero
@@ -82,36 +94,36 @@ namespace BT
             //movement
             var movementPool = world.GetPool<CharacterControllerMovement>();
             ref var movement = ref movementPool.Add(entity);
-            var characterController = heroView.GetComponent<CharacterController>();
+            var characterController = monoView.CC;
             movement.CharacterController = characterController;
 
 
             //translation
             var translationPool = world.GetPool<Translation>();
             ref var translation = ref translationPool.Add(entity);
-            translation.Value = heroView.transform;
+            translation.Value = monoView.Transform;
 
 
             //view
             var viewPool = world.GetPool<CharacterView>();
             ref var view = ref viewPool.Add(entity);
-            view.Animator = heroView.GetComponentInChildren<Animator>();
-            view.ViewTransform = heroView.transform.GetChild(0).transform;
+            view.Animator = monoView.Animator;
+            view.ViewTransform = monoView.Transform.GetChild(0).transform;
             view.Height = characterController.height;
             view.BodyRadius = characterController.radius;
-            view.HipBone = heroView.BodyHips;
+            view.HipBone = monoView.BodyHips;
 
 
             //hit interaction
             var hitPool = world.GetPool<HitInteraction>();
             ref var hit = ref hitPool.Add(entity);
-            hit.HitBoxes = heroView.HitBoxes;
-            hit.HurtBoxes = heroView.HurtBoxes;
+            hit.HitBoxes = monoView.HitBoxes;
+            hit.HurtBoxes = monoView.HurtBoxes;
 
 
             //attackData
             ref var attackData = ref world.GetPool<AttackData>().Add(entity);
-            attackData.Data = heroUnit.Attack;
+            attackData.Data = spawnRequest.UnitData.Attack;
 
 
             //attack
@@ -128,7 +140,7 @@ namespace BT
             //HP
             var healthPool = world.GetPool<Health>();
             ref var heroHealth = ref healthPool.Add(entity);
-            heroHealth.CurrentHP = heroHealth.MaxHP = heroUnit.Data.StartHP;
+            heroHealth.CurrentHP = heroHealth.MaxHP = spawnRequest.UnitData.Data.StartHP;
 
 
             //input

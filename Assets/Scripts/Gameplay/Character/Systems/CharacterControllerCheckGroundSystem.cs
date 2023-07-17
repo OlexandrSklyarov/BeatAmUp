@@ -11,17 +11,14 @@ namespace BT
             var config = systems.GetShared<SharedData>().Config;
 
             var entities = world
-                .Filter<CharacterControllerMovement>()
-                .Inc<Translation>()
+                .Filter<Translation>()
                 .End();
 
-            var movementPool = world.GetPool<CharacterControllerMovement>();
             var translationPool = world.GetPool<Translation>();
             var groundedPool = world.GetPool<CharacterGrounded>();
 
             foreach(var e in entities)
             {
-                ref var movement = ref movementPool.Get(e);
                 ref var translation = ref translationPool.Get(e);
 
                 var isGroundCollision = Physics.CheckSphere

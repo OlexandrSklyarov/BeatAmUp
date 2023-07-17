@@ -29,9 +29,9 @@ namespace BT
 
             var data = new SharedData()
             {
-                InputProvider = new InputHandleProvider(inputService),
                 Config = _gameConfig,
                 WorldData = _worldData,
+                InputProvider = new InputHandleProvider(inputService),
                 VFXController = new VisualFXController(_gameConfig.VfxConfig),
                 EnemyFactory = new EnemyFactory(_gameConfig.EnemyConfig.EnemyPoolData),
                 CollisionService = new CheckCollisionServices()
