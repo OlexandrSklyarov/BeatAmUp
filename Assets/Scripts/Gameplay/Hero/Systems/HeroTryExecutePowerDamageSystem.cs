@@ -11,7 +11,6 @@ namespace BT
 
             var heroes = world
                 .Filter<Hero>()
-                .Inc<MovementCommand>()
                 .Inc<CombatCommand>()
                 .Inc<CharacterGrounded>()
                 .Inc<CharacterAttack>()
@@ -29,7 +28,6 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var commandPool = world.GetPool<MovementCommand>();
             var combatCommandPool = world.GetPool<CombatCommand>();
             var heroPool = world.GetPool<Hero>();
             var attackPool = world.GetPool<CharacterAttack>();
@@ -39,7 +37,6 @@ namespace BT
 
             foreach (var heroEnt in heroes)
             {
-                ref var command = ref commandPool.Get(heroEnt);
                 ref var combat = ref combatCommandPool.Get(heroEnt);
                 ref var attack = ref attackPool.Get(heroEnt);
                 ref var attackData = ref attackDataPool.Get(heroEnt);
