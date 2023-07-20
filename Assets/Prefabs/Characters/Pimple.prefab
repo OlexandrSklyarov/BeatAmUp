@@ -285,9 +285,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46f07dd0b8b263cf8ab29756432a6fea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Transform>k__BackingField: {fileID: 0}
   <CameraLookPoint>k__BackingField: {fileID: 2565816934620170980}
   <CameraFollowPoint>k__BackingField: {fileID: 7762721129449823740}
   <BodyHips>k__BackingField: {fileID: 2548707619892895822}
+  <Animator>k__BackingField: {fileID: 0}
+  <CC>k__BackingField: {fileID: 0}
 --- !u!143 &5731607196185384539
 CharacterController:
   m_ObjectHideFlags: 0
@@ -1138,6 +1141,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 2645694400763288897}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1078737112400898886}
   m_SourcePrefab: {fileID: 100100000, guid: 07677e50fa2c05dabac2fa6ca8e8b713, type: 3}
 --- !u!4 &54355863892692297 stripped
 Transform:
@@ -1275,6 +1282,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c884eb39f6d76bee185894f585fe7028, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1078737112400898886
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 497033896659129277}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 726325959c0cb064597e2f1bd5eb6b21, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lengthFromHeelToToes: 0.1
+  maxRotationAngle: 45
+  ankleHeightOffset: 0
+  enableIKPositioning: 1
+  enableIKRotating: 1
+  globalWeight: 1
+  leftFootWeight: 1
+  rightFootWeight: 1
+  smoothTime: 0.075
+  raySphereRadius: 0.05
+  rayCastRange: 2
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  ignoreTriggers: 1
+  leftFootRayStartHeight: 0.5
+  rightFootRayStartHeight: 0.5
+  enableFootLifting: 1
+  floorRange: 0
+  enableBodyPositioning: 1
+  crouchRange: 0.25
+  stretchRange: 0
+  giveWorldHeightOffset: 0
+  worldHeightOffset: 0
 --- !u!4 &551257707206740614 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 973566510347723882, guid: 07677e50fa2c05dabac2fa6ca8e8b713,
