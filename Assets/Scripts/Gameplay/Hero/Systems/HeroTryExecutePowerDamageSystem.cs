@@ -96,6 +96,8 @@ namespace BT
         {
             if (attack.HitCount < ConstPrm.Character.MAX_HIT_COUNT) return;
 
+            attack.HitCount = 0;
+            attack.HitResetTimer = 0f;
             attack.IsPowerfulDamage = true;
         }
     }

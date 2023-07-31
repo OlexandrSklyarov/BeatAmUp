@@ -69,7 +69,7 @@ namespace BT
             public const float STUN_TIME = 1f;
             public const float POWER_STUN_TIME = 6f;
             public const float DEATH_TIME = 5f;
-            public const float HIT_COUNT_RESET_TIME = 1f;
+            public const float HIT_COUNT_RESET_TIME = 0.5f;
             public const int MAX_HIT_COUNT = 3;
             public const float RESTORE_RAGDOLL_TIME = 0.5f;
         }
