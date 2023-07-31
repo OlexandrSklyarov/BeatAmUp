@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <GameRules>k__BackingField:
     <MaxPlayerCount>k__BackingField: 2
-    <ControlType>k__BackingField: 0
+    <ControlType>k__BackingField: 2
   <Heroes>k__BackingField:
   - {fileID: 11400000, guid: c8c4832168cb3d5c8954729d69d2f9a3, type: 2}
   <CharacterData>k__BackingField:

@@ -24,8 +24,11 @@ namespace BT
                 ref var attack = ref characterAttackPool.Get(ent);
                 ref var view = ref viewPool.Get(ent);
 
-                var attackTrigger = GetAttackTrigger(ref attack);                    
-                if (!string.IsNullOrEmpty(attackTrigger)) view.Animator.SetTrigger(attackTrigger);                     
+                var attackTrigger = GetAttackTrigger(ref attack);                 
+
+                if (string.IsNullOrEmpty(attackTrigger)) continue;
+
+                view.Animator.SetTrigger(attackTrigger);                     
             }
         }
 
