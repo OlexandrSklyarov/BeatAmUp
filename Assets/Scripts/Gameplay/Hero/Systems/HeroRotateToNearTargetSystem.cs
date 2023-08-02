@@ -11,7 +11,7 @@ namespace BT
             var data = systems.GetShared<SharedData>();
 
             var heroEntities = world
-                .Filter<TryHitEvent>()
+                .Filter<AttackEvent>()
                 .Inc<Translation>()
                 .Inc<CharacterView>()
                 .Exc<Stun>()

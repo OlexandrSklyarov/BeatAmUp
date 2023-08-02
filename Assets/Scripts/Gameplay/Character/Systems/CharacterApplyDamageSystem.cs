@@ -26,8 +26,6 @@ namespace BT
                 ChangeHealth(ref hp, ref damageEvent);
 
                 if (!healthFlagPool.Has(ent)) healthFlagPool.Add(ent);
-
-                if (hp.CurrentHP <= 0) AddDeathComponent(world, ent);  
             }
         }        
 
@@ -36,14 +34,6 @@ namespace BT
         {
             hpComp.PreviousHP = hpComp.CurrentHP;
             hpComp.CurrentHP = Mathf.Max(0, hpComp.CurrentHP - damageEvent.DamageAmount);
-        }
-        
-
-        private void AddDeathComponent(EcsWorld world, int damageEntity)
-        {
-            var pool = world.GetPool<Death>();
-            ref var deathComp = ref pool.Add(damageEntity);
-            deathComp.MaxTime = deathComp.Timer = ConstPrm.Character.DEATH_TIME;            
-        }
+        }  
     }
 }

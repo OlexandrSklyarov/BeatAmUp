@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace BT
 {
-    public struct TryHitEvent
+    public struct AttackEvent
     {
         public IEnumerable<HitBox> IgnoredHitBoxes;
         public HurtBox AttackerHurtBox;

@@ -32,8 +32,7 @@ namespace BT
                 if (!IsCanActiveRagdoll(ref damageEvt, isHasRagdollState)) continue;
 
                 AddForceCharacterRagdoll(ref damageEvt, ref body, ref view);
-
-                AddRagdollState(ref view, isHasRagdollState, ragdollPool, ent);                
+                AddRagdollStateComponent(isHasRagdollState, ragdollPool, ent);                
             }
         }
 
@@ -70,7 +69,7 @@ namespace BT
         }
 
 
-        private void AddRagdollState(ref CharacterView view, bool isHasRagdollState, EcsPool<RagdollState> pool, int ent)
+        private void AddRagdollStateComponent(bool isHasRagdollState, EcsPool<RagdollState> pool, int ent)
         {
             if (isHasRagdollState)
             {

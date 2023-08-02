@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterTryHitSystem : IEcsRunSystem
+    public sealed class CharacterHitSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {
@@ -13,7 +13,7 @@ namespace BT
             ClearPrevFrameDamageEvent(world);
 
             var attackers = world
-                .Filter<TryHitEvent>()
+                .Filter<AttackEvent>()
                 .Inc<CharacterAttack>()
                 .End();
 
@@ -25,7 +25,7 @@ namespace BT
                 .Exc<Death>()
                 .End();
 
-            var hitEventPool = world.GetPool<TryHitEvent>();
+            var hitEventPool = world.GetPool<AttackEvent>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
             var viewPool = world.GetPool<CharacterView>();
             var attackPool = world.GetPool<CharacterAttack>();            
@@ -51,14 +51,14 @@ namespace BT
         }
 
 
-        private bool IsHitTimeEnd(ref TryHitEvent hitEvent)
+        private bool IsHitTimeEnd(ref AttackEvent hitEvent)
         {
             hitEvent.ExecuteHitTimer -= Time.deltaTime;
             return hitEvent.ExecuteHitTimer <= 0f;
         }   
 
         
-        private (int count, Collider[] result) CheckHitCount(ref TryHitEvent hitEvent, SharedData data)
+        private (int count, Collider[] result) CheckHitCount(ref AttackEvent hitEvent, SharedData data)
         {
             var service = data.CollisionService;
             
@@ -86,7 +86,7 @@ namespace BT
 
         private void TryApplyDamage(EcsWorld world, Collider col, EcsFilter liveCharacters,
             EcsPool<HitInteraction> hitInteractionPool, EcsPool<CharacterView> viewPool, 
-            ref TryHitEvent hit, ref CharacterAttack attack)
+            ref AttackEvent hit, ref CharacterAttack attack)
         {
             if (!col.TryGetComponent(out HitBox receiveHitBox)) return;
             
@@ -109,7 +109,7 @@ namespace BT
         }
 
 
-        private bool IsHitYourself(HitBox receiveHitBox, ref TryHitEvent hit)
+        private bool IsHitYourself(HitBox receiveHitBox, ref AttackEvent hit)
         {
             foreach (var hitBox in hit.IgnoredHitBoxes)
             {
@@ -127,7 +127,7 @@ namespace BT
         }
 
 
-        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref TryHitEvent hit, ref CharacterView view)
+        private void CreateTakeDamageEvent(EcsWorld world, int damageEntity, ref AttackEvent hit, ref CharacterView view)
         {
             var damageEventPool = world.GetPool<TakeDamageEvent>();
 

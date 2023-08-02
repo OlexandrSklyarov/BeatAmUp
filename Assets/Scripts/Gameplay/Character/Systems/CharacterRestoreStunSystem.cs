@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public sealed class CharacterReleaseStunSystem : IEcsRunSystem
+    public sealed class CharacterRestoreStunSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

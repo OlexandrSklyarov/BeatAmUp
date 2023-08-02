@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace BT
 {
-    public class PrepareRestoreRagdollSystem : IEcsRunSystem
+    public sealed class PrepareRestoreRagdollSystem : IEcsRunSystem
     {
         public void Run(IEcsSystems systems)
         {

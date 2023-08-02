@@ -12,17 +12,14 @@ namespace BT
             var entities = world
                 .Filter<Hero>()
                 .Inc<Death>()
-                .Inc<CharacterView>()
                 .End();
 
             var deathPool = world.GetPool<Death>();
-            var viewPool = world.GetPool<CharacterView>();
             var movementCommandPool = world.GetPool<MovementCommand>();
 
             foreach (var e in entities)
             {
                 ref var death = ref deathPool.Get(e);
-                ref var view = ref viewPool.Get(e);
                 
                 if (movementCommandPool.Has(e))
                 {

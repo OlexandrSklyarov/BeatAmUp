@@ -87,7 +87,7 @@ namespace BT
 
                 //hero
                 .Add(new SpawnHeroSystem())
-                .Add(new PlayerInputSystem())
+                .Add(new PlayerInputSystem())                
                 .Add(new HeroFindNearEnemyTargetSystem())
                 .Add(new HeroSlideToTargetSystem())
                 .Add(new HeroTryExecutePowerDamageSystem())
@@ -104,12 +104,13 @@ namespace BT
                 .Add(new HeroRotateToNearTargetSystem())
 
                 //character hit
-                .Add(new TryResetHitEventSystem())
-                .Add(new CharacterTryHitSystem())
+                .Add(new ResetHitEventSystem())
+                .Add(new CharacterHitSystem())
                 .Add(new CharacterApplyDamageSystem())
+                .Add(new CharacterDetectDeathSystem())
                 .Add(new CharacterActiveStunSystem())
                 .Add(new CharacterActiveRagdollSystem())
-                .Add(new CharacterReleaseStunSystem())
+                .Add(new CharacterRestoreStunSystem())
                 .Add(new PrepareRestoreRagdollSystem())
                 .Add(new EnemyCharacterRestoreRagdollSystem())
                 .Add(new ResetHitCountSystem())

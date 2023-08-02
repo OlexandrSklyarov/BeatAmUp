@@ -19,7 +19,7 @@ namespace BT
                 .End();
 
             var ragdollPool = world.GetPool<RagdollState>();
-            var deactivateRagdollPool = world.GetPool<RestoreRagdollState>();
+            var restoreRagdollPool = world.GetPool<RestoreRagdollState>();
             var viewPool = world.GetPool<CharacterView>();
             var bodyPool = world.GetPool<CharacterPhysicsBody>();
             var deathPool = world.GetPool<Death>();
@@ -31,7 +31,7 @@ namespace BT
                 ref var view = ref viewPool.Get(ent);
                 ref var body = ref bodyPool.Get(ent);
                 ref var ragdoll = ref ragdollPool.Get(ent);
-                ref var restoreRagdoll = ref deactivateRagdollPool.Get(ent);
+                ref var restoreRagdoll = ref restoreRagdollPool.Get(ent);
 
                 if (!restoreRagdoll.IsCanStandUp)
                 {
@@ -48,12 +48,14 @@ namespace BT
                 body.Collider.enabled = true;
 
                 ragdollPool.Del(ent);
-                deactivateRagdollPool.Del(ent);                
+                restoreRagdollPool.Del(ent);                
             }
         }
 
 
-        private bool IsStandUpProcessCompleted(ref RagdollState ragdoll, ref RestoreRagdollState restoreRagdoll,
+        private bool IsStandUpProcessCompleted(
+            ref RagdollState ragdoll, 
+            ref RestoreRagdollState restoreRagdoll,
             ref CharacterPhysicsBody body)
         {
             ragdoll.RestoreTimer -= Time.deltaTime;
@@ -68,8 +70,10 @@ namespace BT
         }
 
 
-        private void StandUpRagdollProcess(ref RagdollState ragdoll, 
-        ref RestoreRagdollState restoreRagdoll, ref CharacterPhysicsBody body)
+        private void StandUpRagdollProcess(
+            ref RagdollState ragdoll, 
+            ref RestoreRagdollState restoreRagdoll, 
+            ref CharacterPhysicsBody body)
         {
             var progress = Mathf.Clamp01(1f - ragdoll.RestoreTimer / ConstPrm.Character.RESTORE_RAGDOLL_TIME);
 

@@ -22,7 +22,7 @@ namespace BT
             var inputPool = world.GetPool<CombatCommand>();
             var heroAttackPool = world.GetPool<CharacterAttack>();
             var hitInteractionPool = world.GetPool<HitInteraction>();
-            var hitEventPool = world.GetPool<TryHitEvent>();   
+            var hitEventPool = world.GetPool<AttackEvent>();   
 
             foreach (var ent in entities)
             {
@@ -48,7 +48,7 @@ namespace BT
 
 
         private void SetComboAttack(ref CombatCommand input, ref CharacterAttack attack, ref HitInteraction hitInteraction, 
-            ref AttackData attackData, int ent, EcsPool<TryHitEvent> hitEventPool)
+            ref AttackData attackData, int ent, EcsPool<AttackEvent> hitEventPool)
         {
             if (attack.IsActiveAttack) return;
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;            
@@ -74,7 +74,7 @@ namespace BT
 
 
         private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackData, 
-            EcsPool<TryHitEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
+            EcsPool<AttackEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentKick = (attack.KickQueue.Count > 0) ?
                 attack.KickQueue.Dequeue() : attackData.Data.KickAnimationData[0];
@@ -90,7 +90,7 @@ namespace BT
 
 
         private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackDat, 
-            EcsPool<TryHitEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
+            EcsPool<AttackEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
         {
             attack.CurrentPunch = (attack.PunchQueue.Count > 0) ?
                 attack.PunchQueue.Dequeue() : attackDat.Data.PunchAnimationData[0];
@@ -105,7 +105,7 @@ namespace BT
         }
 
 
-        private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack, EcsPool<TryHitEvent> hitEventPool,
+        private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack, EcsPool<AttackEvent> hitEventPool,
             CharacterAttackAnimationData attackAnimData, int damage, float pushForce, int ent)
         {
             var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
