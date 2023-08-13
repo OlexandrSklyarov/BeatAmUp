@@ -1,7 +1,8 @@
 using Services.AddressablesProvider;
 using UnityEngine;
+using Services.Scenes;
 
-namespace Services.Scenes
+namespace Services
 {
     public class ProjectContext : MonoBehaviour
     {        
