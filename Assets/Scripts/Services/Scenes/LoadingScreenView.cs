@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Services.Scenes.LoadingScreen;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Services.Scenes.LoadingScreen
+namespace Services.Scenes
 {
     public class LoadingScreenView : MonoBehaviour
     {

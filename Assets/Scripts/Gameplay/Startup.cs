@@ -2,6 +2,8 @@ using System;
 using System.Threading.Tasks;
 using Gameplay.FX;
 using Leopotam.EcsLite;
+using Services;
+using Services.Scenes;
 using Services.Scenes.LoadingScreen;
 using UnityEditor.SearchService;
 using UnityEngine;
@@ -11,8 +13,7 @@ namespace BT
 {
     public sealed class Startup : MonoBehaviour
     {        
-        [SerializeField] private WorldData _worldData;
-        [Space(10f), SerializeField] private GameConfig _gameConfig;
+        [SerializeField] private WorldData _worldData;       
 
         private EcsWorld _world;
         private IEcsSystems _initSystems;
@@ -25,16 +26,17 @@ namespace BT
 
             _world = new EcsWorld();
 
-            var inputService = new InputServices();
+            var config = ProjectContext.Instance.Config;
 
             var data = new SharedData()
             {
-                Config = _gameConfig,
+                Config = config,
                 WorldData = _worldData,
-                InputProvider = new InputHandleProvider(inputService),
-                VFXController = new VisualFXController(_gameConfig.VfxConfig),
-                EnemyFactory = new EnemyFactory(_gameConfig.EnemyConfig.EnemyPoolData),
-                CollisionService = new CheckCollisionServices()
+                VFXController = new VisualFXController(config.VfxConfig),
+                EnemyFactory = new EnemyFactory(config.EnemyConfig.EnemyPoolData),
+                CollisionService = new CheckCollisionServices(),
+                PlayerInputService = ProjectContext.Instance.PlayerBindInputService,
+                GameSettings = ProjectContext.Instance.GameSettings
             };
 
             
@@ -44,7 +46,7 @@ namespace BT
             AddInitSystems();
             AddSystems();      
             
-            TryCreateDebugConsole(inputService); 
+            //TryCreateDebugConsole(inputService); 
         }
 
 

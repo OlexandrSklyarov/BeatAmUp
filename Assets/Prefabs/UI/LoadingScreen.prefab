@@ -58,6 +58,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
@@ -112,7 +113,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7754871526724109285}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 422bf2ab7ee01521f83990c96b310ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 5b7041f15d45864ee956e79e09c82033, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _loadingCanvas: {fileID: 7754871526724109280}

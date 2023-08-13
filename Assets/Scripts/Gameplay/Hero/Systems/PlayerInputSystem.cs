@@ -26,7 +26,7 @@ namespace BT
                 ref var combat = ref combatCommandPool.Get(e); 
                 ref var input = ref inputPool.Get(e); 
 
-                var provider = input.InputProvider;
+                var provider = input.Controller.InputProvider;
 
                 combat.IsKick = provider.IsKick;
                 combat.IsPunch = provider.IsPunch;
@@ -59,7 +59,7 @@ namespace BT
             foreach(var e in entities)
             {
                 ref var input = ref inputPool.Get(e);
-                input.InputProvider.Disable();            
+                input.Controller.InputProvider.Disable();            
             }
         }
     }

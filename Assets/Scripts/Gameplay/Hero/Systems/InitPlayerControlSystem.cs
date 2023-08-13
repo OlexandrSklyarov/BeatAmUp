@@ -1,7 +1,5 @@
-using System;
 using System.Linq;
 using Leopotam.EcsLite;
-using UnityEngine.InputSystem;
 
 namespace BT
 {
@@ -15,83 +13,25 @@ namespace BT
             InitPlayerControl(world, data); 
         }
 
-
         private void InitPlayerControl(EcsWorld world, SharedData data)
         {
-            Util.Debug.PrintColor($"InputSystem.devices: {InputSystem.devices.Count}", UnityEngine.Color.green);
+            if (!data.PlayerInputService.IsHasFreeController) return;
+            if (!data.PlayerInputService.IsHasFreeControllers(data.GameSettings.PlayerCount)) return;
 
-            var gameDevices = GetDevices(data);
-
-            ShowDebugDeviceInfo(gameDevices, data);         
-
-            for (int i = 0; i < gameDevices.Length; i++)
+            for (int i = 0; i < data.GameSettings.PlayerCount; i++)
             {
-                CreateHeroRequest(world, gameDevices[i], data, i);
+                CreateHeroRequest(world, data, i);
             }
         }
 
-
-        private InputDevice[] GetDevices(SharedData data)
-        {
-            var allDevices = InputSystem.devices;
-
-            return data.Config.GameRules.ControlType switch
-            {
-                ControlDeviceType.KEYBOARD => allDevices
-                    .Where(k => k.name == ConstPrm.DevicesName.KEYBOARD)
-                    .ToArray(),
-
-                ControlDeviceType.GAMEPAD => allDevices
-                    .Where(g => g.name == ConstPrm.DevicesName.GAMEPAD)
-                    .ToArray(),
-
-                _ => allDevices
-                    .Where(d => d.name == ConstPrm.DevicesName.KEYBOARD || d.name == ConstPrm.DevicesName.GAMEPAD)
-                    .ToArray(),
-            };
-        }
-
-
-        private void ShowDebugDeviceInfo(InputDevice[] gameDevices, SharedData data)
-        {
-            if (!data.Config.GameDebugConfig.ShowDeviceInfo) return;
-
-            var colorValue = 0.5f;
-            var addValue = 1f / data.Config.GameRules.MaxPlayerCount;
-            
-            Array.ForEach(gameDevices, d =>
-            {
-                var color = new UnityEngine.Color(0.7f, colorValue, 0.7f);
-                Util.Debug.PrintColor($" ++++++++++++++++++++++", color);    
-                Util.Debug.PrintColor($"device: {d.deviceId}", color);
-                Util.Debug.PrintColor($"device: {d.description}", color);
-                Util.Debug.PrintColor($"device: {d.name}", color);
-                Util.Debug.PrintColor($" ++++++++++++++++++++++", color);    
-
-                colorValue += addValue;            
-            });
-        }
-
-
-        private void CreateHeroRequest(EcsWorld world, InputDevice device, SharedData data, int heroIndex)
-        {
-            var heroes = world
-                .Filter<Hero>()
-                .Inc<HeroInputUser>()
-                .End();
-
-            if (IsLimitPlayersExceeded(heroes, data)) return;
-
+        private void CreateHeroRequest(EcsWorld world, SharedData data, int heroIndex)
+        {     
             var requestPool = world.GetPool<CreateHeroRequest>(); 
-
-            if (IsRequestCreated(world, device, requestPool)) return;  
-            if (IsInputUserExisted(world, device, heroes)) return;
 
             var requestEntity = world.NewEntity();                       
             ref var request = ref requestPool.Add(requestEntity);            
             request.SpawnIndex = heroIndex;
             request.UnitData = GetHeroUnitData(data, heroIndex);
-            request.Device = device;
         }
 
 
@@ -100,57 +40,6 @@ namespace BT
             return (data.Config.Heroes.Length <= index + 1) ? 
                 data.Config.Heroes[index] :
                 data.Config.Heroes.Last();
-
-        }
-
-
-        private bool IsLimitPlayersExceeded(EcsFilter heroes, SharedData data)
-        {
-            var heroCount = heroes.GetEntitiesCount();
-
-            if (heroCount > data.Config.GameRules.MaxPlayerCount) 
-            {
-                Util.Debug.PrintColor($"The player limit in the game has been exceeded, count: {heroCount}", UnityEngine.Color.yellow);
-                return true;
-            }
-
-            return false;
-        }
-
-
-        private bool IsRequestCreated(EcsWorld world, InputDevice device, EcsPool<CreateHeroRequest> requestPool)
-        {            
-            var requestEntities = world.Filter<CreateHeroRequest>().End();
-            foreach(var r in requestEntities) 
-            {
-                ref var curRequest = ref requestPool.Get(r);
-                if (curRequest.Device == device) 
-                {
-                    Util.Debug.PrintColor($"This request created", UnityEngine.Color.yellow);
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-
-        private bool IsInputUserExisted(EcsWorld world, InputDevice device, EcsFilter heroes)
-        {
-            var userPool = world.GetPool<HeroInputUser>();
-
-            foreach(var h in heroes)
-            {
-                ref var user = ref userPool.Get(h);
-
-                if (user.Device.name == device.name)
-                {
-                    Util.Debug.PrintColor($"This user existed device{device}: {heroes.GetEntitiesCount()}", UnityEngine.Color.yellow);
-                    return true;
-                } 
-            }
-
-            return false;
         }
     }
 }

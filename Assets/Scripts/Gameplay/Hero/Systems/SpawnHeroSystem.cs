@@ -1,8 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
 using Leopotam.EcsLite;
 using UnityEngine;
-using UnityEngine.InputSystem.Users;
 
 namespace BT
 {
@@ -55,7 +53,7 @@ namespace BT
         {
             var monoView = InstantiateHeroView(data, ref spawnRequest);
 
-            SetupEntity(world, ref spawnRequest, monoView);
+            SetupEntity(world, monoView, data, ref spawnRequest);
         }
 
 
@@ -74,7 +72,7 @@ namespace BT
         }
 
 
-        private void SetupEntity(EcsWorld world, ref CreateHeroRequest spawnRequest, IHeroViewProvider monoView)
+        private void SetupEntity(EcsWorld world, IHeroViewProvider monoView, SharedData data, ref CreateHeroRequest spawnRequest)
         {
             var entity = world.NewEntity();
 
@@ -146,23 +144,10 @@ namespace BT
             //input
             var heroInputPool = world.GetPool<HeroInputUser>();
             ref var input = ref heroInputPool.Add(entity);
-            var action = new InputServices();
-            input.InputProvider = new InputHandleProvider(action);
-            input.InputProvider.Enable();
-            input.Device = spawnRequest.Device;
-            input.User = InputUser.PerformPairingWithDevice(spawnRequest.Device);
+            data.PlayerInputService.BindDeviceToUser(ref input);
+            input.Controller.InputProvider.Enable();
 
-            BindDeviceToUser(action, ref input);
-
-            Util.Debug.PrintColor($"Hero init: {input.Device.name}", UnityEngine.Color.green);
-        }
-
-
-        private void BindDeviceToUser(InputServices action, ref HeroInputUser inputUser)
-        {
-            var deviceName = inputUser.Device.name;
-            inputUser.User.ActivateControlScheme(action.controlSchemes.First(s => s.name.Equals(deviceName)));
-            inputUser.User.AssociateActionsWithUser(action);
-        }
+            Util.Debug.PrintColor($"Hero init: {input.Controller.Device.name}", UnityEngine.Color.green);            
+        }        
     }
 }

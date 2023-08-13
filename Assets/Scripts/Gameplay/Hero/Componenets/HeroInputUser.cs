@@ -1,12 +1,9 @@
-using UnityEngine.InputSystem;
-using UnityEngine.InputSystem.Users;
+using Services.Input;
 
 namespace BT
 {
     public struct HeroInputUser
     {
-        public InputHandleProvider InputProvider;
-        public InputDevice Device;
-        public InputUser User;
+        public InputController Controller;        
     }
 }

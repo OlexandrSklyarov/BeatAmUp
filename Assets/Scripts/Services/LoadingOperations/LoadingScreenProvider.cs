@@ -1,10 +1,9 @@
-using BT;
 using System.Threading.Tasks;
-using Services.Scenes.LoadingScreen;
 using System.Collections.Generic;
 using Services.AddressablesProvider;
+using BT;
 
-namespace Services.Scenes
+namespace Services.Scenes.LoadingScreen
 {
     public class LoadingScreenProvider : BaseLocalAssetProvider
     {

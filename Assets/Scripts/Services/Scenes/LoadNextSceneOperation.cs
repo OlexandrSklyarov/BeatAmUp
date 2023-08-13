@@ -1,9 +1,10 @@
 using System;
 using System.Threading.Tasks;
+using Services.Scenes.LoadingScreen;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace Services.Scenes.LoadingScreen
+namespace Services.Scenes
 {
     public class LoadNextSceneOperation : ILoadingOperation
     {

@@ -6,7 +6,7 @@ namespace BT
     [CreateAssetMenu(menuName = "SO/GameConfig")]
     public class GameConfig : ScriptableObject
     {
-        [field: SerializeField] public GameRules GameRules { get; private set; }
+        [field: Space(50f), SerializeField] public GameRules GameRules{ get; private set; }
         [field: Space(50f), SerializeField] public HeroUnit[] Heroes { get; private set; }
         [field: Space(20f), SerializeField] public CharacterConfig CharacterData { get; private set; }
         [field: Space(20f), SerializeField] public VfxData VfxConfig { get; private set; }
@@ -14,16 +14,7 @@ namespace BT
         [field: Space(20f), SerializeField] public UIData UI { get; private set; }
         [field: Space(20f), SerializeField] public CameraConfig CameraConfig { get; private set; }
         [field: Space(20f), SerializeField] public GameDebug GameDebugConfig { get; private set; }
-    }
-
-
-    [Serializable]
-    public class GameRules
-    {
-        [field: SerializeField, Range(1, 4)] public int MaxPlayerCount { get; private set; } = 2;
-        [field: SerializeField] public ControlDeviceType ControlType { get; private set; } = ControlDeviceType.KEYBOARD;
-
-    }    
+    }     
     
 
     [Serializable]
