@@ -13,7 +13,6 @@ namespace BT
         public float AttackTimer;
         public float ResetNextActionTimer;
         public bool IsActiveAttack;
-        public bool IsNeedFinishAttack;
         public bool IsPowerfulDamage;
         public int HitCount;
         public float HitResetTimer;

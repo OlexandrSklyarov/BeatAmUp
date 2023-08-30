@@ -128,7 +128,6 @@ namespace BT
             var heroHandleAttackPool = world.GetPool<CharacterAttack>();
             ref var heroAttack = ref heroHandleAttackPool.Add(entity);
             heroAttack.IsActiveAttack = false;
-            heroAttack.IsNeedFinishAttack = false;
             heroAttack.CurrentPunch = null;
             heroAttack.CurrentKick = null;
             heroAttack.KickQueue = new Queue<CharacterAttackAnimationData>();

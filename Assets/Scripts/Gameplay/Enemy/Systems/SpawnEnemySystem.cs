@@ -48,7 +48,6 @@ namespace BT
             //attack
             ref var attack = ref world.GetPool<CharacterAttack>().Add(entity);
             attack.IsActiveAttack = false;
-            attack.IsNeedFinishAttack = false;
             attack.CurrentPunch = null;
             attack.CurrentKick = null;
             attack.KickQueue = new Queue<CharacterAttackAnimationData>();

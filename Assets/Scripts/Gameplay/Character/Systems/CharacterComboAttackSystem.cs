@@ -54,60 +54,61 @@ namespace BT
             if (input.IsPunch || input.IsKick) attack.IsActiveAttack = true;            
             if (!attack.IsActiveAttack) return;
 
-            var isPowerfulAttack = attack.IsNeedFinishAttack || attack.IsPowerfulDamage;
-            var pushForce = attackData.Data.PushTargetRagdollForce;
-            var damage = (isPowerfulAttack) ? attackData.Data.MaxDamage : attackData.Data.DefaultDamage;             
+            var pushForce = (attack.IsPowerfulDamage) ? attackData.Data.PushTargetRagdollForce : attackData.Data.PushTargetRagdollForce * 0.5f;
+            var damage = (attack.IsPowerfulDamage) ? attackData.Data.MaxDamage : attackData.Data.DefaultDamage;             
            
-            attack.HitCount = (isPowerfulAttack) ? 0 : attack.HitCount;
+            attack.HitCount = (attack.IsPowerfulDamage) ? 0 : attack.HitCount;
             
             if (input.IsPunch)
             {
-                PunchHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool,
-                    ent, isPowerfulAttack, pushForce, damage);
+                PunchHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool, ent, pushForce, damage);                
+                return;
             }
-            else if (input.IsKick)
+            
+            if (input.IsKick)
             {
-                KickHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool,
-                    ent, isPowerfulAttack, pushForce, damage);
+                KickHandle(ref attack, ref hitInteraction, ref attackData, hitEventPool, ent, pushForce, damage);
             }
         }
 
 
         private void KickHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackData, 
-            EcsPool<AttackEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
+            EcsPool<AttackEvent> hitEventPool, int ent, float pushForce, int damage)
         {
             attack.CurrentKick = (attack.KickQueue.Count > 0) ?
                 attack.KickQueue.Dequeue() : attackData.Data.KickAnimationData[0];
 
-            if (isPowerfulAttack) attack.CurrentKick = attackData.Data.KickAnimationFinishData.RandomElement();
+            if (attack.IsPowerfulDamage) attack.CurrentKick = attackData.Data.KickAnimationFinishData.RandomElement();
 
             attack.CurrentPunch = null;
             attack.AttackTimer = attack.CurrentKick.AttackTime;
             attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, attack.CurrentKick, damage, pushForce, ent);
+            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, isPunch: false, damage, pushForce, ent);
         }
 
 
         private void PunchHandle(ref CharacterAttack attack, ref HitInteraction hitInteraction, ref AttackData attackDat, 
-            EcsPool<AttackEvent> hitEventPool, int ent, bool isPowerfulAttack, float pushForce, int damage)
+            EcsPool<AttackEvent> hitEventPool, int ent, float pushForce, int damage)
         {
             attack.CurrentPunch = (attack.PunchQueue.Count > 0) ?
                 attack.PunchQueue.Dequeue() : attackDat.Data.PunchAnimationData[0];
 
-            if (isPowerfulAttack) attack.CurrentPunch = attackDat.Data.PunchAnimationFinishData.RandomElement();
+            if (attack.IsPowerfulDamage) attack.CurrentPunch = attackDat.Data.PunchAnimationFinishData.RandomElement();
 
             attack.CurrentKick = null;
             attack.AttackTimer = attack.CurrentPunch.AttackTime;
             attack.ResetNextActionTimer = attack.AttackTimer * ConstPrm.Hero.ACTION_TIME_MULTIPLIER;
 
-            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, attack.CurrentPunch, damage, pushForce, ent);
+            CreateHitEvent(ref hitInteraction, ref attack, hitEventPool, isPunch: true, damage, pushForce, ent);
         }
 
 
         private void CreateHitEvent(ref HitInteraction hitInteraction, ref CharacterAttack attack, EcsPool<AttackEvent> hitEventPool,
-            CharacterAttackAnimationData attackAnimData, int damage, float pushForce, int ent)
+            bool isPunch, int damage, float pushForce, int ent)
         {
+            var attackAnimData = (isPunch) ? attack.CurrentPunch : attack.CurrentKick;
+
             var hurtBox = hitInteraction.HurtBoxes.FirstOrDefault(h => h.Type == attackAnimData.HitType);
 
             if (hurtBox == null) return;
@@ -120,16 +121,16 @@ namespace BT
             damageEvent.PushForce = pushForce;
             damageEvent.Damage = damage;
             
-            damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFUL) ? 
-                DamageType.HAMMERING : (attack.IsNeedFinishAttack || attack.IsPowerfulDamage) ? 
-                    DamageType.POWERFUL : DamageType.SIMPLE;
+            damageEvent.Type = (attackAnimData.HitType == HitType.TWO_HAND_POWERFUL) ? DamageType.HAMMERING :   
+                                                            (attack.IsPowerfulDamage) ? DamageType.POWERFUL : 
+                                                                                        DamageType.SIMPLE;
+
+            attack.IsPowerfulDamage = false;
         }
 
 
         private void AddActionQueue(ref CombatCommand input, ref CharacterAttack attack, ref AttackData attackData)
         {
-            if (attack.IsNeedFinishAttack) return;
-
             var punchData = attackData.Data.PunchAnimationData;
             var kickData = attackData.Data.KickAnimationData;
 
@@ -140,6 +141,8 @@ namespace BT
                 attack.NextPunchState++;
                 attack.NextPunchState %= punchData.Length;
                 attack.PunchQueue.Enqueue(punchData[attack.NextPunchState]);
+
+                DebugUtility.PrintColor($"punchData{punchData[attack.NextPunchState].StateName}", Color.cyan);
             }
 
             if (input.IsKick && attack.KickQueue.Count < kickData.Length - 1)
@@ -161,8 +164,6 @@ namespace BT
                 attack.CurrentKick = null;
                 attack.CurrentPunch = null;
                 attack.IsActiveAttack = false;
-                attack.IsNeedFinishAttack = false;
-                attack.IsPowerfulDamage = false;
             }
             else if (attack.AttackTimer > 0f)
             {

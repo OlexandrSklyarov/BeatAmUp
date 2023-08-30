@@ -20,6 +20,7 @@ namespace BT
             var ragdollPool = world.GetPool<RagdollState>();
             var physicsBodyPool = world.GetPool<CharacterPhysicsBody>();
             var viewPool = world.GetPool<CharacterView>();
+            var deathPool = world.GetPool<Death>();
 
             foreach (var ent in entities)
             {
@@ -28,8 +29,9 @@ namespace BT
                 ref var view = ref viewPool.Get(ent);
 
                 var isHasRagdollState = ragdollPool.Has(ent);
+                var isDead = deathPool.Has(ent);
                 
-                if (!IsCanActiveRagdoll(ref damageEvt, isHasRagdollState)) continue;
+                if (!IsCanActiveRagdoll(ref damageEvt, isHasRagdollState, isDead)) continue;
 
                 AddForceCharacterRagdoll(ref damageEvt, ref body, ref view);
                 AddRagdollStateComponent(isHasRagdollState, ragdollPool, ent);                
@@ -37,9 +39,9 @@ namespace BT
         }
 
 
-        private bool IsCanActiveRagdoll(ref TakeDamageEvent damageEvt, bool isHasRagdollState)
+        private bool IsCanActiveRagdoll(ref TakeDamageEvent damageEvt, bool isHasRagdollState, bool isDead)
         {
-            return isHasRagdollState || (damageEvt.IsPowerDamage && !damageEvt.IsHammeringDamage);
+            return isDead || isHasRagdollState || (damageEvt.IsPowerDamage && !damageEvt.IsHammeringDamage);
         }
 
 

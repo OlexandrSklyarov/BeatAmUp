@@ -27,6 +27,7 @@ namespace BT
                 }
                 
                 attack.HitCount = 0;
+                attack.HitResetTimer = 0f;
             }
         }
     }
